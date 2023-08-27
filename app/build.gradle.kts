@@ -61,6 +61,11 @@ dependencies {
     // -------------------------------------------
     implementation("androidx.activity:activity-compose:1.7.2")
 
+    // Navigation
+    // -------------------------------------------
+    val navVersion = "2.7.1"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
