@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.rbraithwaite.untitledmovietracker"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.rbraithwaite.untitledmovietracker"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0-pre-alpha"
 
@@ -50,6 +50,16 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     // TODO [23-08-21 11:33p.m.] -- this material dep probably isn't needed since I'm using compose.
     implementation("com.google.android.material:material:1.9.0")
+
+    // Compose
+    // -------------------------------------------
+    val composeBom = platform("androidx.compose:compose-bom:2023.08.00")
+    implementation(composeBom)
+    implementation("androidx.compose.material3:material3")
+
+    // Compose Extra
+    // -------------------------------------------
+    implementation("androidx.activity:activity-compose:1.7.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
