@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 
 class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,25 +51,13 @@ class MainActivity: ComponentActivity() {
                 // 'add review' flow
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
-                        PlaceholderScreen(text = "dis be the search screen!", color = Color.Green)
+                        DebugPlaceholder(
+                            label = "search screen!",
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun PlaceholderScreen(text: String, color: Color) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color)
-    ) {
-        Text(
-            text = text,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }
