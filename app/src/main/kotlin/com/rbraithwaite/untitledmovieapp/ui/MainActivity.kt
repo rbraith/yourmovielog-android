@@ -51,10 +51,7 @@ class MainActivity: ComponentActivity() {
                 // 'add review' flow
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
-                        DebugPlaceholder(
-                            label = "search screen!",
-                            modifier = Modifier.fillMaxSize()
-                        )
+                        SearchScreen()
                     }
                 }
             }
