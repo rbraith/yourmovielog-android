@@ -13,7 +13,7 @@
         android:theme="@style/Theme.UntitledMovieTracker"
         tools:targetApi="34">
         <activity
-            android:name="com.rbraithwaite.untitledmovieapp.MainActivity"
+            android:name="com.rbraithwaite.untitledmovieapp.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
