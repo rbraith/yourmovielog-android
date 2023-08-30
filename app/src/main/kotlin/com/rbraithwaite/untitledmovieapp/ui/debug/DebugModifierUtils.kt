@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 // REFACTOR [23-08-29 9:04p.m.] -- extract this file to a library.
 
-fun Modifier.debugBackgroundColor(): Modifier {
+fun Modifier.randomBackgroundColor(): Modifier {
     return this.background(randomColor())
 }
 
