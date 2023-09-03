@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
+import timber.log.Timber
 
 @Composable
 fun SearchScreen() {
@@ -35,8 +36,14 @@ fun SearchScreen() {
             .randomBackgroundColor()
     ) {
         QuickSearchWidget(
-            onSearchInputChange = {},
-            onGoToAdvancedSearch = {},
+            onSearchInputChange = {
+                // TO IMPLEMENT
+                Timber.d("QuickSearchWidget onSearchInputChange = $it")
+            },
+            onGoToAdvancedSearch = {
+                // TO IMPLEMENT
+                Timber.d("QuickSearchWidget onSearchInputChange")
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
