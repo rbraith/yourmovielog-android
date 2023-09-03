@@ -1,6 +1,11 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    // Hilt
+    // -------------------------------------------
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -73,7 +78,19 @@ dependencies {
     val navVersion = "2.7.1"
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
+    // Hilt
+    // -------------------------------------------
+    val hiltVersion = "2.48"
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+kapt {
+    // "Allow references to generated code" (for Hilt)
+    correctErrorTypes = true
 }
