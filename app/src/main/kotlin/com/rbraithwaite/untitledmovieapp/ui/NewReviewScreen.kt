@@ -8,11 +8,17 @@ import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 
 @Composable
 fun NewReviewScreen(
-    // NewReviewSearchResult json serialization
-    mediaJsonString: String?
+    media: NewReviewSearchResult?
 ) {
+    val titleString = when(media) {
+        is NewReviewSearchResult.CustomMedia -> {
+            media.title
+        }
+        null -> "no title"
+    }
+
     DebugPlaceholder(
-        label = mediaJsonString ?: "null",
+        label = titleString,
         modifier = Modifier.fillMaxSize()
     )
 }
@@ -20,5 +26,5 @@ fun NewReviewScreen(
 @Preview
 @Composable
 fun PreviewNewReviewScreen() {
-    NewReviewScreen(mediaJsonString = null)
+    NewReviewScreen(null)
 }

@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,18 +55,46 @@ class MainActivity: ComponentActivity() {
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
                         SearchScreen(
-                            onNavToNewReviewScreen = {
-                                navController.navigate(route = "new_review/blah")
+                            onNavToNewReviewScreen = { searchResult ->
+                                val args = serializeForNav(searchResult)
+                                navController.navigate(route = "new_review/$args")
                             }
                         )
                     }
 
-                    composable(route = "new_review/{media}") { navBackStackEntry ->
-                        val argMedia = navBackStackEntry.arguments?.getString("media")
-                        NewReviewScreen(mediaJsonString = argMedia)
+                    composable(route = "new_review/{media_type}/{media_data}") { navBackStackEntry ->
+                        val media = deserializeNewReviewArgs(navBackStackEntry.arguments)
+                        NewReviewScreen(media)
                     }
                 }
             }
         }
+    }
+}
+
+// REFACTOR [23-09-3 2:01a.m.] -- probably better to use an activity-scoped viewmodel to transfer args
+//  than serializing to json strings?
+fun serializeForNav(newReviewSearchResult: NewReviewSearchResult): String {
+    val gson = Gson()
+    return when(newReviewSearchResult) {
+        is NewReviewSearchResult.CustomMedia -> {
+            "custom/${gson.toJson(newReviewSearchResult)}"
+        }
+    }
+}
+
+fun deserializeNewReviewArgs(args: Bundle?): NewReviewSearchResult? {
+    if (args == null) {
+        return null
+    }
+
+    val mediaType = args.getString("media_type")!!
+    val mediaData = args.getString("media_data")!!
+
+    val gson = Gson()
+
+    return when(mediaType) {
+        "custom" -> gson.fromJson(mediaData, NewReviewSearchResult.CustomMedia::class.java)
+        else -> null
     }
 }
