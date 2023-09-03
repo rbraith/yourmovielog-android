@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
@@ -31,27 +33,29 @@ import timber.log.Timber
 
 @Composable
 fun SearchScreen() {
-    Column(
+    var quickSearchInput by remember {
+        mutableStateOf("")
+    }
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .randomBackgroundColor()
     ) {
-        var quickSearchInput by remember {
-            mutableStateOf("")
+        item {
+            QuickSearchWidget(
+                onSearchInputChange = { quickSearchInput = it },
+                onGoToAdvancedSearch = {
+                    // TO IMPLEMENT
+                    Timber.d("QuickSearchWidget onSearchInputChange")
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
         }
 
-        QuickSearchWidget(
-            onSearchInputChange = { quickSearchInput = it },
-            onGoToAdvancedSearch = {
-                // TO IMPLEMENT
-                Timber.d("QuickSearchWidget onSearchInputChange")
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Divider(
-            color = Color.Red
-        )
+        item {
+            Divider(color = Color.Red)
+        }
 
         SearchResults(quickSearchInput = quickSearchInput)
     }
@@ -100,8 +104,7 @@ fun QuickSearchWidget(
     }
 }
 
-@Composable
-fun SearchResults(quickSearchInput: String) {
+fun LazyListScope.SearchResults(quickSearchInput: String) {
 
 }
 
