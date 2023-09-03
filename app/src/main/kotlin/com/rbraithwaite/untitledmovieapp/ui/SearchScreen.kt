@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,11 +36,12 @@ fun SearchScreen() {
             .fillMaxSize()
             .randomBackgroundColor()
     ) {
+        var quickSearchInput by remember {
+            mutableStateOf("")
+        }
+
         QuickSearchWidget(
-            onSearchInputChange = {
-                // TO IMPLEMENT
-                Timber.d("QuickSearchWidget onSearchInputChange = $it")
-            },
+            onSearchInputChange = { quickSearchInput = it },
             onGoToAdvancedSearch = {
                 // TO IMPLEMENT
                 Timber.d("QuickSearchWidget onSearchInputChange")
@@ -51,7 +53,7 @@ fun SearchScreen() {
             color = Color.Red
         )
 
-        DebugPlaceholder(modifier = Modifier.fillMaxSize())
+        SearchResults(quickSearchInput = quickSearchInput)
     }
 }
 
@@ -84,7 +86,9 @@ fun QuickSearchWidget(
         )
         Button(
             onClick = onGoToAdvancedSearch,
-            modifier = Modifier.align(Alignment.End).padding(bottom = 8.dp, end = 8.dp)
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(bottom = 8.dp, end = 8.dp)
         ) {
             Text(text = "Advanced Search")
             Spacer(modifier = Modifier.width(4.dp))
@@ -94,6 +98,11 @@ fun QuickSearchWidget(
             )
         }
     }
+}
+
+@Composable
+fun SearchResults(quickSearchInput: String) {
+
 }
 
 @Preview
