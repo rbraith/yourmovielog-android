@@ -53,7 +53,16 @@ class MainActivity: ComponentActivity() {
                 // 'add review' flow
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
-                        SearchScreen()
+                        SearchScreen(
+                            onNavToNewReviewScreen = {
+                                navController.navigate(route = "new_review/blah")
+                            }
+                        )
+                    }
+
+                    composable(route = "new_review/{media}") { navBackStackEntry ->
+                        val argMedia = navBackStackEntry.arguments?.getString("media")
+                        NewReviewScreen(mediaJsonString = argMedia)
                     }
                 }
             }

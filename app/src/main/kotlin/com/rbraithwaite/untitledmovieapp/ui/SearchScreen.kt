@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,8 +32,16 @@ import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
+sealed interface NewReviewSearchResult {
+    data class CustomMedia(
+        val title: String
+    ) : NewReviewSearchResult
+}
+
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    onNavToNewReviewScreen: (NewReviewSearchResult) -> Unit
+) {
     var quickSearchInput by remember {
         mutableStateOf("")
     }
@@ -57,7 +66,12 @@ fun SearchScreen() {
             Divider(color = Color.Red)
         }
 
-        SearchResults(quickSearchInput = quickSearchInput)
+        SearchResults(
+            quickSearchInput = quickSearchInput,
+            onAddCustomMediaReview = {customMediaTitle ->
+                onNavToNewReviewScreen(NewReviewSearchResult.CustomMedia(customMediaTitle))
+            }
+        )
     }
 }
 
@@ -104,12 +118,28 @@ fun QuickSearchWidget(
     }
 }
 
-fun LazyListScope.SearchResults(quickSearchInput: String) {
+fun LazyListScope.SearchResults(
+    quickSearchInput: String,
+    onAddCustomMediaReview: (mediaTitle: String) -> Unit
+) {
+    item {
+        Text("Results")
+    }
 
+    item {
+        Button(
+            onClick = {
+                onAddCustomMediaReview(quickSearchInput)
+            },
+            modifier = Modifier.fillMaxWidth().height(64.dp)
+        ) {
+            Text("Add review for \"$quickSearchInput\"")
+        }
+    }
 }
 
 @Preview
 @Composable
 fun PreviewSearchScreen() {
-    SearchScreen()
+    SearchScreen {}
 }
