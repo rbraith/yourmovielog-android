@@ -20,6 +20,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
+import timber.log.Timber
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun NewReviewScreen(
@@ -33,11 +36,15 @@ fun NewReviewScreen(
     }
 
     var shouldShowRatingDialog by remember { mutableStateOf(false) }
+    var ratingString by remember { mutableStateOf("--") }
 
     if (shouldShowRatingDialog) {
         RatingPickerDialog(
             onDismiss = { shouldShowRatingDialog = false },
-            onConfirm = { shouldShowRatingDialog = false }
+            onConfirm = { newRating ->
+                shouldShowRatingDialog = false
+                ratingString = newRating?.let { formatRating(it) } ?: "--"
+            }
         )
     }
 
@@ -51,7 +58,7 @@ fun NewReviewScreen(
 
         Text("rating")
         Button(onClick = { shouldShowRatingDialog = true }) {
-            Text("-- / 10")
+            Text("$ratingString / 10")
         }
 
         Text("date")
@@ -69,18 +76,28 @@ fun NewReviewScreen(
     }
 }
 
+/**
+ * @param onConfirm Returns selected rating as 0-100 Int, or null if rating is unselected
+ */
 @Composable
 fun RatingPickerDialog(
+    initialRating: Int? = null,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: (Int?) -> Unit
 ) {
+    var ratingString by remember(initialRating) { mutableStateOf(formatRating(initialRating)) }
+
     AlertDialog(
         onDismissRequest = onDismiss,
         text = {
             Row {
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = ratingString,
+                    onValueChange = {
+                        if (isValidRatingString(it)) {
+                            ratingString = it
+                        }
+                    },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Decimal
                     ),
@@ -93,11 +110,75 @@ fun RatingPickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
+            TextButton(onClick = {
+                onConfirm(parseRatingString(ratingString))
+            }) {
                 Text("Confirm")
             }
         }
     )
+}
+
+private fun formatRating(rating: Int?): String {
+    return if (rating == null) {
+        ""
+    } else {
+        val beforeDecimal = rating / 10
+        val afterDecimal = rating % 10
+
+        if (afterDecimal == 0) {
+            beforeDecimal.toString()
+        } else {
+            "$beforeDecimal.$afterDecimal"
+        }
+    }
+}
+
+// the rating string arrives as a float value between 0-10, converted to int 0-100
+private fun parseRatingString(ratingString: String): Int? {
+    if (ratingString.isBlank()) {
+        return null
+    }
+
+    if (ratingString.endsWith(".")) {
+        return ratingString.dropLast(1).toIntOrNull()?.let { it * 10 }
+    }
+
+    if (ratingString.startsWith(".")) {
+        // return first digit after the decimal point
+        return ratingString.drop(1).getOrNull(0)?.digitToIntOrNull()
+    }
+
+    if (!ratingString.contains(".")) {
+        return ratingString.toIntOrNull()?.let { it * 10 }
+    }
+
+    // last case where there are digits on both sides of the decimal point
+    val decimalSplit = ratingString.split(".")
+    val beforeDec = decimalSplit.getOrNull(0)?.toIntOrNull()?.let { it * 10 }
+    // only first digit after decimal
+    val afterDec = decimalSplit.getOrNull(1)?.getOrNull(0)?.digitToIntOrNull()
+
+    if (beforeDec == null || afterDec == null) {
+        return null
+    }
+
+    return beforeDec + afterDec
+}
+
+private fun isValidRatingString(ratingString: String): Boolean  {
+    if (ratingString.matches(Regex("^10\\.?0?\$"))) {
+        // matches for 10, 10., 10.0
+        return true
+    }
+
+    if (ratingString.matches(Regex("^[0-9]?\\.?[0-9]?\$"))) {
+        // matches for values less than 10, such as .5, 8.2, etc
+        // limits to 1 decimal place
+        return true
+    }
+
+    return false
 }
 
 @Preview
