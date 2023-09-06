@@ -36,6 +36,7 @@ fun NewReviewScreen(
     }
 
     var shouldShowRatingDialog by remember { mutableStateOf(false) }
+    var shouldShowDateDialog by remember { mutableStateOf(false) }
     var ratingString by remember { mutableStateOf("--") }
 
     if (shouldShowRatingDialog) {
@@ -46,6 +47,12 @@ fun NewReviewScreen(
                 ratingString = newRating?.let { formatRating(it) } ?: "--"
             }
         )
+    }
+
+    if (shouldShowDateDialog) {
+        RatingDatePickerDialog {
+            shouldShowDateDialog = false
+        }
     }
 
     Column(
@@ -62,7 +69,7 @@ fun NewReviewScreen(
         }
 
         Text("date")
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { shouldShowDateDialog = true }) {
             Text("Today")
         }
 
