@@ -45,6 +45,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -88,6 +90,9 @@ dependencies {
     // -------------------------------------------
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // java 8 desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
 
     testImplementation("junit:junit:4.13.2")
