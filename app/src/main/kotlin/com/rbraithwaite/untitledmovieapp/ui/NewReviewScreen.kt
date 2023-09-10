@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.Month
 import kotlin.math.max
 import kotlin.math.min
 
@@ -39,6 +41,8 @@ fun NewReviewScreen(
     var shouldShowDateDialog by remember { mutableStateOf(false) }
     var ratingString by remember { mutableStateOf("--") }
 
+    var ratingDate: RatingDate? by remember { mutableStateOf(RatingDate(LocalDate.now())) }
+
     if (shouldShowRatingDialog) {
         RatingPickerDialog(
             onDismiss = { shouldShowRatingDialog = false },
@@ -50,9 +54,16 @@ fun NewReviewScreen(
     }
 
     if (shouldShowDateDialog) {
-        RatingDatePickerDialog {
-            shouldShowDateDialog = false
-        }
+        RatingDatePickerDialog(
+            initialRatingDate = RatingDate(LocalDate.now()),
+            onConfirm = {
+                shouldShowDateDialog = false
+                ratingDate = it
+            },
+            onDismiss = {
+                shouldShowDateDialog = false
+            }
+        )
     }
 
     Column(
@@ -70,7 +81,7 @@ fun NewReviewScreen(
 
         Text("date")
         Button(onClick = { shouldShowDateDialog = true }) {
-            Text("Today")
+            Text(formatDate(ratingDate))
         }
 
         Text("review")
@@ -81,6 +92,18 @@ fun NewReviewScreen(
             Text("add context")
         }
     }
+}
+
+private fun formatDate(date: RatingDate?): String {
+    if (date == null) {
+        return "None"
+    }
+
+    val yearText = date.year.toString()
+    val monthText = date.month?.let { Month.of(it + 1).toString() + " " } ?: ""
+    val dayText = date.day?.let { "$it " } ?: ""
+
+    return "$dayText$monthText$yearText"
 }
 
 private fun formatRating(rating: Int?): String {
