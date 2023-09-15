@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui
+package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardOptions

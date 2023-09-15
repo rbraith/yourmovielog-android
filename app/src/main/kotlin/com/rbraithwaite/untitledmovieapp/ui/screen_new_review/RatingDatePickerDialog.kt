@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui
+package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -26,9 +26,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import timber.log.Timber
 import java.time.LocalDate
-import java.time.Year
 import java.time.YearMonth
 
 data class RatingDate(

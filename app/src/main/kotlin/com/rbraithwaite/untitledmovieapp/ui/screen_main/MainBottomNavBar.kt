@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui
+package com.rbraithwaite.untitledmovieapp.ui.screen_main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
