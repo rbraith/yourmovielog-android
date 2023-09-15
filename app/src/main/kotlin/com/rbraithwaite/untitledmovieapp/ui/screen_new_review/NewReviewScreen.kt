@@ -21,12 +21,12 @@ import java.time.Month
 fun NewReviewScreen(
     media: NewReviewSearchResult?
 ) {
-    val titleString = when(media) {
+    var titleString by remember(media) { mutableStateOf(when(media) {
         is NewReviewSearchResult.CustomMedia -> {
             media.title
         }
         null -> ""
-    }
+    }) }
 
     var shouldShowRatingDialog by remember { mutableStateOf(false) }
     var shouldShowDateDialog by remember { mutableStateOf(false) }
@@ -63,7 +63,9 @@ fun NewReviewScreen(
             .randomBackgroundColor()
     ) {
         Text("title")
-        TextField(value = titleString, onValueChange = {})
+        TextField(value = titleString, onValueChange = {
+            titleString = it
+        })
 
         Text("rating")
         Button(onClick = { shouldShowRatingDialog = true }) {
