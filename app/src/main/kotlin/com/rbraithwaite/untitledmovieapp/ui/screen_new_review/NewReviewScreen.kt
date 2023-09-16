@@ -46,7 +46,7 @@ fun NewReviewScreen(
 
     if (shouldShowDateDialog) {
         RatingDatePickerDialog(
-            initialRatingDate = RatingDate(LocalDate.now()),
+            initialRatingDate = ratingDate,
             onConfirm = {
                 shouldShowDateDialog = false
                 ratingDate = it
