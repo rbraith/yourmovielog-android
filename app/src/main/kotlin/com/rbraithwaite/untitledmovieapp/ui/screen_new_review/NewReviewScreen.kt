@@ -28,6 +28,8 @@ fun NewReviewScreen(
         null -> ""
     }) }
 
+    var userReview by remember { mutableStateOf("") }
+
     var shouldShowRatingDialog by remember { mutableStateOf(false) }
     var shouldShowDateDialog by remember { mutableStateOf(false) }
     var ratingString by remember { mutableStateOf("--") }
@@ -78,7 +80,11 @@ fun NewReviewScreen(
         }
 
         Text("review")
-        TextField(value = "", onValueChange = {})
+        TextField(
+            value = userReview,
+            onValueChange = { userReview = it },
+            minLines = 2
+        )
 
         Text("where did you watch this?")
         Button(onClick = { /*TODO*/ }) {
