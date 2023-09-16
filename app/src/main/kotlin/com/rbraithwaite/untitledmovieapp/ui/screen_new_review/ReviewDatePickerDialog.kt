@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import java.time.LocalDate
 import java.time.YearMonth
 
-data class RatingDate(
+data class ReviewDate(
     val year: Int,
     val month: Int?,
     val day: Int?
@@ -49,15 +49,15 @@ private enum class SelectorType {
 }
 
 @Composable
-private fun rememberRatingDatePickerState(ratingDate: RatingDate?): RatingDatePickerState {
-    return remember(ratingDate) {
-        RatingDatePickerState(ratingDate)
+private fun rememberReviewDatePickerState(reviewDate: ReviewDate?): ReviewDatePickerState {
+    return remember(reviewDate) {
+        ReviewDatePickerState(reviewDate)
     }
 }
 
 @Stable
-private class RatingDatePickerState(
-    inputRatingDate: RatingDate?
+private class ReviewDatePickerState(
+    inputReviewDate: ReviewDate?
 ) {
     companion object {
         const val UNSET_YEAR_TEXT = "Set\nYear"
@@ -65,7 +65,7 @@ private class RatingDatePickerState(
         const val UNSET_DAY_TEXT = "Set\nDay"
     }
 
-    var ratingDate by mutableStateOf(inputRatingDate)
+    var ratingDate by mutableStateOf(inputReviewDate)
         private set
 
     var selectorType by mutableStateOf(SelectorType.YEAR_SELECTOR)
@@ -95,7 +95,7 @@ private class RatingDatePickerState(
         ratingDate = if (year == YEAR_NONE) {
             null
         } else {
-            RatingDate(
+            ReviewDate(
                 year,
                 if (selectedMonth == MONTH_NONE) null else selectedMonth,
                 // clearing the date since changing the year can affect days of the month in feb
@@ -107,7 +107,7 @@ private class RatingDatePickerState(
 
     fun updateMonth(month: Int) {
         if (month != selectedMonth) {
-            ratingDate = RatingDate(
+            ratingDate = ReviewDate(
                 selectedYear,
                 if (month == MONTH_NONE) null else month,
                 null
@@ -116,7 +116,7 @@ private class RatingDatePickerState(
     }
 
     fun updateDay(day: Int) {
-        ratingDate = RatingDate(
+        ratingDate = ReviewDate(
             selectedYear,
             selectedMonth,
             if (day == DAY_NONE) null else day
@@ -131,12 +131,12 @@ private class RatingDatePickerState(
 }
 
 @Composable
-fun RatingDatePickerDialog(
-    initialRatingDate: RatingDate?,
+fun ReviewDatePickerDialog(
+    initialReviewDate: ReviewDate?,
     onDismiss: () -> Unit,
-    onConfirm: (RatingDate?) -> Unit
+    onConfirm: (ReviewDate?) -> Unit
 ) {
-    val state = rememberRatingDatePickerState(ratingDate = initialRatingDate)
+    val state = rememberReviewDatePickerState(reviewDate = initialReviewDate)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -146,23 +146,23 @@ fun RatingDatePickerDialog(
             }
         },
         text = {
-            RatingDatePickerContent(state)
+            ReviewDatePickerContent(state)
         }
     )
 }
 
 @Preview
 @Composable
-fun PreviewRatingDatePickerDialog() {
-    RatingDatePickerDialog(
-        initialRatingDate = null,
+fun PreviewReviewDatePickerDialog() {
+    ReviewDatePickerDialog(
+        initialReviewDate = null,
         onDismiss = { /*TODO*/ },
         onConfirm = {}
     )
 }
 @Composable
-private fun RatingDatePickerContent(
-    state: RatingDatePickerState
+private fun ReviewDatePickerContent(
+    state: ReviewDatePickerState
 ) {
     Column {
         TopRowButtons(

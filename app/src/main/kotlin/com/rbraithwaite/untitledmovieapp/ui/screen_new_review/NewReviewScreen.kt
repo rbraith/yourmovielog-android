@@ -32,7 +32,7 @@ fun NewReviewScreen(
     var shouldShowDateDialog by remember { mutableStateOf(false) }
     var ratingString by remember { mutableStateOf("--") }
 
-    var ratingDate: RatingDate? by remember { mutableStateOf(RatingDate(LocalDate.now())) }
+    var reviewDate: ReviewDate? by remember { mutableStateOf(ReviewDate(LocalDate.now())) }
 
     if (shouldShowRatingDialog) {
         RatingPickerDialog(
@@ -45,11 +45,11 @@ fun NewReviewScreen(
     }
 
     if (shouldShowDateDialog) {
-        RatingDatePickerDialog(
-            initialRatingDate = ratingDate,
+        ReviewDatePickerDialog(
+            initialReviewDate = reviewDate,
             onConfirm = {
                 shouldShowDateDialog = false
-                ratingDate = it
+                reviewDate = it
             },
             onDismiss = {
                 shouldShowDateDialog = false
@@ -74,7 +74,7 @@ fun NewReviewScreen(
 
         Text("date")
         Button(onClick = { shouldShowDateDialog = true }) {
-            Text(formatDate(ratingDate))
+            Text(formatDate(reviewDate))
         }
 
         Text("review")
@@ -87,7 +87,7 @@ fun NewReviewScreen(
     }
 }
 
-private fun formatDate(date: RatingDate?): String {
+private fun formatDate(date: ReviewDate?): String {
     if (date == null) {
         return "None"
     }
