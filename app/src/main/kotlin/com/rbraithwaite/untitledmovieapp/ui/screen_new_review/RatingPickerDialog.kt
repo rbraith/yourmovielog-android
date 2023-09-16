@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import timber.log.Timber
 
 /**
  * @param onConfirm Returns selected rating as 0-100 Int, or null if rating is unselected
@@ -96,9 +97,10 @@ private fun isValidRatingString(ratingString: String): Boolean  {
         return true
     }
 
-    if (ratingString.matches(Regex("^[0-9]?\\.?[0-9]?\$"))) {
+    if (ratingString.matches(Regex("^([0-9]?|[0-9]\\.[0-9]?)\$"))) {
         // matches for values less than 10, such as .5, 8.2, etc
         // limits to 1 decimal place
+        Timber.d("Matches value less than 10: $ratingString")
         return true
     }
 
