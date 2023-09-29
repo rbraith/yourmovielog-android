@@ -31,7 +31,7 @@ import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
 sealed interface NewReviewSearchResult {
-    data class CustomMedia(
+    data class NewCustomMedia(
         val title: String
     ) : NewReviewSearchResult
 }
@@ -67,7 +67,7 @@ fun SearchScreen(
         SearchResults(
             quickSearchInput = quickSearchInput,
             onAddCustomMediaReview = {customMediaTitle ->
-                onNavToNewReviewScreen(NewReviewSearchResult.CustomMedia(customMediaTitle))
+                onNavToNewReviewScreen(NewReviewSearchResult.NewCustomMedia(customMediaTitle))
             }
         )
     }

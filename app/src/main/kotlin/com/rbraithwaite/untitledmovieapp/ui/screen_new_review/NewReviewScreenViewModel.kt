@@ -1,6 +1,5 @@
 package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
 
-import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
@@ -16,7 +15,7 @@ class NewReviewScreenViewModel : ViewModel() {
 
     fun init(searchResult: NewReviewSearchResult?) {
         initialMediaTitle = when (searchResult) {
-            is NewReviewSearchResult.CustomMedia -> searchResult.title
+            is NewReviewSearchResult.NewCustomMedia -> searchResult.title
             null -> ""
         }
     }

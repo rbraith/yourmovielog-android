@@ -70,7 +70,7 @@ class MainActivity: ComponentActivity() {
 fun serializeForNav(newReviewSearchResult: NewReviewSearchResult): String {
     val gson = Gson()
     return when(newReviewSearchResult) {
-        is NewReviewSearchResult.CustomMedia -> {
+        is NewReviewSearchResult.NewCustomMedia -> {
             "custom/${gson.toJson(newReviewSearchResult)}"
         }
     }
@@ -87,7 +87,7 @@ fun deserializeNewReviewArgs(args: Bundle?): NewReviewSearchResult? {
     val gson = Gson()
 
     return when(mediaType) {
-        "custom" -> gson.fromJson(mediaData, NewReviewSearchResult.CustomMedia::class.java)
+        "custom" -> gson.fromJson(mediaData, NewReviewSearchResult.NewCustomMedia::class.java)
         else -> null
     }
 }
