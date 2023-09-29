@@ -26,21 +26,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import java.time.LocalDate
+import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
 import java.time.YearMonth
-
-data class ReviewDate(
-    val year: Int,
-    val month: Int?,
-    val day: Int?
-) {
-    constructor(localDate: LocalDate) : this(
-        year = localDate.year,
-        // REFACTOR [23-09-14 10:48p.m.] -- should probably use 1-12 to align w/ java.time.
-        month = localDate.monthValue - 1,
-        day = localDate.dayOfMonth
-    )
-}
 
 private enum class SelectorType {
     YEAR_SELECTOR,

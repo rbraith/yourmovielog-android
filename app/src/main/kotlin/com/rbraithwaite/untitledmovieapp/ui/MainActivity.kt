@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -10,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.rbraithwaite.untitledmovieapp.ui.screen_main.MainScreen
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreen
+import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreenViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,8 +48,16 @@ class MainActivity: ComponentActivity() {
                     }
 
                     composable(route = "new_review/{media_type}/{media_data}") { navBackStackEntry ->
-                        val media = deserializeNewReviewArgs(navBackStackEntry.arguments)
-                        NewReviewScreen(media)
+                        val searchResult = deserializeNewReviewArgs(navBackStackEntry.arguments)
+
+                        val viewModel = hiltViewModel<NewReviewScreenViewModel>()
+                        viewModel.init(searchResult)
+
+                        NewReviewScreen(
+                            viewModel = viewModel,
+                            onConfirmReview = { TODO() },
+                            onNavBack = { TODO() }
+                        )
                     }
                 }
             }

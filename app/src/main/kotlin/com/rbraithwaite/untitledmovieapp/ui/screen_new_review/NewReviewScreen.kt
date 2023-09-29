@@ -1,10 +1,20 @@
 package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,47 +24,82 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
+import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
 import java.time.LocalDate
 import java.time.Month
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun NewReviewScreen(
-    media: NewReviewSearchResult?
+    viewModel: NewReviewScreenViewModel = viewModel(),
+    onNavBack: () -> Unit,
+    onConfirmReview: () -> Unit
 ) {
-    var titleString by remember(media) { mutableStateOf(when(media) {
-        is NewReviewSearchResult.CustomMedia -> {
-            media.title
+    val screenState = rememberNewReviewScreenState(
+        initialMediaTitle = viewModel.initialMediaTitle,
+        initialReviewDate = viewModel.initialReviewDate
+    )
+
+    Scaffold(
+        topBar = {
+            NewReviewScreenTopAppBar(
+                onNavBack = onNavBack,
+                onConfirmReview = onConfirmReview
+            )
         }
-        null -> ""
-    }) }
+    ) {
+        Box(modifier = Modifier.padding(it)) {
+            NewReviewScreenContent(screenState)
+        }
+    }
+}
 
-    var userReview by remember { mutableStateOf("") }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun NewReviewScreenTopAppBar(
+    onNavBack: () -> Unit,
+    onConfirmReview: () -> Unit
+) {
+    TopAppBar(
+        title = {
+            Text("New Review")
+        },
+        navigationIcon = {
+            IconButton(onClick = onNavBack) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = null)
+            }
+        },
+        actions = {
+            IconButton(onClick = onConfirmReview) {
+                Icon(Icons.Filled.Done, contentDescription = null)
+            }
+        }
+    )
+}
 
-    var shouldShowRatingDialog by remember { mutableStateOf(false) }
-    var shouldShowDateDialog by remember { mutableStateOf(false) }
-    var ratingString by remember { mutableStateOf("--") }
-
-    var reviewDate: ReviewDate? by remember { mutableStateOf(ReviewDate(LocalDate.now())) }
-
-    if (shouldShowRatingDialog) {
+@Composable
+private fun NewReviewScreenContent(
+    screenState: NewReviewScreenState
+) {
+    if (screenState.shouldShowRatingDialog) {
         RatingPickerDialog(
-            onDismiss = { shouldShowRatingDialog = false },
+            onDismiss = {  screenState.dismissRatingDialog() },
             onConfirm = { newRating ->
-                shouldShowRatingDialog = false
-                ratingString = newRating?.let { formatRatingForNewReview(it) } ?: "--"
+                screenState.dismissRatingDialog()
+                screenState.setRating(newRating)
             }
         )
     }
 
-    if (shouldShowDateDialog) {
+    if (screenState.shouldShowDateDialog) {
         ReviewDatePickerDialog(
-            initialReviewDate = reviewDate,
+            initialReviewDate = screenState.reviewDate,
             onConfirm = {
-                shouldShowDateDialog = false
-                reviewDate = it
+                screenState.dismissDateDialog()
+                screenState.setReviewDate(it)
             },
             onDismiss = {
-                shouldShowDateDialog = false
+                screenState.dismissDateDialog()
             }
         )
     }
@@ -65,24 +110,24 @@ fun NewReviewScreen(
             .randomBackgroundColor()
     ) {
         Text("title")
-        TextField(value = titleString, onValueChange = {
-            titleString = it
+        TextField(value = screenState.mediaTitle, onValueChange = {
+            screenState.mediaTitle = it
         })
 
         Text("rating")
-        Button(onClick = { shouldShowRatingDialog = true }) {
-            Text("$ratingString / 10")
+        Button(onClick = { screenState.showRatingDialog() }) {
+            Text(screenState.ratingString)
         }
 
         Text("date")
-        Button(onClick = { shouldShowDateDialog = true }) {
-            Text(formatDate(reviewDate))
+        Button(onClick = { screenState.showDateDialog() }) {
+            Text(screenState.reviewDateString)
         }
 
         Text("review")
         TextField(
-            value = userReview,
-            onValueChange = { userReview = it },
+            value = screenState.userReview,
+            onValueChange = { screenState.userReview = it },
             minLines = 2
         )
 
@@ -93,35 +138,12 @@ fun NewReviewScreen(
     }
 }
 
-private fun formatDate(date: ReviewDate?): String {
-    if (date == null) {
-        return "None"
-    }
-
-    val yearText = date.year.toString()
-    val monthText = date.month?.let { Month.of(it + 1).toString() + " " } ?: ""
-    val dayText = date.day?.let { "$it " } ?: ""
-
-    return "$dayText$monthText$yearText"
-}
-
-private fun formatRatingForNewReview(rating: Int?): String {
-    return if (rating == null) {
-        ""
-    } else {
-        val beforeDecimal = rating / 10
-        val afterDecimal = rating % 10
-
-        if (afterDecimal == 0) {
-            beforeDecimal.toString()
-        } else {
-            "$beforeDecimal.$afterDecimal"
-        }
-    }
-}
 
 @Preview
 @Composable
 fun PreviewNewReviewScreen() {
-    NewReviewScreen(null)
+    NewReviewScreen(
+        onNavBack = {},
+        onConfirmReview = {}
+    )
 }
