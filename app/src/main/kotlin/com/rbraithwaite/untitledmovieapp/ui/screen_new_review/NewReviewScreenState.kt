@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
-import java.time.LocalDate
+import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import java.time.Month
 
 @Composable
@@ -37,6 +37,8 @@ class NewReviewScreenState(
         private set
     var shouldShowDateDialog by mutableStateOf(false)
         private set
+
+    private var rating: Int? = null
     var ratingString by mutableStateOf(formatRating(null))
         private set
 
@@ -45,12 +47,13 @@ class NewReviewScreenState(
     var reviewDateString by mutableStateOf(formatDate(initialReviewDate))
         private set
 
-    fun setReviewDate(reviewDate: ReviewDate?) {
+    fun setNewReviewDate(reviewDate: ReviewDate?) {
         this.reviewDate = reviewDate
         reviewDateString = formatDate(reviewDate)
     }
 
     fun setRating(rating: Int?) {
+        this.rating = rating
         ratingString = formatRating(rating)
     }
 
@@ -95,5 +98,14 @@ class NewReviewScreenState(
 
     fun dismissDateDialog() {
         shouldShowDateDialog = false
+    }
+
+    fun toReview(): MediaReview {
+        return MediaReview(
+            rating,
+            userReview,
+            reviewDate,
+            null
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data
+package com.rbraithwaite.untitledmovieapp.core.data
 
 import java.time.LocalDate
 

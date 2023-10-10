@@ -16,17 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
-import java.time.LocalDate
-import java.time.Month
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -44,7 +36,10 @@ fun NewReviewScreen(
         topBar = {
             NewReviewScreenTopAppBar(
                 onNavBack = onNavBack,
-                onConfirmReview = onConfirmReview
+                onConfirmReview = {
+                    viewModel.confirmReview(screenState.toReview())
+                    onConfirmReview()
+                }
             )
         }
     ) {
@@ -96,7 +91,7 @@ private fun NewReviewScreenContent(
             initialReviewDate = screenState.reviewDate,
             onConfirm = {
                 screenState.dismissDateDialog()
-                screenState.setReviewDate(it)
+                screenState.setNewReviewDate(it)
             },
             onDismiss = {
                 screenState.dismissDateDialog()

@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.data.ReviewDate
+import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import java.time.YearMonth
 
 private enum class SelectorType {
