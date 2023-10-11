@@ -17,7 +17,7 @@ abstract class MediaDao {
     ): Long
 
     @Transaction
-    open suspend fun addCustomMediaWithReview(
+    open suspend fun addNewCustomMediaWithReview(
         customMedia: CustomMediaEntity,
         mediaReview: MediaReviewEntity
     ) {

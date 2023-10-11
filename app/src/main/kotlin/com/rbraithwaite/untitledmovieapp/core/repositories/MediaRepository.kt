@@ -1,10 +1,11 @@
 package com.rbraithwaite.untitledmovieapp.core.repositories
 
+import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 
 interface MediaRepository {
     suspend fun addNewCustomMediaWithReview(
-        customMediaTitle: String,
+        customMedia: CustomMedia,
         review: MediaReview
-    ): Result<Unit>
+    )
 }
