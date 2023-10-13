@@ -18,7 +18,7 @@ class MediaRepositoryImpl(
     private val mediaDao: MediaDao
 ): MediaRepository {
     override suspend fun addNewCustomMediaWithReview(customMedia: CustomMedia, review: MediaReview) {
-        externalScope.launch {
+        externalScope.launch(coroutineDispatcher) {
             val customMediaEntity = CustomMediaEntity(
                 title = customMedia.title
             )
