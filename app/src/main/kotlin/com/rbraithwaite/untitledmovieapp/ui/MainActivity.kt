@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.rbraithwaite.untitledmovieapp.ui.screen_main.MainScreen
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreen
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreenViewModel
+import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +50,7 @@ class MainActivity: ComponentActivity() {
                     composable(route = "new_review/{media_type}/{media_data}") { navBackStackEntry ->
                         val searchResult = deserializeNewReviewArgs(navBackStackEntry.arguments)
 
-                        val viewModel = hiltViewModel<NewReviewScreenViewModel>()
+                        val viewModel = hiltViewModel<NewReviewViewModel>()
                         viewModel.init(searchResult)
 
                         NewReviewScreen(

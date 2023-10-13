@@ -27,7 +27,7 @@ import java.time.Month
 
 @Composable
 fun NewReviewScreen(
-    viewModel: NewReviewScreenViewModel = viewModel(),
+    viewModel: NewReviewViewModel = viewModel(),
     onNavBack: () -> Unit,
     onConfirmReview: () -> Unit
 ) {
