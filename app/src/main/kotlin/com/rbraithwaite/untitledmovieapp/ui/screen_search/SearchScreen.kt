@@ -18,14 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
@@ -141,19 +137,32 @@ fun LazyListScope.SearchResults(
     }
 
     item {
+        NewCustomMediaSearchResult(
+            searchInput = searchInput,
+            onSelect = { onSelectResult(it) }
+        )
+    }
+}
+
+@Composable
+fun NewCustomMediaSearchResult(
+    searchInput: SearchInput,
+    onSelect: (NewReviewSearchResult.NewCustomMedia) -> Unit
+) {
+    val newCustomMediaTitle: String = remember(searchInput) {
         when (searchInput) {
-            is SearchInput.Quick -> {
-                Button(
-                    onClick = {
-                        onSelectResult(NewReviewSearchResult.NewCustomMedia(searchInput.input))
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                ) {
-                    Text("Add review for \"${searchInput.input}\"")
-                }
-            }
+            is SearchInput.Quick -> searchInput.input
         }
+    }
+
+    Button(
+        onClick = {
+            onSelect(NewReviewSearchResult.NewCustomMedia(newCustomMediaTitle))
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(64.dp)
+    ) {
+        Text("Add review for \"$newCustomMediaTitle\"")
     }
 }
