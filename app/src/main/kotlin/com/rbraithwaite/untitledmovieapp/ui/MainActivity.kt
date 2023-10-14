@@ -14,6 +14,7 @@ import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreen
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchScreen
+import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +41,7 @@ class MainActivity: ComponentActivity() {
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
                         SearchScreen(
+                            hiltViewModel(),
                             onNavToNewReviewScreen = { searchResult ->
                                 val args = serializeForNav(searchResult)
                                 navController.navigate(route = "new_review/$args")

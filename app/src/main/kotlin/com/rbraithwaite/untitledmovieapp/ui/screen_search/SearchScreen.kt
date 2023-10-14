@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
@@ -38,11 +39,10 @@ sealed interface NewReviewSearchResult {
 
 @Composable
 fun SearchScreen(
+    viewModel: SearchViewModel,
     onNavToNewReviewScreen: (NewReviewSearchResult) -> Unit
 ) {
-    var quickSearchInput by remember {
-        mutableStateOf("")
-    }
+    val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier
@@ -50,11 +50,11 @@ fun SearchScreen(
             .randomBackgroundColor()
     ) {
         item {
-            QuickSearchWidget(
-                onSearchInputChange = { quickSearchInput = it },
-                onGoToAdvancedSearch = {
+            SearchInputWidget(
+                searchInput = searchInput,
+                onSwitchInputMode = {
                     // TO IMPLEMENT
-                    Timber.d("QuickSearchWidget onSearchInputChange")
+                    Timber.d("SearchInputWidget onSwitchInputMode")
                 },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -65,16 +65,37 @@ fun SearchScreen(
         }
 
         SearchResults(
-            quickSearchInput = quickSearchInput,
-            onAddCustomMediaReview = {customMediaTitle ->
-                onNavToNewReviewScreen(NewReviewSearchResult.NewCustomMedia(customMediaTitle))
+            searchInput = searchInput,
+            onSelectResult = {
+                onNavToNewReviewScreen(it)
             }
+        )
+    }
+}
+
+enum class SearchInputMode {
+    QUICK, ADVANCED
+}
+
+@Composable
+fun SearchInputWidget(
+    searchInput: SearchInput,
+    onSwitchInputMode: (SearchInputMode) -> Unit,
+    modifier: Modifier)
+= when(searchInput) {
+    is SearchInput.Quick -> {
+        QuickSearchWidget(
+            searchInputText = searchInput.input,
+            onSearchInputChange = { searchInput.updateInput(it) },
+            onGoToAdvancedSearch = { onSwitchInputMode(SearchInputMode.ADVANCED) },
+            modifier = modifier
         )
     }
 }
 
 @Composable
 fun QuickSearchWidget(
+    searchInputText: String,
     onSearchInputChange: (String) -> Unit,
     onGoToAdvancedSearch: () -> Unit,
     modifier: Modifier = Modifier
@@ -82,18 +103,13 @@ fun QuickSearchWidget(
     Column(
         modifier = modifier
     ) {
-        var searchInput by rememberSaveable {
-            mutableStateOf("")
-        }
-
         Text(
             text = "Quick Search",
             modifier = Modifier.padding(start = 8.dp, top = 8.dp)
         )
         TextField(
-            value = searchInput,
+            value = searchInputText,
             onValueChange = {
-                searchInput = it
                 onSearchInputChange(it)
             },
             modifier = Modifier
@@ -117,27 +133,27 @@ fun QuickSearchWidget(
 }
 
 fun LazyListScope.SearchResults(
-    quickSearchInput: String,
-    onAddCustomMediaReview: (mediaTitle: String) -> Unit
+    searchInput: SearchInput,
+    onSelectResult: (NewReviewSearchResult) -> Unit
 ) {
     item {
         Text("Results")
     }
 
     item {
-        Button(
-            onClick = {
-                onAddCustomMediaReview(quickSearchInput)
-            },
-            modifier = Modifier.fillMaxWidth().height(64.dp)
-        ) {
-            Text("Add review for \"$quickSearchInput\"")
+        when (searchInput) {
+            is SearchInput.Quick -> {
+                Button(
+                    onClick = {
+                        onSelectResult(NewReviewSearchResult.NewCustomMedia(searchInput.input))
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp)
+                ) {
+                    Text("Add review for \"${searchInput.input}\"")
+                }
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSearchScreen() {
-    SearchScreen {}
 }
