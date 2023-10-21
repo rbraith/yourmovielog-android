@@ -13,7 +13,6 @@ data class MediaReviewEntity(
     @ColumnInfo(name = "media_type") val mediaType: String,
     @ColumnInfo(name = "rating") val rating: Int?,
     @ColumnInfo(name = "review") val review: String?,
-    // CURRENT BRANCH [23-10-7 4:33p.m.] need mapper for ReviewDate.
     @ColumnInfo(name = "review_date") val reviewDate: ReviewDate?,
     @ColumnInfo(name = "watch_context") val watchContext: String?
 )
