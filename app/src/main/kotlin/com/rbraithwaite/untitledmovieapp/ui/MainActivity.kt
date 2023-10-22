@@ -57,8 +57,12 @@ class MainActivity: ComponentActivity() {
 
                         NewReviewScreen(
                             viewModel = viewModel,
-                            onConfirmReview = { TODO() },
-                            onNavBack = { TODO() }
+                            onConfirmReview = {
+                                // TO IMPLEMENT
+                            },
+                            onNavBack = {
+                                // TO IMPLEMENT
+                            }
                         )
                     }
                 }

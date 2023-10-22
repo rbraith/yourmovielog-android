@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -24,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
@@ -39,6 +42,7 @@ fun SearchScreen(
     onNavToNewReviewScreen: (NewReviewSearchResult) -> Unit
 ) {
     val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
+    val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier
@@ -60,8 +64,13 @@ fun SearchScreen(
             Divider(color = Color.Red)
         }
 
+        // Results header
+        item {
+            Text("Results")
+        }
+
         SearchResults(
-            searchInput = searchInput,
+            searchResults = searchResults,
             onSelectResult = {
                 onNavToNewReviewScreen(it)
             }
@@ -128,41 +137,81 @@ fun QuickSearchWidget(
     }
 }
 
-fun LazyListScope.SearchResults(
-    searchInput: SearchInput,
-    onSelectResult: (NewReviewSearchResult) -> Unit
-) {
-    item {
-        Text("Results")
-    }
-
-    item {
-        NewCustomMediaSearchResult(
-            searchInput = searchInput,
-            onSelect = { onSelectResult(it) }
-        )
-    }
+@Composable
+private fun ResultItemNoInput() {
+    Text("Waiting for search input")
 }
 
 @Composable
-fun NewCustomMediaSearchResult(
-    searchInput: SearchInput,
+private fun ResultItemLoading() {
+    Text("Loading...")
+}
+
+@Composable
+fun ResultItemNewCustomMedia(
+    title: String,
     onSelect: (NewReviewSearchResult.NewCustomMedia) -> Unit
 ) {
-    val newCustomMediaTitle: String = remember(searchInput) {
-        when (searchInput) {
-            is SearchInput.Quick -> searchInput.input
-        }
-    }
-
     Button(
         onClick = {
-            onSelect(NewReviewSearchResult.NewCustomMedia(newCustomMediaTitle))
+            onSelect(NewReviewSearchResult.NewCustomMedia(title))
         },
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
     ) {
-        Text("Add review for \"$newCustomMediaTitle\"")
+        Text("Add review for \"$title\"")
+    }
+}
+
+fun LazyListScope.SearchResults(
+    searchResults: SearchResults,
+    onSelectResult: (NewReviewSearchResult) -> Unit
+) = when (searchResults) {
+    is SearchResults.NoInput -> {
+        item {
+            ResultItemNoInput()
+        }
+    }
+    is SearchResults.Loading -> {
+        item {
+            ResultItemNewCustomMedia(
+                title = searchResults.newCustomMediaTitle,
+                onSelect = { onSelectResult(it) }
+            )
+        }
+        item {
+            ResultItemLoading()
+        }
+    }
+    is SearchResults.Success -> {
+        item {
+            // REFACTOR [23-10-21 3:44p.m.] -- duplicated in SearchResults.Loading type.
+            ResultItemNewCustomMedia(
+                title = searchResults.newCustomMediaTitle,
+                onSelect = { onSelectResult(it) }
+            )
+        }
+        items(
+            items = searchResults.mediaResults,
+            key = {
+                when (it) {
+                    is CustomMedia -> "custom/${it.id}"
+                }
+            }
+        ) { media ->
+            when (media) {
+                is CustomMedia -> {
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
+                            .randomBackgroundColor()
+                    ) {
+                        Text(media.title)
+                    }
+                }
+            }
+        }
     }
 }

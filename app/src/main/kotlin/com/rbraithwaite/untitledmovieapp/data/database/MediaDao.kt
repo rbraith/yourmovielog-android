@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.Query
 import androidx.room.Transaction
 
 @Dao
@@ -15,6 +16,12 @@ abstract class MediaDao {
     abstract suspend fun addReview(
         mediaReview: MediaReviewEntity
     ): Long
+
+    // This syntax "'%' || :searchCriteria || '%'" concatenates the %'s with the search criteria
+    // string, so that the search doesn't need to be an exact match
+    @Query("SELECT * FROM ${CustomMediaEntity.Contract.TABLE_NAME} " +
+            "WHERE ${CustomMediaEntity.Contract.Columns.TITLE} LIKE '%' || :searchCriteria || '%'")
+    abstract suspend fun searchCustomMedia(searchCriteria: String): List<CustomMediaEntity>
 
     @Transaction
     open suspend fun addNewCustomMediaWithReview(
