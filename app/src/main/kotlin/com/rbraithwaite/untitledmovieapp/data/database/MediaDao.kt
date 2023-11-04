@@ -17,6 +17,8 @@ abstract class MediaDao {
         mediaReview: MediaReviewEntity
     ): Long
 
+    // TODO [23-11-3 10:04p.m.] -- I need a strategy for testing the real & fake dao in parallel to
+    //  keep their behaviour aligned.
     // This syntax "'%' || :searchCriteria || '%'" concatenates the %'s with the search criteria
     // string, so that the search doesn't need to be an exact match
     @Query("SELECT * FROM ${CustomMediaEntity.Contract.TABLE_NAME} " +
