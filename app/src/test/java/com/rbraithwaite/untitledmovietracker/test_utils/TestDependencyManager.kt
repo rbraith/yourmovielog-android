@@ -1,10 +1,17 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultMovie
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultPerson
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.valueOf
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeDatabase
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeMediaDao
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbApiV3
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
@@ -16,18 +23,34 @@ class TestDependencyManager(
     private val coroutineDispatcher: CoroutineDispatcher,
 ) {
     private val localDatabase: FakeDatabase by lazy {
-        FakeDatabase()
+        FakeDatabase(listOf(
+            CustomMediaEntity::class,
+            MediaReviewEntity::class
+        ))
+    }
+
+    private val backend: FakeDatabase by lazy {
+        FakeDatabase(listOf(
+            SearchMultiResultMovie::class,
+            SearchMultiResultTv::class,
+            SearchMultiResultPerson::class
+        ))
     }
 
     private val mediaDao: FakeMediaDao by lazy {
         FakeMediaDao(localDatabase)
     }
 
+    private val tmdbApiV3: FakeTmdbApiV3 by lazy {
+        FakeTmdbApiV3(backend)
+    }
+
     val mediaRepository: DelegateFakeMediaRepository by lazy {
         DelegateFakeMediaRepository(
             externalScope,
             coroutineDispatcher,
-            mediaDao
+            mediaDao,
+            tmdbApiV3
         )
     }
 
@@ -41,6 +64,12 @@ class TestDependencyManager(
          * @param customMedia The custom media to initialize the repo with
          */
         suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder)
+
+        suspend fun withBackendSearchResults(
+            movies: List<SearchMultiResultMovie>,
+            tvShows: List<SearchMultiResultTv>,
+            people: List<SearchMultiResultPerson>
+        )
     }
 
     private inner class TestStateInitializerImpl: TestStateInitializer {
@@ -49,6 +78,24 @@ class TestDependencyManager(
                 this@TestDependencyManager.mediaRepository.withMockEnabled(false) {
                     addNewCustomMedia(valueOf(it))
                 }
+            }
+        }
+
+        override suspend fun withBackendSearchResults(
+            movies: List<SearchMultiResultMovie>,
+            tvShows: List<SearchMultiResultTv>,
+            people: List<SearchMultiResultPerson>
+        ) {
+            val depManager = this@TestDependencyManager
+
+            for (movie in movies) {
+                depManager.backend.insert(movie) { copy(id = it.toInt()) }
+            }
+            for (tvShow in tvShows) {
+                depManager.backend.insert(tvShow) { copy(id = it.toInt()) }
+            }
+            for (person in people) {
+                depManager.backend.insert(person) { copy(id = it.toInt()) }
             }
         }
     }

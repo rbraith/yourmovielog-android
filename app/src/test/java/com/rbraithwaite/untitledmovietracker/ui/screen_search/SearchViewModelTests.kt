@@ -1,25 +1,34 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_search
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchInput
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchResults
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMedia
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeMediaRepository
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.listValuesOf
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultPerson
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultTvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.kotlin.notNull
 
 class SearchViewModelTests {
     @get:Rule
@@ -56,7 +65,24 @@ class SearchViewModelTests {
         testDependencyManager.initializeTestState {
             withCustomMedia(
                 aCustomMedia().withTitle(expectedTitle),
+                // REFACTOR [23-11-20 10:09p.m.] -- hardcoded title.
                 aCustomMedia().withTitle("nope")
+            )
+            // REFACTOR [23-11-19 4:43p.m.] -- maybe extract tmdb search to a separate test?
+            //  maybe parameterize this test?.
+            withBackendSearchResults(
+                listValuesOf(
+                    aSearchMultiResultMovie().withTitle(expectedTitle),
+                    aSearchMultiResultMovie().withTitle("nope")
+                ),
+                listValuesOf(
+                    aSearchMultiResultTvShow().withName(expectedTitle),
+                    aSearchMultiResultTvShow().withName("nope")
+                ),
+                listValuesOf(
+                    aSearchMultiResultPerson().withName(expectedTitle),
+                    aSearchMultiResultPerson().withName("nope")
+                )
             )
         }
 
@@ -71,17 +97,39 @@ class SearchViewModelTests {
         val userInput = "expect"
         quickSearch.updateInput(userInput)
 
+        // REFACTOR [23-11-20 10:09p.m.] -- hardcoded delay - magic knowledge of the debounce time.
+        delay(6000)
+
         // THEN that media appears in the results
         // -------------------------------------------
         val success = searchResults.value as SearchResults.Success
 
         assertThat(success.newCustomMediaTitle, willBe(userInput))
 
-        with (success.mediaResults) {
-            assertThat(size, willBe(1))
+        with (success.searchResults) {
+            assertThat(size, willBe(4))
 
-            val foundMedia = get(0) as CustomMedia
-            assertThat(foundMedia.title, willBe(expectedTitle))
+            // custom media results are first
+            val foundCustomMedia = get(0) as SearchResult.CustomMedia
+            assertThat(foundCustomMedia.title, willBe(expectedTitle))
+
+            // remaining are tmdb results, unordered
+            // TODO [23-11-20 11:03p.m.] -- weird hamcrest syntax here, for some reason notNull()
+            //  wasn't working for me.
+            assertThat(
+                find { (it as? SearchResult.TmdbMovie)?.title == expectedTitle } != null,
+                willBe(true)
+            )
+
+            assertThat(
+                find { (it as? SearchResult.TmdbTvShow)?.name == expectedTitle } != null,
+                willBe(true)
+            )
+
+            assertThat(
+                find { (it as? SearchResult.TmdbPerson)?.name == expectedTitle } != null,
+                willBe(true)
+            )
         }
     }
 

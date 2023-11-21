@@ -3,20 +3,31 @@ package com.rbraithwaite.untitledmovieapp.data.media
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultMovie
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultPerson
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
+import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class MediaRepositoryImpl(
+class MediaRepositoryImpl @Inject constructor(
     private val externalScope: CoroutineScope,
+    @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher,
-    private val mediaDao: MediaDao
+    private val mediaDao: MediaDao,
+    private val tmdbApiV3: TmdbApiV3
 ): MediaRepository {
 
     override suspend fun addNewCustomMedia(customMedia: CustomMedia) {
@@ -45,16 +56,85 @@ class MediaRepositoryImpl(
         }.join()
     }
 
-    override suspend fun findMedia(searchCriteria: String): List<Media> {
+    // REFACTOR [23-11-19 3:15p.m.] -- extract the api call to a new repository type TmdbRepository (or
+    //  something) and rename it to searchQuick(quickInput)
+    //  Make this repo into CustomMediaRepository
+    //  then there will probably need to be a SearchQuickUseCase combining CustomMediaRepository
+    //  with something like TmdbRepository (since tmdb api returns movie/tv/person data types).
+    override suspend fun findMedia(searchCriteria: String): List<SearchResult> {
         val foundCustomMedia = mediaDao.searchCustomMedia(searchCriteria)
-        return foundCustomMedia.map { it.toCustomMedia() }
+
+        // TODO [23-11-11 11:49p.m.] -- I'll need to figure out what to do about the paging
+        //  these results would need to be stored as a variable, and different triggers would send
+        //  new requests (changes to the search criteria, then also scrolling down).
+        val tmdbResults = tmdbApiV3.searchMulti(searchCriteria)
+
+        return buildList {
+            addAll(foundCustomMedia.map { it.toSearchResult() })
+            addAll(tmdbResults.results.map { apiSearchResult ->
+                when (apiSearchResult) {
+                    is SearchMultiResultMovie -> apiSearchResult.toCoreSearchResult()
+                    is SearchMultiResultTv -> apiSearchResult.toCoreSearchResult()
+                    is SearchMultiResultPerson -> apiSearchResult.toCoreSearchResult()
+                }
+            })
+        }
     }
 
     private fun CustomMedia.toNewEntity(): CustomMediaEntity {
         return CustomMediaEntity(title = this.title)
     }
 
+    private fun CustomMediaEntity.toSearchResult(): SearchResult.CustomMedia {
+        return SearchResult.CustomMedia(id, title)
+    }
+
+    private fun SearchMultiResultMovie.toCoreSearchResult(): SearchResult.TmdbMovie {
+        return SearchResult.TmdbMovie(
+            id,
+            title,
+            overview,
+            posterPath,
+            genreIds,
+            popularity,
+            parseTmdbDateString(releaseDate),
+            voteAverage,
+            voteCount
+        )
+    }
+
+    private fun SearchMultiResultTv.toCoreSearchResult(): SearchResult.TmdbTvShow {
+        return SearchResult.TmdbTvShow(
+            id,
+            name,
+            overview,
+            posterPath,
+            genreIds,
+            popularity,
+            parseTmdbDateString(firstAirDate),
+            voteAverage,
+            voteCount
+        )
+    }
+
+    private fun SearchMultiResultPerson.toCoreSearchResult(): SearchResult.TmdbPerson {
+        return SearchResult.TmdbPerson(
+            id,
+            name,
+            popularity,
+            gender,
+            knownForDepartment,
+            profilePath
+        )
+    }
+
+    // REFACTOR [23-11-19 3:43p.m.] -- should delete this.
     private fun CustomMediaEntity.toCustomMedia(): CustomMedia {
         return CustomMedia(id, title)
     }
+}
+
+// REFACTOR [23-11-19 3:56p.m.] -- move this somewhere.
+private fun parseTmdbDateString(dateString: String): LocalDate {
+    return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
 }

@@ -4,7 +4,9 @@ import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import kotlin.reflect.KClass
 
-class FakeDatabase {
+class FakeDatabase(
+    entityTypes: List<KClass<out Any>>
+) {
     companion object {
         const val ID_ORIGINAL = -1L
         const val ID_FAILED = -2L
@@ -16,10 +18,7 @@ class FakeDatabase {
         val rows = mutableListOf<T>()
     }
 
-    private val tables: List<Table<out Any>> = listOf(
-        Table(CustomMediaEntity::class),
-        Table(MediaReviewEntity::class)
-    )
+    private val tables: List<Table<out Any>> = entityTypes.map { Table(it) }
 
     inline fun <reified T : Any> insert(entity: T, noinline idUpdateBlock: (T.(Long) -> T)? = null): Long {
         val table = getTableFor(T::class) ?: return ID_FAILED

@@ -3,16 +3,13 @@ package com.rbraithwaite.untitledmovieapp.ui.screen_search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rbraithwaite.untitledmovieapp.core.data.Media
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -35,7 +32,7 @@ sealed interface SearchResults {
 
     data class Success(
         val newCustomMediaTitle: String,
-        val mediaResults: List<Media>
+        val searchResults: List<SearchResult>
     ): SearchResults
 }
 
@@ -59,31 +56,48 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             // TODO [23-10-22 11:44a.m.] -- add debounce probably.
             // TODO [23-10-30 12:39a.m.] -- should be collectLatest?
-            _searchInput.collect { newInput ->
-                val newResults: SearchResults = when (newInput) {
-                    is SearchInput.Quick -> {
-                        if (newInput.input.isEmpty()) {
-                            SearchResults.NoInput
-                        } else {
-                            // TODO [23-10-22 12:59p.m.] -- change state to Loading here?
-                            //  _searchResults.update { ... }
-
-                            // TODO [23-10-22 11:57a.m.] -- this findMedia arg will need to eventually be some kind of
-                            //  SearchCriteria class instead of just a string - look at old task app search filter
-                            //  logic.
-                            //  I'll need to compose the quick-search criteria here (setting user input to the
-                            //  title, director, cast, etc).
-                            val media = mediaRepository.findMedia(newInput.input)
-
-                            SearchResults.Success(
-                                newInput.input,
-                                media
-                            )
+            _searchInput
+                .onEach { newInput ->
+                    // When search input changes, run a side effect to set Loading result
+                    // Loading remains while the debounce is waiting
+                    val newResults = when (newInput) {
+                        is SearchInput.Quick -> {
+                            if (newInput.input.isEmpty()) {
+                                SearchResults.NoInput
+                            } else {
+                                SearchResults.Loading(newInput.input)
+                            }
                         }
                     }
+                    _searchResults.update { newResults }
                 }
-                _searchResults.update { newResults }
-            }
+                // Let's not go crazy with api calls...
+                // SMELL [23-11-12 12:15a.m.] -- this is sorta weird, maybe the wrong place for this
+                //  debounce - ideally should move to repo so viewmodel doesn't know about the api
+                //  call.
+                .debounce(5000)
+                .collect { newInput ->
+                    val newResults: SearchResults = when (newInput) {
+                        is SearchInput.Quick -> {
+                            if (newInput.input.isEmpty()) {
+                                SearchResults.NoInput
+                            } else {
+                                // TODO [23-10-22 11:57a.m.] -- this findMedia arg will need to eventually be some kind of
+                                //  SearchCriteria class instead of just a string - look at old task app search filter
+                                //  logic.
+                                //  I'll need to compose the quick-search criteria here (setting user input to the
+                                //  title, director, cast, etc).
+                                val media = mediaRepository.findMedia(newInput.input)
+
+                                SearchResults.Success(
+                                    newInput.input,
+                                    media
+                                )
+                            }
+                        }
+                    }
+                    _searchResults.update { newResults }
+                }
         }
     }
 

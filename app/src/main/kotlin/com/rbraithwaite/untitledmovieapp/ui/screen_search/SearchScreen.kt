@@ -20,13 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
@@ -193,25 +193,49 @@ fun LazyListScope.SearchResults(
             )
         }
         items(
-            items = searchResults.mediaResults,
+            items = searchResults.searchResults,
             key = {
                 when (it) {
-                    is CustomMedia -> "custom/${it.id}"
+                    is SearchResult.CustomMedia -> "custom/${it.id}"
+                    is SearchResult.TmdbMovie -> "movie/${it.id}"
+                    is SearchResult.TmdbTvShow -> "tv_show/${it.id}"
+                    is SearchResult.TmdbPerson -> "person/${it.id}"
                 }
             }
-        ) { media ->
-            when (media) {
-                is CustomMedia -> {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .randomBackgroundColor()
-                    ) {
-                        Text(media.title)
-                    }
+        ) { searchResult ->
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp)
+                    .randomBackgroundColor()
+            ) {
+                when (searchResult) {
+                    is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
+                    is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
+                    is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
+                    is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ResultItemContentCustomMedia(result: SearchResult.CustomMedia) {
+    Text("custom media: ${result.title}")
+}
+
+@Composable
+private fun ResultItemContentTmdbMovie(result: SearchResult.TmdbMovie) {
+    Text("tmdb movie: ${result.title}")
+}
+
+@Composable
+private fun ResultItemContentTmdbTvShow(result: SearchResult.TmdbTvShow) {
+    Text("tmdb show: ${result.name}")
+}
+
+@Composable
+private fun ResultItemContentTmdbPerson(result: SearchResult.TmdbPerson) {
+    Text("tmdb person: ${result.name}")
 }

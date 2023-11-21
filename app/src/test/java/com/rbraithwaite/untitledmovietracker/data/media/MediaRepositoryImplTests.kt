@@ -7,6 +7,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.media.MediaRepositoryImpl
+import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -21,10 +22,13 @@ class MediaRepositoryImplTests {
 
     private val mockMediaDao = mock(MediaDao::class.java)
 
+    private val mockTmdbApiV3 = mock(TmdbApiV3::class.java)
+
     private val mediaRepositoryImpl = MediaRepositoryImpl(
         testScope,
         testDispatcher,
-        mockMediaDao
+        mockMediaDao,
+        mockTmdbApiV3
     )
 
     @Test

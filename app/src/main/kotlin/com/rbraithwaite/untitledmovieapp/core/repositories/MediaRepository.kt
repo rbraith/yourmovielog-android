@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.core.repositories
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 
 interface MediaRepository {
     /**
@@ -19,5 +20,5 @@ interface MediaRepository {
         review: MediaReview
     )
 
-    suspend fun findMedia(searchCriteria: String): List<Media>
+    suspend fun findMedia(searchCriteria: String): List<SearchResult>
 }

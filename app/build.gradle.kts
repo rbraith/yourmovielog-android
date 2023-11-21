@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,6 +15,11 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+// Load TMDB API secrets
+val tmdbApiSecretsFile = rootProject.file("local/secrets/tmdb_api.properties")
+val tmdbApiSecretsProperties = Properties()
+tmdbApiSecretsProperties.load(FileInputStream(tmdbApiSecretsFile))
+
 android {
     namespace = "com.rbraithwaite.untitledmovietracker"
     compileSdk = 34
@@ -24,6 +32,13 @@ android {
         versionName = "1.0-pre-alpha"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Create BuildConfig fields
+        buildConfigField(
+            "String",
+            "TMDB_API_BEARER_TOKEN",
+            tmdbApiSecretsProperties["TMDB_API_BEARER_TOKEN"] as String
+        )
     }
 
     buildTypes {
@@ -41,6 +56,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -103,6 +119,18 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+
+    // Network
+    // -------------------------------------------
+    // retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
+
+    // gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
 
     // Misc
