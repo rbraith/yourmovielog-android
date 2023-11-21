@@ -1,6 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models
 
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.Builder
 
 fun aSearchMultiResultTvShow(
@@ -9,8 +9,8 @@ fun aSearchMultiResultTvShow(
     return SearchMultiResultTvBuilder().apply(buildBlock)
 }
 
-class SearchMultiResultTvBuilder: Builder<SearchMultiResultTv> {
-    private var data = SearchMultiResultTv(
+class SearchMultiResultTvBuilder: Builder<SearchMultiResult.TvShow> {
+    private var data = SearchMultiResult.TvShow(
         adult = false,
         backdropPath = null,
         id = 0,
@@ -28,7 +28,7 @@ class SearchMultiResultTvBuilder: Builder<SearchMultiResultTv> {
         originCountry = listOf("Canada")
     )
 
-    override fun build(): SearchMultiResultTv {
+    override fun build(): SearchMultiResult.TvShow {
         return data.copy()
     }
 

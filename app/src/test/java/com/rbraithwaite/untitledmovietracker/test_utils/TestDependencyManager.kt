@@ -3,9 +3,7 @@ package com.rbraithwaite.untitledmovietracker.test_utils
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultMovie
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultPerson
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.valueOf
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeMediaRepository
@@ -31,9 +29,9 @@ class TestDependencyManager(
 
     private val backend: FakeDatabase by lazy {
         FakeDatabase(listOf(
-            SearchMultiResultMovie::class,
-            SearchMultiResultTv::class,
-            SearchMultiResultPerson::class
+            SearchMultiResult.Movie::class,
+            SearchMultiResult.TvShow::class,
+            SearchMultiResult.Person::class
         ))
     }
 
@@ -66,9 +64,9 @@ class TestDependencyManager(
         suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder)
 
         suspend fun withBackendSearchResults(
-            movies: List<SearchMultiResultMovie>,
-            tvShows: List<SearchMultiResultTv>,
-            people: List<SearchMultiResultPerson>
+            movies: List<SearchMultiResult.Movie>,
+            tvShows: List<SearchMultiResult.TvShow>,
+            people: List<SearchMultiResult.Person>
         )
     }
 
@@ -82,9 +80,9 @@ class TestDependencyManager(
         }
 
         override suspend fun withBackendSearchResults(
-            movies: List<SearchMultiResultMovie>,
-            tvShows: List<SearchMultiResultTv>,
-            people: List<SearchMultiResultPerson>
+            movies: List<SearchMultiResult.Movie>,
+            tvShows: List<SearchMultiResult.TvShow>,
+            people: List<SearchMultiResult.Person>
         ) {
             val depManager = this@TestDependencyManager
 

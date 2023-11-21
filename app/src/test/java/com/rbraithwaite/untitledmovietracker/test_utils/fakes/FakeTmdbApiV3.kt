@@ -3,9 +3,6 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultMovie
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultPerson
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 
 class FakeTmdbApiV3(
@@ -19,17 +16,17 @@ class FakeTmdbApiV3(
     ): SearchMultiResults {
         // TODO [23-11-20 10:51p.m.] -- this only implements using the 'query' arg at the moment.
 
-        val movies = backend.find<SearchMultiResultMovie> {
+        val movies = backend.find<SearchMultiResult.Movie> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             title.contains(query)
         }
 
-        val tvShows = backend.find<SearchMultiResultTv> {
+        val tvShows = backend.find<SearchMultiResult.TvShow> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             name.contains(query)
         }
 
-        val people = backend.find<SearchMultiResultPerson> {
+        val people = backend.find<SearchMultiResult.Person> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             name.contains(query)
         }

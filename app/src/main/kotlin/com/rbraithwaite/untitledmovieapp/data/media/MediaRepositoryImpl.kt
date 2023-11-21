@@ -9,9 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultMovie
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultPerson
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultTv
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -73,9 +71,9 @@ class MediaRepositoryImpl @Inject constructor(
             addAll(foundCustomMedia.map { it.toSearchResult() })
             addAll(tmdbResults.results.map { apiSearchResult ->
                 when (apiSearchResult) {
-                    is SearchMultiResultMovie -> apiSearchResult.toCoreSearchResult()
-                    is SearchMultiResultTv -> apiSearchResult.toCoreSearchResult()
-                    is SearchMultiResultPerson -> apiSearchResult.toCoreSearchResult()
+                    is SearchMultiResult.Movie -> apiSearchResult.toCoreSearchResult()
+                    is SearchMultiResult.TvShow -> apiSearchResult.toCoreSearchResult()
+                    is SearchMultiResult.Person -> apiSearchResult.toCoreSearchResult()
                 }
             })
         }
@@ -89,7 +87,7 @@ class MediaRepositoryImpl @Inject constructor(
         return SearchResult.CustomMedia(id, title)
     }
 
-    private fun SearchMultiResultMovie.toCoreSearchResult(): SearchResult.TmdbMovie {
+    private fun SearchMultiResult.Movie.toCoreSearchResult(): SearchResult.TmdbMovie {
         return SearchResult.TmdbMovie(
             id,
             title,
@@ -97,13 +95,14 @@ class MediaRepositoryImpl @Inject constructor(
             posterPath,
             genreIds,
             popularity,
+            // BUG [23-11-20 11:24p.m.] -- CRASH: releaseDate can be an empty string
             parseTmdbDateString(releaseDate),
             voteAverage,
             voteCount
         )
     }
 
-    private fun SearchMultiResultTv.toCoreSearchResult(): SearchResult.TmdbTvShow {
+    private fun SearchMultiResult.TvShow.toCoreSearchResult(): SearchResult.TmdbTvShow {
         return SearchResult.TmdbTvShow(
             id,
             name,
@@ -117,7 +116,7 @@ class MediaRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun SearchMultiResultPerson.toCoreSearchResult(): SearchResult.TmdbPerson {
+    private fun SearchMultiResult.Person.toCoreSearchResult(): SearchResult.TmdbPerson {
         return SearchResult.TmdbPerson(
             id,
             name,
