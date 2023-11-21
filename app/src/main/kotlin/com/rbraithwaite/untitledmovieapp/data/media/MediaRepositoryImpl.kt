@@ -95,7 +95,6 @@ class MediaRepositoryImpl @Inject constructor(
             posterPath,
             genreIds,
             popularity,
-            // BUG [23-11-20 11:24p.m.] -- CRASH: releaseDate can be an empty string
             parseTmdbDateString(releaseDate),
             voteAverage,
             voteCount
@@ -134,6 +133,9 @@ class MediaRepositoryImpl @Inject constructor(
 }
 
 // REFACTOR [23-11-19 3:56p.m.] -- move this somewhere.
-private fun parseTmdbDateString(dateString: String): LocalDate {
+private fun parseTmdbDateString(dateString: String): LocalDate? {
+    if (dateString.isEmpty()) {
+        return null
+    }
     return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
 }

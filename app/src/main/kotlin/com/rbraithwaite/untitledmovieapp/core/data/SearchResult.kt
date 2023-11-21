@@ -15,7 +15,7 @@ sealed interface SearchResult {
         val posterPath: String?,
         val genreIds: List<Int>,
         val popularity: Float,
-        val releaseDate: LocalDate,
+        val releaseDate: LocalDate?,
         val voteAverage: Float,
         val voteCount: Int
     ): SearchResult
@@ -27,7 +27,7 @@ sealed interface SearchResult {
         val posterPath: String?,
         val genreIds: List<Int>,
         val popularity: Float,
-        val firstAirDate: LocalDate,
+        val firstAirDate: LocalDate?,
         val voteAverage: Float,
         val voteCount: Int
     ): SearchResult
