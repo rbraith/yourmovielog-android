@@ -23,6 +23,7 @@ interface TmdbApiV3 {
     suspend fun searchMulti(
         @Query("query") query: String,
         @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [23-11-21 11:16p.m.] -- hardcoded language string.
         @Query("language") language: String = "en-US",
         @Query("page") pageNumber: Int = 1
     ): SearchMultiResults
