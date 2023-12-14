@@ -1,9 +1,8 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
-import org.intellij.lang.annotations.Language
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbApiV3 {
@@ -26,5 +25,5 @@ interface TmdbApiV3 {
         // REFACTOR [23-11-21 11:16p.m.] -- hardcoded language string.
         @Query("language") language: String = "en-US",
         @Query("page") pageNumber: Int = 1
-    ): SearchMultiResults
+    ): Result<SearchMultiResults>
 }

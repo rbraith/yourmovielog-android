@@ -13,7 +13,7 @@ class FakeTmdbApiV3(
         includeAdult: Boolean,
         language: String,
         pageNumber: Int
-    ): SearchMultiResults {
+    ): Result<SearchMultiResults> {
         // TODO [23-11-20 10:51p.m.] -- this only implements using the 'query' arg at the moment.
 
         val movies = backend.find<SearchMultiResult.Movie> {
@@ -37,11 +37,13 @@ class FakeTmdbApiV3(
             addAll(people)
         }
 
-        return SearchMultiResults(
+        val searchMultiResult = SearchMultiResults(
             page = 1,
             results = results,
             totalPages = 1,
             totalResults = results.size
         )
+
+        return Result.success(searchMultiResult)
     }
 }

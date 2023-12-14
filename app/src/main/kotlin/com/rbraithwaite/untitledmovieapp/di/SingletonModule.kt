@@ -11,6 +11,7 @@ import com.rbraithwaite.untitledmovieapp.data.media.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultDeserializer
+import com.rbraithwaite.untitledmovieapp.data.network.result_call_adapter.ResultCallAdapterFactory
 import com.rbraithwaite.untitledmovietracker.BuildConfig
 import dagger.Binds
 import dagger.Module
@@ -22,6 +23,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -95,9 +98,7 @@ object SingletonModule {
     @Singleton
     @Provides
     fun provideGson(): Gson {
-        val builder = GsonBuilder()
-        builder.registerTypeAdapter(SearchMultiResult::class.java, SearchMultiResultDeserializer())
-        return builder.create()
+        return createGson()
     }
 
     @Singleton
@@ -121,15 +122,29 @@ object SingletonModule {
             .addInterceptor(headersInterceptor)
             .build()
 
+        return createRetrofitBuilder(
+            TmdbApiV3.Constants.BASE_URL.toHttpUrlOrNull()!!,
+            gson
+        ).client(client)
+            .build()
+    }
+
+    // REFACTOR [23-12-10 11:13p.m.] -- not super happy about these methods, try to think of something
+    //  better
+    //  dunno if SingletonModule is the right place for them.
+
+    fun createGson(): Gson {
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(SearchMultiResult::class.java, SearchMultiResultDeserializer())
+        return builder.create()
+    }
+
+    fun createRetrofitBuilder(baseUrl: HttpUrl, gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            // REFACTOR [23-11-10 10:41p.m.] -- maybe not a good idea to hardcode the v3 base url
-            //  or maybe make this Retrofit specific to the v3 api?
-            .baseUrl(TmdbApiV3.Constants.BASE_URL)
-            // TODO [23-11-10 10:38p.m.] -- Is scalar converted needed if I have gson?
+            .baseUrl(baseUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
-            .build()
+            .addCallAdapterFactory(ResultCallAdapterFactory())
     }
 
     @Singleton

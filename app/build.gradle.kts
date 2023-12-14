@@ -124,10 +124,11 @@ dependencies {
     // -------------------------------------------
     // retrofit
     val retrofitVersion = "2.9.0"
+    val okHttpVersion = "4.2.1"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
 
     // gson
     implementation("com.google.code.gson:gson:2.10.1")
@@ -149,6 +150,7 @@ dependencies {
     // TODO [23-10-12 10:32p.m.] -- mockito-kotlin latest requires java 11 support.
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
     testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

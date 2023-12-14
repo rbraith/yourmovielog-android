@@ -65,15 +65,22 @@ class MediaRepositoryImpl @Inject constructor(
         // TODO [23-11-11 11:49p.m.] -- I'll need to figure out what to do about the paging
         //  these results would need to be stored as a variable, and different triggers would send
         //  new requests (changes to the search criteria, then also scrolling down).
-        val tmdbResults = tmdbApiV3.searchMulti(searchCriteria)
+        val apiResult = tmdbApiV3.searchMulti(searchCriteria)
 
         return buildList {
             addAll(foundCustomMedia.map { it.toSearchResult() })
-            addAll(tmdbResults.results.map { apiSearchResult ->
-                when (apiSearchResult) {
-                    is SearchMultiResult.Movie -> apiSearchResult.toCoreSearchResult()
-                    is SearchMultiResult.TvShow -> apiSearchResult.toCoreSearchResult()
-                    is SearchMultiResult.Person -> apiSearchResult.toCoreSearchResult()
+
+            // TODO [23-12-10 10:49p.m.] -- not handling api failures yet
+            //  should handle like this:
+            //  - skip adding anything to this return list
+            //  - instead of returning a list, return a data class with a list for received errors
+            //      which the ui layer can display to the user.
+            addAll(apiResult.getOrNull()!!.results.map { searchMultiResult ->
+                when (searchMultiResult) {
+                    // REFACTOR [23-12-10 10:49p.m.] -- not a big fan of these repeated method names idk.
+                    is SearchMultiResult.Movie -> searchMultiResult.toCoreSearchResult()
+                    is SearchMultiResult.TvShow -> searchMultiResult.toCoreSearchResult()
+                    is SearchMultiResult.Person -> searchMultiResult.toCoreSearchResult()
                 }
             })
         }
