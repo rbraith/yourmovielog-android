@@ -147,9 +147,7 @@ object SingletonModule {
             .addCallAdapterFactory(ResultCallAdapterFactory())
     }
 
-    @Singleton
-    @Provides
-    fun provideTmdbApiV3(retrofit: Retrofit): TmdbApiV3 {
+    fun createTmdbApiV3(retrofit: Retrofit): TmdbApiV3 {
         return retrofit.create(TmdbApiV3::class.java)
     }
 

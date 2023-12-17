@@ -1,0 +1,417 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/dVtsFRWmwOS44Ek9GKbM2eiTrRz.jpg",
+      "id": 209183,
+      "name": "Better",
+      "original_language": "en",
+      "original_name": "Better",
+      "overview": "After a family tragedy is narrowly averted, a corrupt police detective undergoes a painful moral awakening and decides to put right twenty years of wrongdoing but satisfying her newfound conscience won't be straightforward.",
+      "poster_path": "/bVkFNpY3U1yFL8sjErs6cJ6gHJ7.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        18,
+        80
+      ],
+      "popularity": 26.899,
+      "first_air_date": "2023-02-13",
+      "vote_average": 7,
+      "vote_count": 8,
+      "origin_country": [
+        "GB"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/hPea3Qy5Gd6z4kJLUruBbwAH8Rm.jpg",
+      "id": 60059,
+      "name": "Better Call Saul",
+      "original_language": "en",
+      "original_name": "Better Call Saul",
+      "overview": "Six years before Saul Goodman meets Walter White. We meet him when the man who will become Saul Goodman is known as Jimmy McGill, a small-time lawyer searching for his destiny, and, more immediately, hustling to make ends meet. Working alongside, and, often, against Jimmy, is “fixer” Mike Ehrmantraut. The series tracks Jimmy’s transformation into Saul Goodman, the man who puts “criminal” in “criminal lawyer\".",
+      "poster_path": "/fC2HDm5t0kHl7mTm7jxMR31b7by.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        80,
+        18
+      ],
+      "popularity": 623.522,
+      "first_air_date": "2015-02-08",
+      "vote_average": 8.648,
+      "vote_count": 4445,
+      "origin_country": [
+        "US"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 850146,
+      "title": "Better",
+      "original_language": "en",
+      "original_title": "Better",
+      "overview": "Founder of Wellness Engineering and New York Times Bestselling author Jonathan Bailor shares how personal tragedy led him to dedicate his life to finding a better way to eat, think, and live that reverses the causes and symptoms of diabetes and obesity (Diabesity). Featuring expert interviews on-location at Harvard Medical School with Dr. David Ludwig, Dr. JoAnn Manson, Dr. Kirsten Davison, and Dr. John Ratey, along with intimate testimonials of everyday Americans, we see the pain and struggle of the old-fashioned and ineffective “calories in, calories out” model, expose the lies that led to it, and provide a proven, practical, and pleasurable alternative. BETTER culminates in offering a proven path toward better living by introducing revolutionary methods to lower the body weight “Setpoint” through simple, evidence-based solutions that everyone can use to optimize their current diet to prevent and reverse many of today’s most common diseases.",
+      "poster_path": "/wrPYD84HSlVFOT5P0HVawM4JvPn.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        99
+      ],
+      "popularity": 0.728,
+      "release_date": "2019-07-01",
+      "video": false,
+      "vote_average": 4,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 714217,
+      "title": "Better",
+      "original_language": "en",
+      "original_title": "Better",
+      "overview": "Questioning the ideal worlds of a perfectionistic culture.",
+      "poster_path": "/zLEe9AQvMSpjymq5iUTlCt4zbix.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        16
+      ],
+      "popularity": 0.6,
+      "release_date": "2019-10-04",
+      "video": false,
+      "vote_average": 2,
+      "vote_count": 1
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 752382,
+      "title": "Better",
+      "original_language": "en",
+      "original_title": "Better",
+      "overview": "A controversial new medical procedure which claims to 'fix' personalities is introduced to a young mother who is struggling to deal with her son's current situation.",
+      "poster_path": "/4mnhkJpC6kj0qinlyajvmxdLE4M.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 0.6,
+      "release_date": "2020-10-12",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 59533,
+      "name": "Better",
+      "original_language": "en",
+      "original_name": "Better",
+      "overview": "The Better Show is a syndicated lifestyle television show. It airs weekdays on 155 stations across the United States. The program is produced and distributed by Meredith Corporation, a publishing company founded in 1902. The Better Show gets its name from Meredith's flagship publication, Better Homes and Gardens. Much of the show's content is tied not only to Better Homes and Gardens but also to Meredith's other magazines including More, Fitness, Ladies' Home Journal, Parents, and Family Circle. Each episode features a mix of subject matter experts and celebrity guests. There are both in-studio interviews and pre-taped feature stories.",
+      "poster_path": null,
+      "media_type": "tv",
+      "genre_ids": [],
+      "popularity": 0.6,
+      "first_air_date": "",
+      "vote_average": 0,
+      "vote_count": 0,
+      "origin_country": []
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 59804,
+      "name": "Women Lie Better",
+      "original_language": "lt",
+      "original_name": "Moterys meluoja geriau",
+      "overview": "Moterys meluoja geriau is a Lithuanian TV series produced by TV3. It is the most watched Lithuanian drama of all time. It is based on a novel by Daiva Vaitkevičiūtė. The series follows four young women and their love interests.",
+      "poster_path": "/wXv3Fv7TQE0UC7goU587M9CiMkt.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        35,
+        18
+      ],
+      "popularity": 78.275,
+      "first_air_date": "2008-02-04",
+      "vote_average": 0,
+      "vote_count": 0,
+      "origin_country": [
+        "LT"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 1188828,
+      "title": "Better",
+      "original_language": "en",
+      "original_title": "Better",
+      "overview": "A young woman is surprised to see her chronically ill sister has a new life.",
+      "poster_path": null,
+      "media_type": "movie",
+      "genre_ids": [],
+      "popularity": 0.6,
+      "release_date": "",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/sgKWm5B1SjlhxQJpsJpT1IEwUtR.jpg",
+      "id": 84380,
+      "name": "Better Than Us",
+      "original_language": "ru",
+      "original_name": "Лучше, чем люди",
+      "overview": "Moscow in a not so distant future where human beings share their daily lives with robots. Georgy, a forensic who has a robot assistant, suddenly finds himself caught up in the first murder committed by a new kind of experimental humanoid.",
+      "poster_path": "/dUigUEoz7IlImY4uJLtqnLRYEU3.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        10765,
+        18
+      ],
+      "popularity": 37.736,
+      "first_air_date": "2018-11-23",
+      "vote_average": 7.388,
+      "vote_count": 329,
+      "origin_country": [
+        "RU"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mIL3s8d0JgcGoUjQU4NhNYfVd0b.jpg",
+      "id": 237421,
+      "name": "The Little Master's Better Life",
+      "original_language": "zh",
+      "original_name": "正经少主的幸福生活",
+      "overview": "Humans are little, but not inferior, in the wild. They are all putting in a lot of effort and growing rapidly in their own ways, whether it be Shennong and his people in the human sphere or the many clans in Beiye. Despite being bewitched and restrained by the Star God, he would mount a tenacious resistance against the Star God in order to safeguard his tribe, family, and blood in the tribe.",
+      "poster_path": "/kkT9mty0Tz0c6PSrX2v3SW11Fzc.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        16,
+        10765,
+        10759
+      ],
+      "popularity": 25.021,
+      "first_air_date": "2023-10-22",
+      "vote_average": 0,
+      "vote_count": 0,
+      "origin_country": [
+        "CN"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/jKtTZBye6wEQMhBs2XLtZW8D8rF.jpg",
+      "id": 74063,
+      "name": "To Be a Better Man",
+      "original_language": "zh",
+      "original_name": "好先生",
+      "overview": "Lu Yuan worked hard in America to become a Michelin 3-starred chef. To many, he is the Devil incarnate, reckless and wanton. But when it comes to the person he loves, he is an entirely different \"good man,\" loyal, kind, and honest. After a nightmarish car accident takes away his friend, he returns home with his remains. There, he runs into the person he most doesn't want to see, and becomes entangled with his ex, Gan Jing, their old classmate, Jiang Haokun, and Haokun's younger sister, Jiang Lai.",
+      "poster_path": "/y7rpHfwDUUufwBR7Pc5zVQyLVWa.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 17.879,
+      "first_air_date": "2016-05-31",
+      "vote_average": 8,
+      "vote_count": 2,
+      "origin_country": [
+        "CN"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/l1P5JbizBI1XxzeNCrwOCQUHAI5.jpg",
+      "id": 575813,
+      "title": "Better Days",
+      "original_language": "zh",
+      "original_title": "少年的你",
+      "overview": "A bullied teenage girl forms an unlikely friendship with a mysterious young man who protects her from her assailants, while she copes with the pressures of her final examinations.",
+      "poster_path": "/csVZ2ZQCj98XdZoCuW1aixMYJ0W.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 15.072,
+      "release_date": "2019-10-25",
+      "video": false,
+      "vote_average": 8.2,
+      "vote_count": 364
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/vj843UtmqHezzXPO0BSLG733RqN.jpg",
+      "id": 18305,
+      "title": "A Better Tomorrow II",
+      "original_language": "zh",
+      "original_title": "英雄本色2",
+      "overview": "A restauranteur teams up with a police officer and his ex-con brother to avenge the death of a friend's daughter.",
+      "poster_path": "/e8352Dw1SeM4rNAGYDZVkQ0aenz.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "popularity": 17.328,
+      "release_date": "1987-12-17",
+      "video": false,
+      "vote_average": 7.064,
+      "vote_count": 228
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/z2ANcLGddYI02Dz8ziFCv5skByE.jpg",
+      "id": 91593,
+      "name": "Love Better Than Immortality",
+      "original_language": "zh",
+      "original_name": "天雷一部之春花秋月",
+      "overview": "A woman from the future arrives at a fantasy-like universe to experience love for the first time. She goes by the name Chun Hua and falls into a complicated romance with two young men who are opposites like black and white.",
+      "poster_path": "/enj2s0CNvp2oaf84j87H8Vsdbr0.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        10759,
+        35
+      ],
+      "popularity": 13.178,
+      "first_air_date": "2019-07-05",
+      "vote_average": 6.778,
+      "vote_count": 10,
+      "origin_country": [
+        "CN"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/exsMQZ9nnMfuG2IhFMaC4wvcRhl.jpg",
+      "id": 103140,
+      "name": "Better off Mine",
+      "original_language": "th",
+      "original_name": "อุ้มรักเกมลวง",
+      "overview": "One woman is having hard time, decides to carry a baby for her friend but the child is belong to her ex-boyfriend",
+      "poster_path": "/vW1OgiVmkc8cfJ3FiLRLdxvzypc.jpg",
+      "media_type": "tv",
+      "genre_ids": [],
+      "popularity": 6.262,
+      "first_air_date": "2020-05-04",
+      "vote_average": 8,
+      "vote_count": 1,
+      "origin_country": [
+        "TH"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/o3NOUSFVCHjQFUUvS6OYPvC4sBE.jpg",
+      "id": 11471,
+      "title": "A Better Tomorrow",
+      "original_language": "zh",
+      "original_title": "英雄本色",
+      "overview": "A reforming ex-gangster tries to reconcile with his estranged policeman brother, but the ties to his former gang are difficult to break.",
+      "poster_path": "/3LaUyoLADXqndKaX7ZjGYrWCedt.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        80,
+        18
+      ],
+      "popularity": 14.289,
+      "release_date": "1986-08-02",
+      "video": false,
+      "vote_average": 7.454,
+      "vote_count": 455
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/v05DLp96bxccpUmASZeNKNrW1ZV.jpg",
+      "id": 31927,
+      "name": "My Better Half",
+      "original_language": "cn",
+      "original_name": "老公萬歲",
+      "overview": "Pharmaceutical company employee Ching Sum has an overbearing wife, Ko Lai-sum. In order not to fight head-on with her, he has been avoiding her in their seven years of marriage. Lai-sum, however, has never stopped watching his move, as she always believes he is fooling around behind her back. One day, Ching Sum is caught red-handed in Shenzhen by Lai-sum, who proposes to divorce him!",
+      "poster_path": "/oYCX7Ua7XUjToFSUUL7QA872tIb.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        35
+      ],
+      "popularity": 18.129,
+      "first_air_date": "2010-02-16",
+      "vote_average": 0,
+      "vote_count": 0,
+      "origin_country": [
+        "HK"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/6lX8OmFpyIKpj7zo6MWfmNG3tvj.jpg",
+      "id": 41244,
+      "title": "A Better Tomorrow III: Love and Death in Saigon",
+      "original_language": "cn",
+      "original_title": "英雄本色3：夕阳之歌",
+      "overview": "The year is 1974. A young Hong Kong Chinese, Mark, travels to Saigon to make his fortune. There, he encounters a mysterious femme fatale, the lovely Kit. As he becomes more involved in her various underworld deals, a tragic romance develops. On the eve of the outbreak of war, Kit's past returns to endanger her, and Mark must risk everything for the one true love of his life.",
+      "poster_path": "/bsEb5TkUbJXwFhWO3lkPlYM3thv.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        10752,
+        28,
+        53
+      ],
+      "popularity": 17.03,
+      "release_date": "1989-10-20",
+      "video": false,
+      "vote_average": 6.554,
+      "vote_count": 102
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mptZ4VR9S8gs30N8O8DbxcYu0BI.jpg",
+      "id": 99693,
+      "name": "I Will Find You a Better Home",
+      "original_language": "zh",
+      "original_name": "安家",
+      "overview": "28-year old Fang Si Jin loves herself. She is a woman who sells houses, the regional manager of a famous real estate company. In a turn of events, she is sent to deal with one of their chain stores, which has been suffering from declining sales. The manager of that store is Xu Wen Dao, a \"nobleman\" who is kind and can't bear to fire his underperforming employees. Fang Si Jin sees such benevolence as weak and useless. She manages to save the store using her cold, ruthless methods, but it loses its warm, inviting atmosphere. Fang Si Jin and Xu Wen Dao constantly butt heads over their different philosophies",
+      "poster_path": "/kZTSaMWrzuqb4dck2NNRfqdyZbm.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 21.179,
+      "first_air_date": "2020-02-21",
+      "vote_average": 8.7,
+      "vote_count": 3,
+      "origin_country": [
+        "CN"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 67556,
+      "name": "Better Late Than Never",
+      "original_language": "en",
+      "original_name": "Better Late Than Never",
+      "overview": "This hilarious fish-out-of-water comedy/reality show follows cultural icons Henry Winkler, William Shatner, Terry Bradshaw and George Foreman on their greatest adventure yet. Deciding it's Better Late Than Never, these four national treasures embark on the journey of a lifetime, traveling across Asia on their own with no schedule and no itinerary. The only \"help\" will come from Jeff Dye, a young, strong, tech-savvy comedian with an agenda of his own - who isn't above leading the men off track. Each stop is packed with hilarious cultural experiences, heartwarming spectacles and unexpected twists as our legends take on this unforgettable adventure.",
+      "poster_path": "/13AQ0k3E7zwIc2zp5c7luXVbsJg.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        10764,
+        35
+      ],
+      "popularity": 27.035,
+      "first_air_date": "2016-08-23",
+      "vote_average": 7.857,
+      "vote_count": 14,
+      "origin_country": [
+        "US"
+      ]
+    }
+  ],
+  "total_pages": 33,
+  "total_results": 653
+}
