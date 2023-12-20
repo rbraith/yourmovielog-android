@@ -3,18 +3,25 @@ package com.rbraithwaite.untitledmovieapp.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.google.gson.Gson
+import com.rbraithwaite.untitledmovieapp.AddReviewFlowSharedData
 import com.rbraithwaite.untitledmovieapp.ui.screen_main.MainScreen
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreen
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchScreen
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +34,7 @@ class MainActivity: ComponentActivity() {
 
             NavHost(
                 navController = navController,
+                route = "root_nav",
                 startDestination = "main"
             ) {
                 composable(route = "main") {
@@ -40,30 +48,43 @@ class MainActivity: ComponentActivity() {
                 // 'add review' flow
                 navigation(startDestination = "search", route = "add_review_flow") {
                     composable(route = "search") {
+                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
+                            rememberKey = it,
+                            scopeRoute = "add_review_flow"
+                        )
+
                         SearchScreen(
                             hiltViewModel(),
                             onNavToNewReviewScreen = { searchResult ->
-                                val args = serializeForNav(searchResult)
-                                navController.navigate(route = "new_review/$args")
+                                addReviewFlowSharedData.newReviewSearchResult = searchResult
+                                navController.navigate(route = "new_review")
                             }
                         )
                     }
 
-                    composable(route = "new_review/{media_type}/{media_data}") { navBackStackEntry ->
-                        val searchResult = deserializeNewReviewArgs(navBackStackEntry.arguments)
+                    composable(route = "new_review") { navBackStackEntry ->
+                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
+                            rememberKey = navBackStackEntry,
+                            scopeRoute = "add_review_flow"
+                        )
 
                         val viewModel = hiltViewModel<NewReviewViewModel>()
-                        viewModel.init(searchResult)
 
-                        NewReviewScreen(
-                            viewModel = viewModel,
-                            onConfirmReview = {
-                                // TO IMPLEMENT
-                            },
-                            onNavBack = {
-                                // TO IMPLEMENT
-                            }
-                        )
+                        val viewModelInitialized = waitFor(navBackStackEntry) {
+                            viewModel.init(addReviewFlowSharedData.newReviewSearchResult)
+                        }
+
+                        if (viewModelInitialized) {
+                            NewReviewScreen(
+                                viewModel = viewModel,
+                                onConfirmReview = {
+                                    // TO IMPLEMENT
+                                },
+                                onNavBack = {
+                                    // TO IMPLEMENT
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -71,29 +92,30 @@ class MainActivity: ComponentActivity() {
     }
 }
 
-// REFACTOR [23-09-3 2:01a.m.] -- probably better to use an activity-scoped viewmodel to transfer args
-//  than serializing to json strings?
-fun serializeForNav(newReviewSearchResult: NewReviewSearchResult): String {
-    val gson = Gson()
-    return when(newReviewSearchResult) {
-        is NewReviewSearchResult.NewCustomMedia -> {
-            "custom/${gson.toJson(newReviewSearchResult)}"
-        }
+// REFACTOR [23-12-20 1:28a.m.] -- move to utils.
+// REFACTOR [23-12-20 1:28a.m.] -- find a better name.
+@Composable
+inline fun waitFor(rememberKey: Any? = null, crossinline codeBlock: () -> Unit): Boolean {
+    var isFinished by remember(rememberKey) { mutableStateOf(false) }
+    LaunchedEffect(rememberKey) {
+        codeBlock()
+        isFinished = true
     }
+    return isFinished
 }
 
-fun deserializeNewReviewArgs(args: Bundle?): NewReviewSearchResult? {
-    if (args == null) {
-        return null
+// REFACTOR [23-12-20 1:28a.m.] -- move to utils.
+/**
+ * @param rememberKey This is used to remember the scope backstack entry
+ * @param scopeRoute The route to scope the returned ViewModel to.
+ */
+@Composable
+inline fun <reified T : ViewModel> NavHostController.getScopedViewModel(
+    rememberKey: NavBackStackEntry,
+    scopeRoute: String
+): T {
+    val scopeEntry = remember(rememberKey) {
+        this.getBackStackEntry(scopeRoute)
     }
-
-    val mediaType = args.getString("media_type")!!
-    val mediaData = args.getString("media_data")!!
-
-    val gson = Gson()
-
-    return when(mediaType) {
-        "custom" -> gson.fromJson(mediaData, NewReviewSearchResult.NewCustomMedia::class.java)
-        else -> null
-    }
+    return hiltViewModel(scopeEntry)
 }

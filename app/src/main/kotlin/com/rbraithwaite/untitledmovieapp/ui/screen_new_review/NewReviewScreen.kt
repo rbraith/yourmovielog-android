@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,8 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rbraithwaite.untitledmovieapp.DebugLogging
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import java.time.Month
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun NewReviewScreen(
@@ -118,6 +121,14 @@ private fun NewReviewScreenContent(
                         }
                     )
                 }
+                // TODO [23-12-20 2:06a.m.] -- define (!isTitleEditable) UI.
+            }
+            is TmdbMovieUiState -> {
+                val tmdbMovie = mediaUiState.tmdbMovie
+
+                Text("title: ${tmdbMovie.title} (${tmdbMovie.releaseDate?.year})")
+                Text("overview: ${tmdbMovie.overview}")
+                Divider()
             }
         }
 

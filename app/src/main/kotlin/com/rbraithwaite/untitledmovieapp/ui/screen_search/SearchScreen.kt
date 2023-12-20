@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.ui.screen_search
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,21 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rbraithwaite.untitledmovieapp.DebugLogging
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
-sealed interface NewReviewSearchResult {
-    data class NewCustomMedia(
-        val title: String
-    ) : NewReviewSearchResult
-}
-
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
-    onNavToNewReviewScreen: (NewReviewSearchResult) -> Unit
+    onNavToNewReviewScreen: (SearchResult) -> Unit
 ) {
     val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
@@ -150,11 +146,15 @@ private fun ResultItemLoading() {
 @Composable
 fun ResultItemNewCustomMedia(
     title: String,
-    onSelect: (NewReviewSearchResult.NewCustomMedia) -> Unit
+    onSelect: (SearchResult.CustomMedia) -> Unit
 ) {
     Button(
         onClick = {
-            onSelect(NewReviewSearchResult.NewCustomMedia(title))
+            // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
+            onSelect(SearchResult.CustomMedia(
+                id=0L,
+                title=title
+            ))
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -166,7 +166,7 @@ fun ResultItemNewCustomMedia(
 
 fun LazyListScope.SearchResults(
     searchResults: SearchResults,
-    onSelectResult: (NewReviewSearchResult) -> Unit
+    onSelectResult: (SearchResult) -> Unit
 ) = when (searchResults) {
     is SearchResults.NoInput -> {
         item {
@@ -208,11 +208,16 @@ fun LazyListScope.SearchResults(
                     .fillMaxWidth()
                     .height(30.dp)
                     .randomBackgroundColor()
+                    .clickable {
+                        onSelectResult(searchResult)
+                    }
             ) {
                 when (searchResult) {
                     is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
                     is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
                     is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
+                    // TODO [23-12-17 12:20a.m.] -- get rid of TmdbPerson results, these don't
+                    //  work for adding new reviews.
                     is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
                 }
             }

@@ -7,7 +7,8 @@ import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,9 +28,13 @@ data class NewReviewUiState(
 
 sealed interface MediaUiState
 data class CustomMediaUiState(
-    val media: CustomMedia,
+    val media: SearchResult.CustomMedia,
     val isTitleEditable: Boolean,
     val editTitle: (String) -> Unit
+): MediaUiState
+
+data class TmdbMovieUiState(
+    val tmdbMovie: SearchResult.TmdbMovie
 ): MediaUiState
 
 @HiltViewModel
@@ -40,42 +45,47 @@ class NewReviewViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<NewReviewUiState?> = MutableStateFlow(null)
     val uiState: StateFlow<NewReviewUiState?> = _uiState
 
-    fun init(searchResult: NewReviewSearchResult?) {
+    fun init(searchResult: SearchResult?) {
         searchResult?.let {
-            when (it) {
-                is NewReviewSearchResult.NewCustomMedia -> {
-                    val newCustomMedia = CustomMedia(
-                        title = it.title
+            val mediaUiState: MediaUiState = when (it) {
+                is SearchResult.CustomMedia -> {
+                    // REFACTOR [23-12-20 1:56a.m.] -- should I convert to CustomMedia here?
+                    //  what am I doing with CustomMedia vs SearchResult.CustomMedia? should the
+                    //  search result just have a CustomMedia in it instead of duplicating the fields?
+                    CustomMediaUiState(
+                        media = it,
+                        // REFACTOR [23-10-11 12:28a.m.] -- hardcoded - call 0L NEW_ENTITY or something.
+                        isTitleEditable = it.id == 0L,
+                        editTitle = ::editTitle
                     )
-                    _uiState.update { _ ->
-                        initialUiState(newCustomMedia)
-                    }
                 }
+                is SearchResult.TmdbMovie -> {
+                    TmdbMovieUiState(it)
+                }
+                else -> {
+                    // TO IMPLEMENT
+                    TODO("Other search result types not yet implemented")
+                }
+            }
+
+            _uiState.update { _ ->
+                initialUiState(mediaUiState)
             }
         }
     }
 
-    private fun initialUiState(media: Media): NewReviewUiState {
+    private fun initialUiState(mediaUiState: MediaUiState): NewReviewUiState {
         val emptyReview = MediaReview()
 
-        return when (media) {
-            is CustomMedia -> {
-                NewReviewUiState(
-                    CustomMediaUiState(
-                        media,
-                        // REFACTOR [23-10-11 12:28a.m.] -- hardcoded - call 0L NEW_ENTITY or something.
-                        media.id == 0L,
-                        ::editTitle
-                    ),
-                    emptyReview,
-                    ::onConfirmReview,
-                    ::editRating,
-                    ::editReview,
-                    ::editWatchContext,
-                    ::editReviewDate
-                )
-            }
-        }
+        return NewReviewUiState(
+            mediaUiState,
+            emptyReview,
+            ::onConfirmReview,
+            ::editRating,
+            ::editReview,
+            ::editWatchContext,
+            ::editReviewDate
+        )
     }
 
     private fun onConfirmReview() {
@@ -84,12 +94,24 @@ class NewReviewViewModel @Inject constructor(
             when (val mediaUiState = _uiState.value!!.mediaUiState) {
                 is CustomMediaUiState -> {
                     val customMedia = mediaUiState.media
+
+                    // REFACTOR [23-12-20 1:54a.m.] -- wtf am I doing here? am I using CustomMedia
+                    //  or SearchResult.CustomMedia?
+                    val customMedia2 = CustomMedia(
+                        customMedia.id,
+                        customMedia.title
+                    )
+
                     if (customMedia.id == 0L) {
                         mediaRepository.addNewCustomMediaWithReview(
-                            customMedia,
+                            customMedia2,
                             review
                         )
                     }
+                }
+                is TmdbMovieUiState -> {
+                    // TO IMPLEMENT
+                    TODO("not implemented yet.")
                 }
             }
         }

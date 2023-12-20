@@ -3,10 +3,11 @@ package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.CustomMediaUiState
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.NewReviewSearchResult
+import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.TmdbMovieUiState
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
@@ -36,9 +37,9 @@ class NewReviewViewModelTests {
     @Test
     fun afterInit_usingNewCustomMediaSearchResult() {
         val expectedMediaTitle = "test"
-        val searchResult = NewReviewSearchResult.NewCustomMedia(expectedMediaTitle)
+        // REFACTOR [23-12-20 2:45p.m.] -- hardcoded 0L id for new custom media.
+        val searchResult = SearchResult.CustomMedia(0L, expectedMediaTitle)
 
-        val expectedMedia = CustomMedia(title = expectedMediaTitle)
         val blankReview = MediaReview()
 
         viewModel.init(searchResult)
@@ -48,9 +49,41 @@ class NewReviewViewModelTests {
         assertThat("", uiState?.mediaUiState is CustomMediaUiState)
 
         val customMediaUiState = uiState?.mediaUiState as CustomMediaUiState
-        assertThat(customMediaUiState.media, willBeEqualTo(expectedMedia))
+        assertThat(customMediaUiState.media, willBeEqualTo(searchResult))
         assertThat(customMediaUiState.isTitleEditable, willBe(true))
         assertThat(uiState.review, willBeEqualTo(blankReview))
+    }
+
+    @Test
+    fun afterInit_usingTmdbMovieResult() {
+        // GIVEN a TmdbMovie SearchResult
+        // -------------------------------------------
+
+        // REFACTOR [23-12-20 2:52p.m.] -- use something else for this data, a builder or something.
+        val searchResult = SearchResult.TmdbMovie(
+            id = 123,
+            title = "",
+            overview = "",
+            posterPath = null,
+            genreIds = emptyList(),
+            popularity = 1.23f,
+            releaseDate = null,
+            voteAverage = 3.21f,
+            voteCount = 456
+        )
+
+        // WHEN the viewmodel is initialized with that result
+        // -------------------------------------------
+
+        viewModel.init(searchResult)
+
+        // THEN the MediaUiState is a TmdbMovieUiState
+        // -------------------------------------------
+
+        val mediaUiState = viewModel.uiState.value!!.mediaUiState
+
+        assertThat("", mediaUiState is TmdbMovieUiState)
+        assertThat((mediaUiState as TmdbMovieUiState).tmdbMovie, willBe(searchResult))
     }
 
     @Test
@@ -63,7 +96,8 @@ class NewReviewViewModelTests {
     @Test
     fun onConfirmReview_forNewCustomMedia() = runTest {
         val initialTitle = "initial title"
-        val searchResult = NewReviewSearchResult.NewCustomMedia(initialTitle)
+        // REFACTOR [23-12-20 2:46p.m.] -- hardcoded 0L id.
+        val searchResult = SearchResult.CustomMedia(0L, initialTitle)
 
         viewModel.init(searchResult)
         val uiState = viewModel.uiState
