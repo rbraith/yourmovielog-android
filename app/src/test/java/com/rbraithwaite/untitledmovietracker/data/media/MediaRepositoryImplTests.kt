@@ -11,9 +11,12 @@ import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import okhttp3.internal.wait
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.argForWhich
+import org.mockito.kotlin.check
 import org.mockito.kotlin.verify
 
 class MediaRepositoryImplTests {
@@ -30,6 +33,44 @@ class MediaRepositoryImplTests {
         mockMediaDao,
         mockTmdbApiV3
     )
+
+    @Test
+    fun addTmdbMovieReview_test() = testScope.runTest {
+        // GIVEN a MediaReview
+        // -------------------------------------------
+
+        val rating = 34
+        val review = "review text"
+        val watchContext = "watch context"
+        val reviewDate = ReviewDate(2022, 10, 10)
+        val mediaReview = MediaReview(
+            rating, review, reviewDate, watchContext
+        )
+
+        // WHEN that review is added for a TmdbMovie
+        // -------------------------------------------
+
+        val expectedTmdbMovieId = 123
+
+        mediaRepositoryImpl.addTmdbMovieReview(
+            expectedTmdbMovieId,
+            mediaReview
+        )
+
+        // THEN the dao is called with proper arguments
+        // -------------------------------------------
+
+        verify(mockMediaDao).addReview(check { mediaReviewEntity ->
+            assertThat("", mediaReviewEntity.id == 0L)
+            assertThat("", mediaReviewEntity.mediaId == expectedTmdbMovieId.toLong())
+            // REFACTOR [23-12-27 2:14p.m.] -- hardcoded string.
+            assertThat("", mediaReviewEntity.mediaType == "tmdb_movie")
+            assertThat("", mediaReviewEntity.rating == rating)
+            assertThat("", mediaReviewEntity.review == review)
+            assertThat("", mediaReviewEntity.reviewDate == reviewDate)
+            assertThat("", mediaReviewEntity.watchContext == watchContext)
+        })
+    }
 
     @Test
     fun addNewCustomMediaWithReview_callsDao() = testScope.runTest {

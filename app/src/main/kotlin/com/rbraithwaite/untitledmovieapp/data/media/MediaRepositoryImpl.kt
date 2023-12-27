@@ -54,6 +54,22 @@ class MediaRepositoryImpl @Inject constructor(
         }.join()
     }
 
+    override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {
+        externalScope.launch(coroutineDispatcher) {
+            // REFACTOR [23-12-27 2:19p.m.] -- extract entity creation to a helper function.
+            val mediaReviewEntity = MediaReviewEntity(
+                mediaId = tmdbMovieId.toLong(),
+                mediaType = "tmdb_movie",
+                rating = review.rating,
+                review = review.review,
+                reviewDate = review.reviewDate,
+                watchContext = review.watchContext
+            )
+
+            mediaDao.addReview(mediaReviewEntity)
+        }.join()
+    }
+
     // REFACTOR [23-11-19 3:15p.m.] -- extract the api call to a new repository type TmdbRepository (or
     //  something) and rename it to searchQuick(quickInput)
     //  Make this repo into CustomMediaRepository

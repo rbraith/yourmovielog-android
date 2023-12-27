@@ -62,6 +62,10 @@ class DelegateFakeMediaRepository(
         real.addNewCustomMediaWithReview(customMedia, review)
     }
 
+    override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun findMedia(searchCriteria: String): List<SearchResult> {
         if (mockEnabled) {
             mock.findMedia(searchCriteria)

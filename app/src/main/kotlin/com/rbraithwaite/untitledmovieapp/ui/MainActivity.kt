@@ -93,7 +93,7 @@ class MainActivity: ComponentActivity() {
 }
 
 // REFACTOR [23-12-20 1:28a.m.] -- move to utils.
-// REFACTOR [23-12-20 1:28a.m.] -- find a better name.
+// REFACTOR [23-12-20 1:28a.m.] -- find a better name, maybe 'sequentialEffect'.
 @Composable
 inline fun waitFor(rememberKey: Any? = null, crossinline codeBlock: () -> Unit): Boolean {
     var isFinished by remember(rememberKey) { mutableStateOf(false) }

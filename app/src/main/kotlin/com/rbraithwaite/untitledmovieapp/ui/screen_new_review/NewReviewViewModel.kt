@@ -110,8 +110,10 @@ class NewReviewViewModel @Inject constructor(
                     }
                 }
                 is TmdbMovieUiState -> {
-                    // TO IMPLEMENT
-                    TODO("not implemented yet.")
+                    mediaRepository.addTmdbMovieReview(
+                        tmdbMovieId = mediaUiState.tmdbMovie.id,
+                        review = review
+                    )
                 }
             }
         }

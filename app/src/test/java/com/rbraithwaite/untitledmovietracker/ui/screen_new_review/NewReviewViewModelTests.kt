@@ -94,6 +94,63 @@ class NewReviewViewModelTests {
     }
 
     @Test
+    fun onConfirmReview_forTmdbMovie() = runTest {
+        // GIVEN a new review for a tmdb movie
+        // -------------------------------------------
+
+        val expectedId = 123
+
+        // REFACTOR [23-12-27 1:50p.m.] -- this should be a test data builder.
+        val searchResult = SearchResult.TmdbMovie(
+            id = expectedId,
+            title = "",
+            overview = "",
+            posterPath = null,
+            genreIds = emptyList(),
+            popularity = 1.23f,
+            releaseDate = null,
+            voteAverage = 3.21f,
+            voteCount = 456
+        )
+
+        viewModel.init(searchResult)
+
+        // WHEN you update the review then confirm it
+        // -------------------------------------------
+
+        val uiState = viewModel.uiState
+
+        val updatedRating = 12
+        uiState.value?.let { it.editRating(updatedRating) }
+
+        val updatedReview = "updated review"
+        uiState.value?.let { it.editReview(updatedReview) }
+
+        val updatedWatchContext = "updated watch context"
+        uiState.value?.let { it.editWatchContext(updatedWatchContext) }
+
+        val updatedReviewDate = ReviewDate(2020, 12, 12)
+        uiState.value?.let { it.editReviewDate(updatedReviewDate) }
+
+        uiState.value?.let { it.onConfirmReview() }
+
+        // THEN the correct repository API is called with good arguments
+        // -------------------------------------------
+
+        val expectedReview = MediaReview(
+            updatedRating,
+            updatedReview,
+            updatedReviewDate,
+            updatedWatchContext
+        )
+
+        verify(mockMediaRepository).addTmdbMovieReview(
+            expectedId,
+            expectedReview
+        )
+    }
+
+    @Test
     fun onConfirmReview_forNewCustomMedia() = runTest {
         val initialTitle = "initial title"
         // REFACTOR [23-12-20 2:46p.m.] -- hardcoded 0L id.
