@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 
+import com.rbraithwaite.test_data_utils.valueOf
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
@@ -9,6 +10,7 @@ import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.CustomMediaUiState
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.TmdbMovieUiState
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.tmdbMovieSearchResult
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.test.runTest
@@ -59,18 +61,7 @@ class NewReviewViewModelTests {
         // GIVEN a TmdbMovie SearchResult
         // -------------------------------------------
 
-        // REFACTOR [23-12-20 2:52p.m.] -- use something else for this data, a builder or something.
-        val searchResult = SearchResult.TmdbMovie(
-            id = 123,
-            title = "",
-            overview = "",
-            posterPath = null,
-            genreIds = emptyList(),
-            popularity = 1.23f,
-            releaseDate = null,
-            voteAverage = 3.21f,
-            voteCount = 456
-        )
+        val searchResult = valueOf(tmdbMovieSearchResult())
 
         // WHEN the viewmodel is initialized with that result
         // -------------------------------------------
@@ -100,18 +91,7 @@ class NewReviewViewModelTests {
 
         val expectedId = 123
 
-        // REFACTOR [23-12-27 1:50p.m.] -- this should be a test data builder.
-        val searchResult = SearchResult.TmdbMovie(
-            id = expectedId,
-            title = "",
-            overview = "",
-            posterPath = null,
-            genreIds = emptyList(),
-            popularity = 1.23f,
-            releaseDate = null,
-            voteAverage = 3.21f,
-            voteCount = 456
-        )
+        val searchResult = tmdbMovieSearchResult().withId(expectedId).build()
 
         viewModel.init(searchResult)
 

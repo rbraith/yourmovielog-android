@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_search
 
+import com.rbraithwaite.test_data_utils.listValuesOf
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchInput
@@ -8,7 +9,6 @@ import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMedia
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.listValuesOf
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultPerson
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultTvShow

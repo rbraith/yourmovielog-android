@@ -1,8 +1,8 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models
 
+import com.rbraithwaite.test_data_utils.Builder
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult.Person
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.Builder
 
 fun aSearchMultiResultPerson(
     buildBlock: SearchMultiResultPersonBuilder.() -> Unit = {}
@@ -10,7 +10,7 @@ fun aSearchMultiResultPerson(
     return SearchMultiResultPersonBuilder().apply(buildBlock)
 }
 
-class SearchMultiResultPersonBuilder: Builder<SearchMultiResult.Person> {
+class SearchMultiResultPersonBuilder: Builder<Person> {
     private var data = SearchMultiResult.Person(
         adult = false,
         id = 0,

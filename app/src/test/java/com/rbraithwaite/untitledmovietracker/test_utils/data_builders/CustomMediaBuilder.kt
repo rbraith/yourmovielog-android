@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders
 
+import com.rbraithwaite.test_data_utils.Builder
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 
 fun aCustomMedia(buildBlock: CustomMediaBuilder.() -> Unit = {}): CustomMediaBuilder {

@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Untitled Movie Tracker"
 include(":app")
+include(":test_data_utils")
