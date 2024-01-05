@@ -45,9 +45,6 @@ fun MainScreen(
                     }
                 }
             )
-        },
-        floatingActionButton = {
-
         }
     ) { innerPadding ->
         NavHost(
