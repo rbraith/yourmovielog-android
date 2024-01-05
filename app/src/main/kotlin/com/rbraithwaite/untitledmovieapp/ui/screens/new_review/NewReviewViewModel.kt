@@ -1,14 +1,12 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
+package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

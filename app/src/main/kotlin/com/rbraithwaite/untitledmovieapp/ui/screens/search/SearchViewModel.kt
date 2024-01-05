@@ -1,8 +1,7 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_search
+package com.rbraithwaite.untitledmovieapp.ui.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 // REFACTOR [23-10-22 1:00p.m.] -- rename to SearchInputUiState.

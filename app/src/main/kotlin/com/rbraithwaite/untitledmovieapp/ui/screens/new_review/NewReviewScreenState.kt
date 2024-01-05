@@ -1,13 +1,10 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
+package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
-import java.time.Month
 
 @Composable
 fun rememberNewReviewScreenState(): NewReviewScreenState {

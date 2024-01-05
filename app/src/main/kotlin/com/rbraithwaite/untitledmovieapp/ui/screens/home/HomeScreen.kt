@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_home
+package com.rbraithwaite.untitledmovieapp.ui.screens.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

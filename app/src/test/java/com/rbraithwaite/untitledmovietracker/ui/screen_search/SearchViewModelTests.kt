@@ -1,11 +1,10 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_search
 
 import com.rbraithwaite.test_data_utils.listValuesOf
-import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchInput
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchResults
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchViewModel
+import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchInput
+import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchResults
+import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMedia
@@ -22,13 +21,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.CoreMatchers.not
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.notNull
 
 class SearchViewModelTests {
     @get:Rule

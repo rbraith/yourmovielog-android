@@ -6,9 +6,9 @@ import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.CustomMediaUiState
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.TmdbMovieUiState
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.CustomMediaUiState
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.TmdbMovieUiState
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.tmdbMovieSearchResult
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe

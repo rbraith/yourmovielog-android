@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
+package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi

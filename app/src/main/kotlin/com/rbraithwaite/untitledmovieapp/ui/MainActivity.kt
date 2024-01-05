@@ -18,10 +18,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.rbraithwaite.untitledmovieapp.AddReviewFlowSharedData
-import com.rbraithwaite.untitledmovieapp.ui.screen_main.MainScreen
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewScreen
-import com.rbraithwaite.untitledmovieapp.ui.screen_new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovieapp.ui.screen_search.SearchScreen
+import com.rbraithwaite.untitledmovieapp.ui.screens.main.MainScreen
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewScreen
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
+import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.ui.screen_new_review
+package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rbraithwaite.untitledmovieapp.DebugLogging
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import java.time.Month
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun NewReviewScreen(
@@ -171,7 +169,7 @@ private fun formatRating(rating: Int?): String {
         if (afterDecimal == 0) {
             beforeDecimal.toString()
         } else {
-            "$beforeDecimal.$afterDecimal / ${RATING_SUFFIX}"
+            "$beforeDecimal.$afterDecimal / $RATING_SUFFIX"
         }
     }
 }
