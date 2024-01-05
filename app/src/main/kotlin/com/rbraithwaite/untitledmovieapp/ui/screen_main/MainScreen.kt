@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rbraithwaite.untitledmovieapp.DebugLogging
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import com.rbraithwaite.untitledmovieapp.ui.screen_home.HomeScreen
 
 @Composable
 fun MainScreen(
@@ -64,27 +65,6 @@ fun MainScreen(
                     modifier = Modifier.fillMaxSize()
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun HomeScreen(
-    beginAddReviewFlow: () -> Unit
-) {
-    Scaffold(
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text("Add Review") },
-                icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-                onClick = beginAddReviewFlow)
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
-            DebugPlaceholder(
-                label = "home content!",
-                modifier = Modifier.fillMaxSize()
-            )
         }
     }
 }
