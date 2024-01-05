@@ -21,7 +21,7 @@ import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 
 @Composable
 fun MainScreen(
-    startDest: String = "home",
+    startDest: String = BottomNavDest.HOME.route,
     beginAddReviewFlow: () -> Unit
 ) {
     val navController = rememberNavController()
@@ -31,7 +31,7 @@ fun MainScreen(
             MainBottomNavBar(
                 initialDest = startDest,
                 onSelectDest = { selectedDest ->
-                    navController.navigate(selectedDest.route) {
+                    navController.navigate(selectedDest) {
                         // pop up to start to prevent a large dest backstack from building
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true

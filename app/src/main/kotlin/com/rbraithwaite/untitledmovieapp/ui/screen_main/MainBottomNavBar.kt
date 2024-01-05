@@ -14,50 +14,48 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 
-enum class BottomNavDest(val route: String) {
-    HOME("home"),
-    REVIEW_HISTORY("review_history")
+enum class BottomNavDest(
+    val route: String,
+    // REFACTOR [24-01-4 10:24p.m.] -- label should be a string resource id instead.
+    val label: String,
+    val icon: ImageVector
+) {
+    HOME(
+        route = "home",
+        label = "Home",
+        icon = Icons.Filled.Home
+    ),
+    REVIEW_HISTORY(
+        route = "review_history",
+        label = "Reviews",
+        icon = Icons.Filled.Star
+    )
 }
 
 @Composable
 fun MainBottomNavBar(
     initialDest: String,
-    onSelectDest: (BottomNavDest) -> Unit
+    onSelectDest: (String) -> Unit
 ) {
     var selectedDest by remember(initialDest) { mutableStateOf(initialDest) }
 
     NavigationBar {
-        NavigationBarItem(
-            selected = selectedDest == "home",
-            onClick = {
-                // REFACTOR [24-12-31 6:05p.m.] -- I should do that android guide thing of
-                //  defining the bottom bar item values in an enum, then loop over it. everything
-                //  with the nav is hardcoded rn.
-                selectedDest = BottomNavDest.HOME.route
-                onSelectDest(BottomNavDest.HOME)
-            },
-            icon = {
-                Icon(Icons.Filled.Home, contentDescription = "what")
-            },
-            label = {
-                Text("home")
-            }
-        )
-        NavigationBarItem(
-            selected = selectedDest == "review_history",
-            onClick = {
-                selectedDest = BottomNavDest.REVIEW_HISTORY.route
-                onSelectDest(BottomNavDest.REVIEW_HISTORY)
-            },
-            icon = {
-                Icon(Icons.Filled.Star, contentDescription = "what")
-            },
-            label = {
-                Text("reviews")
-            }
-        )
+        for (dest in BottomNavDest.entries) {
+            NavigationBarItem(
+                selected = selectedDest == dest.route,
+                icon = {
+                    Icon(imageVector = dest.icon, contentDescription = null)
+                },
+                label = { Text(dest.label) },
+                onClick = {
+                    selectedDest = dest.route
+                    onSelectDest(dest.route)
+                }
+            )
+        }
     }
 }
 
