@@ -10,14 +10,34 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 
+enum class BottomNavDest(val route: String) {
+    HOME("home"),
+    REVIEW_HISTORY("review_history")
+}
+
 @Composable
-fun MainBottomNavBar() {
+fun MainBottomNavBar(
+    initialDest: String,
+    onSelectDest: (BottomNavDest) -> Unit
+) {
+    var selectedDest by remember(initialDest) { mutableStateOf(initialDest) }
+
     NavigationBar {
         NavigationBarItem(
-            selected = true,
-            onClick = { /*TODO*/ },
+            selected = selectedDest == "home",
+            onClick = {
+                // REFACTOR [24-12-31 6:05p.m.] -- I should do that android guide thing of
+                //  defining the bottom bar item values in an enum, then loop over it. everything
+                //  with the nav is hardcoded rn.
+                selectedDest = BottomNavDest.HOME.route
+                onSelectDest(BottomNavDest.HOME)
+            },
             icon = {
                 Icon(Icons.Filled.Home, contentDescription = "what")
             },
@@ -26,8 +46,11 @@ fun MainBottomNavBar() {
             }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = selectedDest == "review_history",
+            onClick = {
+                selectedDest = BottomNavDest.REVIEW_HISTORY.route
+                onSelectDest(BottomNavDest.REVIEW_HISTORY)
+            },
             icon = {
                 Icon(Icons.Filled.Star, contentDescription = "what")
             },
@@ -41,5 +64,8 @@ fun MainBottomNavBar() {
 @Preview
 @Composable
 fun PreviewMainBottomNavBar() {
-    MainBottomNavBar()
+    MainBottomNavBar(
+        initialDest = "home",
+        onSelectDest = {}
+    )
 }
