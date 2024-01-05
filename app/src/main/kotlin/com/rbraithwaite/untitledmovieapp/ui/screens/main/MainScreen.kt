@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.screens.home.HomeScreen
+import com.rbraithwaite.untitledmovieapp.ui.screens.review_history.ReviewHistoryScreen
 
 @Composable
 fun MainScreen(
@@ -53,10 +54,7 @@ fun MainScreen(
             }
 
             composable(route = BottomNavDest.REVIEW_HISTORY.route) {
-                DebugPlaceholder(
-                    label = "review screen!",
-                    modifier = Modifier.fillMaxSize()
-                )
+                ReviewHistoryScreen()
             }
         }
     }
