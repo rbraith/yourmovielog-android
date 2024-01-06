@@ -113,7 +113,7 @@ private fun NewReviewScreenContent(
                 Text("title")
                 if (mediaUiState.isTitleEditable) {
                     TextField(
-                        value = mediaUiState.media.title,
+                        value = mediaUiState.media.data.title,
                         onValueChange = {
                             mediaUiState.editTitle(it)
                         }
@@ -124,8 +124,8 @@ private fun NewReviewScreenContent(
             is TmdbMovieUiState -> {
                 val tmdbMovie = mediaUiState.tmdbMovie
 
-                Text("title: ${tmdbMovie.title} (${tmdbMovie.releaseDate?.year})")
-                Text("overview: ${tmdbMovie.overview}")
+                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
+                Text("overview: ${tmdbMovie.data.overview}")
                 Divider()
             }
         }

@@ -53,7 +53,7 @@ class NewReviewViewModel @Inject constructor(
                     CustomMediaUiState(
                         media = it,
                         // REFACTOR [23-10-11 12:28a.m.] -- hardcoded - call 0L NEW_ENTITY or something.
-                        isTitleEditable = it.id == 0L,
+                        isTitleEditable = it.data.id == 0L,
                         editTitle = ::editTitle
                     )
                 }
@@ -96,11 +96,11 @@ class NewReviewViewModel @Inject constructor(
                     // REFACTOR [23-12-20 1:54a.m.] -- wtf am I doing here? am I using CustomMedia
                     //  or SearchResult.CustomMedia?
                     val customMedia2 = CustomMedia(
-                        customMedia.id,
-                        customMedia.title
+                        customMedia.data.id,
+                        customMedia.data.title
                     )
 
-                    if (customMedia.id == 0L) {
+                    if (customMedia.data.id == 0L) {
                         mediaRepository.addNewCustomMediaWithReview(
                             customMedia2,
                             review
@@ -109,7 +109,7 @@ class NewReviewViewModel @Inject constructor(
                 }
                 is TmdbMovieUiState -> {
                     mediaRepository.addTmdbMovieReview(
-                        tmdbMovieId = mediaUiState.tmdbMovie.id,
+                        tmdbMovieId = mediaUiState.tmdbMovie.data.id,
                         review = review
                     )
                 }
@@ -121,7 +121,10 @@ class NewReviewViewModel @Inject constructor(
         _uiState.update { state ->
             state?.let {
                 if (it.mediaUiState is CustomMediaUiState) {
-                    val mediaCopy = it.mediaUiState.media.copy(title = title)
+                    val dataCopy = it.mediaUiState.media.data.run {
+                        copy(title = title)
+                    }
+                    val mediaCopy = it.mediaUiState.media.copy(data = dataCopy)
                     val mediaUiStateCopy = it.mediaUiState.copy(media = mediaCopy)
                     it.copy(mediaUiState = mediaUiStateCopy)
                 } else {

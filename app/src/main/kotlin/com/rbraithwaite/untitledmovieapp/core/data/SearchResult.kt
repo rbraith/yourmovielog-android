@@ -4,41 +4,18 @@ import java.time.LocalDate
 
 sealed interface SearchResult {
     data class CustomMedia(
-        val id: Long,
-        val title: String
+        val data: com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
     ): SearchResult
 
     data class TmdbMovie(
-        val id: Int,
-        val title: String,
-        val overview: String,
-        val posterPath: String?,
-        val genreIds: List<Int>,
-        val popularity: Float,
-        val releaseDate: LocalDate?,
-        val voteAverage: Float,
-        val voteCount: Int
+        val data: TmdbLite.Movie
     ): SearchResult
 
     data class TmdbTvShow(
-        val id: Int,
-        val name: String,
-        val overview: String,
-        val posterPath: String?,
-        val genreIds: List<Int>,
-        val popularity: Float,
-        val firstAirDate: LocalDate?,
-        val voteAverage: Float,
-        val voteCount: Int
+        val data: TmdbLite.TvShow
     ): SearchResult
 
     data class TmdbPerson(
-        val id: Int,
-        val name: String,
-        val popularity: Float,
-        // TODO [23-11-19 3:58p.m.] -- gender should be an enum.
-        val gender: Int,
-        val knownForDepartment: String,
-        val profilePath: String?
+        val data: TmdbLite.Person
     ): SearchResult
 }

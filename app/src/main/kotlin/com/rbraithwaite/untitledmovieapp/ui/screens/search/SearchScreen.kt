@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
@@ -149,10 +150,10 @@ fun ResultItemNewCustomMedia(
     Button(
         onClick = {
             // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
-            onSelect(SearchResult.CustomMedia(
+            onSelect(SearchResult.CustomMedia(CustomMedia(
                 id=0L,
                 title=title
-            ))
+            )))
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -194,10 +195,10 @@ fun LazyListScope.SearchResults(
             items = searchResults.searchResults,
             key = {
                 when (it) {
-                    is SearchResult.CustomMedia -> "custom/${it.id}"
-                    is SearchResult.TmdbMovie -> "movie/${it.id}"
-                    is SearchResult.TmdbTvShow -> "tv_show/${it.id}"
-                    is SearchResult.TmdbPerson -> "person/${it.id}"
+                    is SearchResult.CustomMedia -> "custom/${it.data.id}"
+                    is SearchResult.TmdbMovie -> "movie/${it.data.id}"
+                    is SearchResult.TmdbTvShow -> "tv_show/${it.data.id}"
+                    is SearchResult.TmdbPerson -> "person/${it.data.id}"
                 }
             }
         ) { searchResult ->
@@ -225,20 +226,20 @@ fun LazyListScope.SearchResults(
 
 @Composable
 private fun ResultItemContentCustomMedia(result: SearchResult.CustomMedia) {
-    Text("custom media: ${result.title}")
+    Text("custom media: ${result.data.title}")
 }
 
 @Composable
 private fun ResultItemContentTmdbMovie(result: SearchResult.TmdbMovie) {
-    Text("tmdb movie: ${result.title}")
+    Text("tmdb movie: ${result.data.title}")
 }
 
 @Composable
 private fun ResultItemContentTmdbTvShow(result: SearchResult.TmdbTvShow) {
-    Text("tmdb show: ${result.name}")
+    Text("tmdb show: ${result.data.name}")
 }
 
 @Composable
 private fun ResultItemContentTmdbPerson(result: SearchResult.TmdbPerson) {
-    Text("tmdb person: ${result.name}")
+    Text("tmdb person: ${result.data.name}")
 }

@@ -4,6 +4,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
@@ -107,11 +108,11 @@ class MediaRepositoryImpl @Inject constructor(
     }
 
     private fun CustomMediaEntity.toSearchResult(): SearchResult.CustomMedia {
-        return SearchResult.CustomMedia(id, title)
+        return SearchResult.CustomMedia(CustomMedia(id, title))
     }
 
     private fun SearchMultiResult.Movie.toCoreSearchResult(): SearchResult.TmdbMovie {
-        return SearchResult.TmdbMovie(
+        return SearchResult.TmdbMovie(TmdbLite.Movie(
             id,
             title,
             overview,
@@ -121,11 +122,11 @@ class MediaRepositoryImpl @Inject constructor(
             parseTmdbDateString(releaseDate),
             voteAverage,
             voteCount
-        )
+        ))
     }
 
     private fun SearchMultiResult.TvShow.toCoreSearchResult(): SearchResult.TmdbTvShow {
-        return SearchResult.TmdbTvShow(
+        return SearchResult.TmdbTvShow(TmdbLite.TvShow(
             id,
             name,
             overview,
@@ -135,18 +136,18 @@ class MediaRepositoryImpl @Inject constructor(
             parseTmdbDateString(firstAirDate),
             voteAverage,
             voteCount
-        )
+        ))
     }
 
     private fun SearchMultiResult.Person.toCoreSearchResult(): SearchResult.TmdbPerson {
-        return SearchResult.TmdbPerson(
+        return SearchResult.TmdbPerson(TmdbLite.Person(
             id,
             name,
             popularity,
             gender,
             knownForDepartment,
             profilePath
-        )
+        ))
     }
 
     // REFACTOR [23-11-19 3:43p.m.] -- should delete this.

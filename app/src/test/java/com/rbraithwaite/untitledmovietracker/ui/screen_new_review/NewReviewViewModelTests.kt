@@ -10,7 +10,7 @@ import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.CustomMediaUiStat
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.TmdbMovieUiState
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.tmdbMovieSearchResult
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.tmdbLiteMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.test.runTest
@@ -40,7 +40,7 @@ class NewReviewViewModelTests {
     fun afterInit_usingNewCustomMediaSearchResult() {
         val expectedMediaTitle = "test"
         // REFACTOR [23-12-20 2:45p.m.] -- hardcoded 0L id for new custom media.
-        val searchResult = SearchResult.CustomMedia(0L, expectedMediaTitle)
+        val searchResult = SearchResult.CustomMedia(CustomMedia(0L, expectedMediaTitle))
 
         val blankReview = MediaReview()
 
@@ -61,7 +61,7 @@ class NewReviewViewModelTests {
         // GIVEN a TmdbMovie SearchResult
         // -------------------------------------------
 
-        val searchResult = valueOf(tmdbMovieSearchResult())
+        val searchResult = SearchResult.TmdbMovie(valueOf(tmdbLiteMovie()))
 
         // WHEN the viewmodel is initialized with that result
         // -------------------------------------------
@@ -91,7 +91,7 @@ class NewReviewViewModelTests {
 
         val expectedId = 123
 
-        val searchResult = tmdbMovieSearchResult().withId(expectedId).build()
+        val searchResult = SearchResult.TmdbMovie(tmdbLiteMovie().withId(expectedId).build())
 
         viewModel.init(searchResult)
 
@@ -134,14 +134,14 @@ class NewReviewViewModelTests {
     fun onConfirmReview_forNewCustomMedia() = runTest {
         val initialTitle = "initial title"
         // REFACTOR [23-12-20 2:46p.m.] -- hardcoded 0L id.
-        val searchResult = SearchResult.CustomMedia(0L, initialTitle)
+        val searchResult = SearchResult.CustomMedia(CustomMedia(0L, initialTitle))
 
         viewModel.init(searchResult)
         val uiState = viewModel.uiState
 
         val updatedTitle = "updated title"
         (uiState.value?.mediaUiState as CustomMediaUiState).editTitle(updatedTitle)
-        assertThat((uiState.value?.mediaUiState as CustomMediaUiState).media.title, willBe(updatedTitle))
+        assertThat((uiState.value?.mediaUiState as CustomMediaUiState).media.data.title, willBe(updatedTitle))
 
         val updatedRating = 12
         uiState.value?.let { it.editRating(updatedRating) }

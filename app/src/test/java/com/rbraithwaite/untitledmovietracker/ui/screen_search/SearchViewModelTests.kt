@@ -106,23 +106,23 @@ class SearchViewModelTests {
 
             // custom media results are first
             val foundCustomMedia = get(0) as SearchResult.CustomMedia
-            assertThat(foundCustomMedia.title, willBe(expectedTitle))
+            assertThat(foundCustomMedia.data.title, willBe(expectedTitle))
 
             // remaining are tmdb results, unordered
             // TODO [23-11-20 11:03p.m.] -- weird hamcrest syntax here, for some reason notNull()
             //  wasn't working for me.
             assertThat(
-                find { (it as? SearchResult.TmdbMovie)?.title == expectedTitle } != null,
+                find { (it as? SearchResult.TmdbMovie)?.data?.title == expectedTitle } != null,
                 willBe(true)
             )
 
             assertThat(
-                find { (it as? SearchResult.TmdbTvShow)?.name == expectedTitle } != null,
+                find { (it as? SearchResult.TmdbTvShow)?.data?.name == expectedTitle } != null,
                 willBe(true)
             )
 
             assertThat(
-                find { (it as? SearchResult.TmdbPerson)?.name == expectedTitle } != null,
+                find { (it as? SearchResult.TmdbPerson)?.data?.name == expectedTitle } != null,
                 willBe(true)
             )
         }
