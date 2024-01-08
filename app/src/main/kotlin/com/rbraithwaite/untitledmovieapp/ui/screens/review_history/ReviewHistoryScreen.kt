@@ -16,11 +16,13 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.TempWipData
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
@@ -29,18 +31,34 @@ import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import okhttp3.internal.format
 
 @Composable
-fun ReviewHistoryScreen() {
-    val testData: List<MediaReview> = remember {
-        TempWipData.allReviews
-    }
+fun ReviewHistoryScreen(
+    viewModel: ReviewHistoryViewModel
+) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
+    when (val uiStateValue = uiState.value) {
+        is ReviewHistoryUiState.Success -> {
+            ReviewHistoryList(uiState = uiStateValue)
+        }
+        else -> {
+            // TO IMPLEMENT
+            TODO("not implemented yet.")
+        }
+    }
+}
+
+@Composable
+fun ReviewHistoryList(uiState: ReviewHistoryUiState.Success) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .randomBackgroundColor()
     ) {
-        items(testData, key = { it.id }) { review ->
-            Row(modifier = Modifier.fillMaxWidth().randomBackgroundColor().padding(16.dp)) {
+        items(uiState.reviews, key = { it.id }) { review ->
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .randomBackgroundColor()
+                .padding(16.dp)) {
                 // rating
                 Text(
                     text = review.formatRating(),
