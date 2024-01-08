@@ -44,7 +44,7 @@ class MediaRepositoryImplTests {
         val watchContext = "watch context"
         val reviewDate = ReviewDate(2022, 10, 10)
         val mediaReview = MediaReview(
-            rating, review, reviewDate, watchContext
+            0, rating, review, reviewDate, watchContext
         )
 
         // WHEN that review is added for a TmdbMovie
@@ -82,7 +82,7 @@ class MediaRepositoryImplTests {
         val watchContext = "watch context"
         val reviewDate = ReviewDate(2022, 10, 10)
         val mediaReview = MediaReview(
-            rating, review, reviewDate, watchContext
+            0, rating, review, reviewDate, watchContext
         )
 
         mediaRepositoryImpl.addNewCustomMediaWithReview(

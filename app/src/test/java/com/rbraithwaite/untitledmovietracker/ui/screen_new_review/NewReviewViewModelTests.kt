@@ -118,6 +118,7 @@ class NewReviewViewModelTests {
         // -------------------------------------------
 
         val expectedReview = MediaReview(
+            0,
             updatedRating,
             updatedReview,
             updatedReviewDate,
@@ -160,6 +161,7 @@ class NewReviewViewModelTests {
         assertThat(uiState.value?.review?.reviewDate, willBe(updatedReviewDate))
 
         val expectedReview = MediaReview(
+            0,
             updatedRating,
             updatedReview,
             updatedReviewDate,
