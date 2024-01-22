@@ -13,4 +13,6 @@ import androidx.room.TypeConverters
 @TypeConverters(ReviewDateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun mediaDao(): MediaDao
+
+    abstract fun reviewDao(): ReviewDao
 }

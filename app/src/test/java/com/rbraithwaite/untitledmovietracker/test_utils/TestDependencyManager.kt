@@ -1,14 +1,18 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
 import com.rbraithwaite.test_data_utils.valueOf
+import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.MediaReviewBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeMediaRepository
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeReviewRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeDatabase
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeMediaDao
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeReviewDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbApiV3
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -39,8 +43,21 @@ class TestDependencyManager(
         FakeMediaDao(localDatabase)
     }
 
+    private val reviewDao: FakeReviewDao by lazy {
+        FakeReviewDao(localDatabase)
+    }
+
     private val tmdbApiV3: FakeTmdbApiV3 by lazy {
         FakeTmdbApiV3(backend)
+    }
+
+    val reviewRepository: DelegateFakeReviewRepository by lazy {
+        DelegateFakeReviewRepository(
+            reviewDao,
+            mediaDao,
+            externalScope,
+            coroutineDispatcher
+        )
     }
 
     val mediaRepository: DelegateFakeMediaRepository by lazy {
@@ -58,10 +75,17 @@ class TestDependencyManager(
     //region Test State Initialization
 
     interface TestStateInitializer {
+        // TODO [24-01-19 11:27p.m.] -- this doesn't allow for custom ids, since adding through
+        //  the repo ignores the given id (also see impl of FakeMediaDao, the FakeDatabase sets the id).
         /**
          * @param customMedia The custom media to initialize the repo with
          */
         suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder)
+
+        /**
+         * @param mediaReviews These are pairs of (review, custom media id)
+         */
+        suspend fun withMediaReviewsForCustomMedia(vararg mediaReviews: Pair<MediaReviewBuilder, Long>)
 
         suspend fun withBackendSearchResults(
             movies: List<SearchMultiResult.Movie>,
@@ -76,6 +100,15 @@ class TestDependencyManager(
                 this@TestDependencyManager.mediaRepository.withMockEnabled(false) {
                     addNewCustomMedia(valueOf(it))
                 }
+            }
+        }
+
+        override suspend fun withMediaReviewsForCustomMedia(vararg mediaReviews: Pair<MediaReviewBuilder, Long>) {
+            mediaReviews.forEach { (mediaReview, customMediaId) ->
+                this@TestDependencyManager.reviewRepository.addReviewForCustomMedia(
+                    mediaReview.build(),
+                    customMediaId
+                )
             }
         }
 

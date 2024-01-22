@@ -20,6 +20,12 @@ class FakeMediaDao(
         val allCustomMedia = database.find<CustomMediaEntity>()
         return allCustomMedia.filter { it.title.contains(searchCriteria) }
     }
+
+    override suspend fun findCustomMediaWithIds(customMediaIds: List<Long>): List<CustomMediaEntity> {
+        return database.find {
+            customMediaIds.contains(this.id)
+        }
+    }
 }
 
 // REFACTOR [23-10-29 3:55p.m.] -- move this

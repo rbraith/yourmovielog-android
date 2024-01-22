@@ -1,34 +1,24 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.review_history
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rbraithwaite.untitledmovieapp.TempWipData
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
-import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
-import okhttp3.internal.format
 
 @Composable
 fun ReviewHistoryScreen(
@@ -37,12 +27,11 @@ fun ReviewHistoryScreen(
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     when (val uiStateValue = uiState.value) {
+        is ReviewHistoryUiState.Loading -> {
+            Text("Loading")
+        }
         is ReviewHistoryUiState.Success -> {
             ReviewHistoryList(uiState = uiStateValue)
-        }
-        else -> {
-            // TO IMPLEMENT
-            TODO("not implemented yet.")
         }
     }
 }
@@ -98,11 +87,11 @@ private fun MediaReview.formatRating(): String {
 }
 
 private fun MediaReview.formatMediaType(): String {
-    val relatedMedia = getHydration<MediaReview.Hydration.RelatedMedia>() ?: return "?"
+    val relatedMedia = getExtra<MediaReview.Extras.RelatedMedia>() ?: return "?"
 
     return when (relatedMedia) {
-        is MediaReview.Hydration.RelatedMedia.Custom -> "custom"
-        is MediaReview.Hydration.RelatedMedia.Tmdb -> {
+        is MediaReview.Extras.RelatedMedia.Custom -> "custom"
+        is MediaReview.Extras.RelatedMedia.Tmdb -> {
             when (relatedMedia.data) {
                 is TmdbLite.Movie -> "tmdb movie"
                 else -> {
@@ -115,11 +104,11 @@ private fun MediaReview.formatMediaType(): String {
 }
 
 private fun MediaReview.formatMediaTitle(): String {
-    val relatedMedia = getHydration<MediaReview.Hydration.RelatedMedia>() ?: return "??"
+    val relatedMedia = getExtra<MediaReview.Extras.RelatedMedia>() ?: return "??"
 
     return when (relatedMedia) {
-        is MediaReview.Hydration.RelatedMedia.Custom -> relatedMedia.data.title
-        is MediaReview.Hydration.RelatedMedia.Tmdb -> {
+        is MediaReview.Extras.RelatedMedia.Custom -> relatedMedia.data.title
+        is MediaReview.Extras.RelatedMedia.Tmdb -> {
             when (val media = relatedMedia.data) {
                 is TmdbLite.Movie -> media.title
                 else -> {

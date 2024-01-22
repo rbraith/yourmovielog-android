@@ -1,11 +1,14 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.review_history
 
 import androidx.lifecycle.ViewModel
-import com.rbraithwaite.untitledmovieapp.TempWipData
+import androidx.lifecycle.viewModelScope
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed interface ReviewHistoryUiState {
@@ -14,10 +17,21 @@ sealed interface ReviewHistoryUiState {
 }
 
 @HiltViewModel
-class ReviewHistoryViewModel @Inject constructor(): ViewModel() {
-    private val _uiState = MutableStateFlow<ReviewHistoryUiState>(
-//        ReviewHistoryUiState.Loading
-        ReviewHistoryUiState.Success(TempWipData.allReviews)
-    )
+class ReviewHistoryViewModel @Inject constructor(
+    private val reviewRepository: ReviewRepository
+): ViewModel() {
+    private val _uiState = MutableStateFlow<ReviewHistoryUiState>(ReviewHistoryUiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val reviews = reviewRepository.getAllReviews(
+                extras = setOf(MediaReview.Extras.RelatedMedia::class)
+            )
+
+            _uiState.update {
+                ReviewHistoryUiState.Success(reviews)
+            }
+        }
+    }
 }

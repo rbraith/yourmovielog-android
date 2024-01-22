@@ -2,18 +2,17 @@ package com.rbraithwaite.untitledmovieapp
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReviewHydrationType
+import com.rbraithwaite.untitledmovieapp.core.data.MediaReviewExtrasType
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import kotlin.random.Random
 import kotlin.random.nextInt
-import kotlin.reflect.KClass
 
 object TempWipData {
     val allReviews: List<MediaReview> by lazy {
         generateMediaReviews(
             count = 50,
-            hydrations = setOf(MediaReview.Hydration.RelatedMedia::class)
+            extras = setOf(MediaReview.Extras.RelatedMedia::class)
         )
     }
 
@@ -83,14 +82,14 @@ private fun generateTmdbLiteMovie(): TmdbLite.Movie {
     )
 }
 
-private fun generateMediaReviews(count: Int, hydrations: Set<MediaReviewHydrationType>): List<MediaReview> {
+private fun generateMediaReviews(count: Int, extras: Set<MediaReviewExtrasType>): List<MediaReview> {
     return buildList {
         repeat(count) {
             var mediaReview = generateMediaReview()
-            for (hydration in hydrations) {
-                when (hydration) {
-                    MediaReview.Hydration.RelatedMedia::class -> {
-                        mediaReview = mediaReview.withHydration(generateRandomMediaReviewRelatedMedia())
+            for (extrasType in extras) {
+                when (extrasType) {
+                    MediaReview.Extras.RelatedMedia::class -> {
+                        mediaReview = mediaReview.withExtras(generateRandomMediaReviewRelatedMedia())
                     }
                 }
             }
@@ -99,16 +98,16 @@ private fun generateMediaReviews(count: Int, hydrations: Set<MediaReviewHydratio
     }
 }
 
-private fun generateRandomMediaReviewRelatedMedia(): MediaReview.Hydration.RelatedMedia {
+private fun generateRandomMediaReviewRelatedMedia(): MediaReview.Extras.RelatedMedia {
     val isCustomMedia = RANDOM.nextFloat() <= 0.25f
     if (isCustomMedia) {
-        return MediaReview.Hydration.RelatedMedia.Custom(data = TempWipData.allCustomMedia.random())
+        return MediaReview.Extras.RelatedMedia.Custom(data = TempWipData.allCustomMedia.random())
     }
-    return MediaReview.Hydration.RelatedMedia.Tmdb(data = TempWipData.allTmdbLiteMedia.random())
+    return MediaReview.Extras.RelatedMedia.Tmdb(data = TempWipData.allTmdbLiteMedia.random())
 }
 
 /**
- * Generate non-hydrated MediaReview.
+ * Generate MediaReview without extras.
  */
 private fun generateMediaReview(): MediaReview {
     return MediaReview(

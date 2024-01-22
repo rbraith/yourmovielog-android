@@ -27,7 +27,7 @@ class FakeDatabase(
             table.rows.add(entity)
             ID_ORIGINAL
         } else {
-            val newId = (table.rows.size - 1).toLong()
+            val newId = (table.rows.size + 1).toLong()
             val updatedEntity = entity.idUpdateBlock(newId)
             table.rows.add(updatedEntity)
             newId

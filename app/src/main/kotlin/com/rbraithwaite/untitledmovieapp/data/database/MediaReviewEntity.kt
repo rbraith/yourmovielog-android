@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 
-@Entity
+@Entity(tableName = "reviews")
 data class MediaReviewEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "media_id") val mediaId: Long = -1,
@@ -15,4 +15,8 @@ data class MediaReviewEntity(
     @ColumnInfo(name = "review") val review: String?,
     @ColumnInfo(name = "review_date") val reviewDate: ReviewDate?,
     @ColumnInfo(name = "watch_context") val watchContext: String?
-)
+) {
+    enum class Type(val value: String) {
+        CUSTOM("custom")
+    }
+}

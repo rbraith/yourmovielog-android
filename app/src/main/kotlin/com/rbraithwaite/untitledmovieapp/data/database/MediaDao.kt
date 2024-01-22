@@ -12,10 +12,16 @@ abstract class MediaDao {
         customMedia: CustomMediaEntity
     ): Long
 
+    // REFACTOR [24-01-21 1:26a.m.] -- move to ReviewDao.
     @Insert
     abstract suspend fun addReview(
         mediaReview: MediaReviewEntity
     ): Long
+
+    // TEST NEEDED [24-01-19 11:09p.m.] -- .
+    // REFACTOR [24-01-19 10:54p.m.] -- hardcoded id col name.
+    @Query("SELECT * FROM ${CustomMediaEntity.Contract.TABLE_NAME} WHERE id IN (:customMediaIds)")
+    abstract suspend fun findCustomMediaWithIds(customMediaIds: List<Long>): List<CustomMediaEntity>
 
     // TODO [23-11-3 10:04p.m.] -- I need a strategy for testing the real & fake dao in parallel to
     //  keep their behaviour aligned.

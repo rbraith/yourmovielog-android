@@ -51,6 +51,7 @@ class SearchViewModelTests {
         assertThat(searchResults.value is SearchResults.NoInput, willBe(true))
     }
 
+    // BUG [24-01-13 8:02p.m.] -- I think this should be using mainDispatcherRule.testScope.runTest()
     @Test
     fun changingQuickSearchInputUpdatesResults() = runTest {
         // GIVEN a repository with some Media
