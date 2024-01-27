@@ -108,6 +108,9 @@ class NewReviewViewModel @Inject constructor(
                     }
                 }
                 is TmdbMovieUiState -> {
+                    // TEST NEEDED [24-01-22 12:02a.m.] i need to fix NewReviewViewModelTests
+                    //  convert to delegate fakes to test this addOrUpdate call.
+                    mediaRepository.addOrUpdateTmdbLite(mediaUiState.tmdbMovie.data)
                     mediaRepository.addTmdbMovieReview(
                         tmdbMovieId = mediaUiState.tmdbMovie.data.id,
                         review = review

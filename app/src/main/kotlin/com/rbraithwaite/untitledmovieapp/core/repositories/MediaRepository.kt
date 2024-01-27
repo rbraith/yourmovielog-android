@@ -4,6 +4,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 
 interface MediaRepository {
     /**
@@ -19,6 +20,8 @@ interface MediaRepository {
         customMedia: CustomMedia,
         review: MediaReview
     )
+
+    suspend fun addOrUpdateTmdbLite(tmdblite: TmdbLite)
 
     // REFACTOR [23-12-20 3:41p.m.] -- this is very lazy lol - I need to rethink how I'm adding reviews,
     //  and core data in general, like have one common addMediaReview(<media-specific-id>, review)

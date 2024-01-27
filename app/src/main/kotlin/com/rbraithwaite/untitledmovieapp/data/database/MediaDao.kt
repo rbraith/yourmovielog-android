@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 
@@ -41,4 +42,28 @@ abstract class MediaDao {
         val mediaReview2 = mediaReview.copy(mediaId = mediaId)
         addReview(mediaReview2)
     }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity)
+
+    // TEST NEEDED [24-01-22 12:40a.m.] -- .
+    @Transaction
+    open suspend fun addOrUpdateGenreIdsForMovie(
+        movieId: Int,
+        genreIds: List<Int>
+    ) {
+        clearGenreIdsForMovie(movieId)
+
+        val junctions = genreIds.map { genreId ->
+            TmdbLiteMovieGenreJunction(movieId, genreId)
+        }.toTypedArray()
+
+        addMovieGenreJunctions(*junctions)
+    }
+
+    @Query("DELETE FROM movie_x_genre WHERE movie_id = :movieId")
+    protected abstract suspend fun clearGenreIdsForMovie(movieId: Int)
+
+    @Insert
+    protected abstract suspend fun addMovieGenreJunctions(vararg junctions: TmdbLiteMovieGenreJunction)
 }

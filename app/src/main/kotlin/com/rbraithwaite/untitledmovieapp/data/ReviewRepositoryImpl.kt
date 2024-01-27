@@ -63,6 +63,9 @@ class ReviewRepositoryImpl @Inject constructor(
 
         groupedByMediaType = updateWithCustomRelatedMedia(groupedByMediaType)
 
+        // TODO [24-01-22 12:42a.m.] here, I need to pull tmdb lite movie data from the db
+        //  it'll need to be combined with the genre ids in the movie/genre junction.
+
         return groupedByMediaType.entries.flatMap { it.value }.sortedBy { it.entity.id }
     }
 

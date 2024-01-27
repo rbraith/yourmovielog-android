@@ -9,6 +9,8 @@ import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
@@ -53,6 +55,36 @@ class MediaRepositoryImpl @Inject constructor(
                 mediaReviewEntity
             )
         }.join()
+    }
+
+    // TEST NEEDED [24-01-22 12:40a.m.].
+    override suspend fun addOrUpdateTmdbLite(tmdblite: TmdbLite) {
+        launchCoroutine {
+            when (tmdblite) {
+                is TmdbLite.Movie -> {
+                    val movieEntity = TmdbLiteMovieEntity(
+                        tmdblite.id,
+                        tmdblite.title,
+                        tmdblite.overview,
+                        tmdblite.posterPath,
+                        tmdblite.popularity,
+                        tmdblite.releaseDate,
+                        tmdblite.voteAverage,
+                        tmdblite.voteCount
+                    )
+
+                    mediaDao.addOrUpdateTmdbLiteMovie(movieEntity)
+                    mediaDao.addOrUpdateGenreIdsForMovie(
+                        tmdblite.id,
+                        tmdblite.genreIds
+                    )
+                }
+                else -> {
+                    // TO IMPLEMENT
+                    TODO("not implemented yet.")
+                }
+            }
+        }
     }
 
     override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {
@@ -153,6 +185,13 @@ class MediaRepositoryImpl @Inject constructor(
     // REFACTOR [23-11-19 3:43p.m.] -- should delete this.
     private fun CustomMediaEntity.toCustomMedia(): CustomMedia {
         return CustomMedia(id, title)
+    }
+
+    // REFACTOR [24-01-22 12:03a.m.] -- duplicate with ReviewRepositoryImpl.
+    private suspend fun launchCoroutine(block: suspend () -> Unit) {
+        externalScope.launch(coroutineDispatcher) {
+            block()
+        }.join()
     }
 }
 

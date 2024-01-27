@@ -4,6 +4,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.media.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
@@ -59,6 +60,10 @@ class DelegateFakeMediaRepository(
             mock.addNewCustomMediaWithReview(customMedia, review)
         }
         real.addNewCustomMediaWithReview(customMedia, review)
+    }
+
+    override suspend fun addOrUpdateTmdbLite(tmdblite: TmdbLite) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {

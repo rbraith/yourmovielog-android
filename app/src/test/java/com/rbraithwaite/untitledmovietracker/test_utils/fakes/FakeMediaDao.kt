@@ -3,6 +3,8 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
 
 class FakeMediaDao(
     private val database: FakeDatabase
@@ -25,6 +27,18 @@ class FakeMediaDao(
         return database.find {
             customMediaIds.contains(this.id)
         }
+    }
+
+    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun clearGenreIdsForMovie(movieId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addMovieGenreJunctions(vararg junctions: TmdbLiteMovieGenreJunction) {
+        TODO("Not yet implemented")
     }
 }
 

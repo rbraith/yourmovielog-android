@@ -7,10 +7,15 @@ import androidx.room.TypeConverters
 @Database(
     entities = [
         CustomMediaEntity::class,
-        MediaReviewEntity::class],
+        MediaReviewEntity::class,
+        TmdbLiteMovieEntity::class,
+        TmdbLiteMovieGenreJunction::class],
     version = 1
 )
-@TypeConverters(ReviewDateConverter::class)
+@TypeConverters(
+    ReviewDateConverter::class,
+    LocalDateConverter::class
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun mediaDao(): MediaDao
 
