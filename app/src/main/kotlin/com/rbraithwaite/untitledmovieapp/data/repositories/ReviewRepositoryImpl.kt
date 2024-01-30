@@ -6,7 +6,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
@@ -30,7 +30,7 @@ class ReviewRepositoryImpl @Inject constructor(
     }
 
     private data class ReviewEntityAndCoreData(
-        val entity: MediaReviewEntity,
+        val entity: ReviewEntity,
         val coreData: MediaReview
     )
 
@@ -73,7 +73,7 @@ class ReviewRepositoryImpl @Inject constructor(
     private suspend fun updateWithCustomRelatedMedia(
         groupedReviewsByMediaType: Map<String, List<ReviewEntityAndCoreData>>
     ): Map<String, List<ReviewEntityAndCoreData>> {
-        val customMediaTypeKey = MediaReviewEntity.Type.CUSTOM.value
+        val customMediaTypeKey = ReviewEntity.Type.CUSTOM.value
         val customMediaReviewGroup = groupedReviewsByMediaType[customMediaTypeKey] ?: return groupedReviewsByMediaType
 
         val customMediaIds = customMediaReviewGroup.map { (entity, _) -> entity.mediaId }
@@ -101,7 +101,7 @@ class ReviewRepositoryImpl @Inject constructor(
     private suspend fun updateWithTmdbMovieRelatedMedia(
         groupedReviewsByMediaType: Map<String, List<ReviewEntityAndCoreData>>
     ): Map<String, List<ReviewEntityAndCoreData>> {
-        val mediaTypeKey = MediaReviewEntity.Type.TMDB_MOVIE.value
+        val mediaTypeKey = ReviewEntity.Type.TMDB_MOVIE.value
         val reviewGroup = groupedReviewsByMediaType[mediaTypeKey] ?: return groupedReviewsByMediaType
 
         val movieIds = reviewGroup.map { (entity, _) -> entity.mediaId }
@@ -142,7 +142,7 @@ class ReviewRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun MediaReviewEntity.toMediaReview(): MediaReview {
+    private fun ReviewEntity.toMediaReview(): MediaReview {
         return MediaReview(
             id = id.toInt(),
             rating = rating,
@@ -162,7 +162,7 @@ class ReviewRepositoryImpl @Inject constructor(
     override suspend fun addReviewForCustomMedia(review: MediaReview, customMediaId: Long) {
         launchCoroutine {
             val reviewEntity = review.toEntityForMedia(
-                mediaType = MediaReviewEntity.Type.CUSTOM,
+                mediaType = ReviewEntity.Type.CUSTOM,
                 mediaId = customMediaId
             )
 
@@ -171,8 +171,8 @@ class ReviewRepositoryImpl @Inject constructor(
     }
 }
 
-fun MediaReview.toEntityForMedia(mediaType: MediaReviewEntity.Type, mediaId: Long): MediaReviewEntity {
-    return MediaReviewEntity(
+fun MediaReview.toEntityForMedia(mediaType: ReviewEntity.Type, mediaId: Long): ReviewEntity {
+    return ReviewEntity(
         id = id.toLong(),
         mediaId = mediaId,
         mediaType = mediaType.value,

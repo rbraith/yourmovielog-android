@@ -7,7 +7,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
@@ -37,7 +37,7 @@ class MediaRepositoryImpl @Inject constructor(
     override suspend fun addNewCustomMediaWithReview(customMedia: CustomMedia, review: MediaReview) {
         externalScope.launch(coroutineDispatcher) {
             val customMediaEntity = customMedia.toNewEntity()
-            val mediaReviewEntity = MediaReviewEntity(
+            val reviewEntity = ReviewEntity(
                 mediaType = "custom",
                 rating = review.rating,
                 review = review.review,
@@ -45,11 +45,11 @@ class MediaRepositoryImpl @Inject constructor(
                 watchContext = review.watchContext
             )
 
-            Timber.d("adding review to db: \n$customMediaEntity \n$mediaReviewEntity")
+            Timber.d("adding review to db: \n$customMediaEntity \n$reviewEntity")
 
             mediaDao.addNewCustomMediaWithReview(
                 customMediaEntity,
-                mediaReviewEntity
+                reviewEntity
             )
         }.join()
     }
@@ -87,16 +87,16 @@ class MediaRepositoryImpl @Inject constructor(
     override suspend fun addTmdbMovieReview(tmdbMovieId: Long, review: MediaReview) {
         externalScope.launch(coroutineDispatcher) {
             // REFACTOR [23-12-27 2:19p.m.] -- extract entity creation to a helper function.
-            val mediaReviewEntity = MediaReviewEntity(
+            val reviewEntity = ReviewEntity(
                 mediaId = tmdbMovieId,
-                mediaType = MediaReviewEntity.Type.TMDB_MOVIE.value,
+                mediaType = ReviewEntity.Type.TMDB_MOVIE.value,
                 rating = review.rating,
                 review = review.review,
                 reviewDate = review.reviewDate,
                 watchContext = review.watchContext
             )
 
-            mediaDao.addReview(mediaReviewEntity)
+            mediaDao.addReview(reviewEntity)
         }.join()
     }
 

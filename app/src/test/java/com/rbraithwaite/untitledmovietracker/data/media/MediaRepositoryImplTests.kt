@@ -5,7 +5,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -90,13 +90,13 @@ class MediaRepositoryImplTests {
         )
 
         val expectedCustomMediaEntity = CustomMediaEntity(0, mediaTitle)
-        val expectedMediaReviewEntity = MediaReviewEntity(
+        val expectedReviewEntity = ReviewEntity(
             0, -1, "custom", rating, review, reviewDate, watchContext
         )
 
         verify(mockMediaDao).addNewCustomMediaWithReview(
             argForWhich { equals(expectedCustomMediaEntity) },
-            argForWhich { equals(expectedMediaReviewEntity) }
+            argForWhich { equals(expectedReviewEntity) }
         )
     }
 }

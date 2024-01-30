@@ -2,7 +2,7 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
@@ -15,7 +15,7 @@ class FakeMediaDao(
         return database.insert(customMedia, updateCustomMediaId)
     }
 
-    override suspend fun addReview(mediaReview: MediaReviewEntity): Long {
+    override suspend fun addReview(mediaReview: ReviewEntity): Long {
         return database.insert(mediaReview, updateMediaReviewId)
     }
 
@@ -80,7 +80,7 @@ private val updateCustomMediaId: (CustomMediaEntity.(Long) -> CustomMediaEntity)
 
 // REFACTOR [23-10-29 4:03p.m.] -- might be good to refactor entities with some common data class
 //  holding a primary key long id?
-private val updateMediaReviewId: (MediaReviewEntity.(Long) -> MediaReviewEntity) = {
+private val updateMediaReviewId: (ReviewEntity.(Long) -> ReviewEntity) = {
     if (this.id == 0L) {
         this.copy(id = it)
     } else {

@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 
@@ -21,7 +21,7 @@ abstract class MediaDao {
     // REFACTOR [24-01-21 1:26a.m.] -- move to ReviewDao.
     @Insert
     abstract suspend fun addReview(
-        mediaReview: MediaReviewEntity
+        mediaReview: ReviewEntity
     ): Long
 
     // TEST NEEDED [24-01-19 11:09p.m.] -- .
@@ -47,7 +47,7 @@ abstract class MediaDao {
     @Transaction
     open suspend fun addNewCustomMediaWithReview(
         customMedia: CustomMediaEntity,
-        mediaReview: MediaReviewEntity
+        mediaReview: ReviewEntity
     ) {
         val mediaId = addCustomMedia(customMedia)
 
