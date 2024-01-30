@@ -5,6 +5,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieWithGenres
 
 class FakeMediaDao(
     private val database: FakeDatabase
@@ -29,16 +30,42 @@ class FakeMediaDao(
         }
     }
 
-    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
-        TODO("Not yet implemented")
+    override suspend fun findTmdbLiteMoviesById(movieIds: List<Long>): List<TmdbLiteMovieWithGenres> {
+        val movies = database.find<TmdbLiteMovieEntity> { movieIds.contains(id) }
+
+        val foundMovieIds = movies.map { it.id }
+
+        val genreJunctions = database.find<TmdbLiteMovieGenreJunction> { foundMovieIds.contains(movieId) }
+        val groupedGenreJunctions = genreJunctions.groupBy { it.movieId }
+
+        return movies.map { movie ->
+            TmdbLiteMovieWithGenres(
+                movie,
+                groupedGenreJunctions.getOrElse(movie.id) { emptyList() }
+            )
+        }
     }
 
-    override suspend fun clearGenreIdsForMovie(movieId: Int) {
-        TODO("Not yet implemented")
+    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
+        val found = database.find<TmdbLiteMovieEntity> { id == movie.id }
+
+        if (found.isEmpty()) {
+            database.insert(movie)
+        } else {
+            database.update(movie) { id == movie.id }
+        }
+    }
+
+    override suspend fun clearGenreIdsForMovie(movieId: Long) {
+        database.delete<TmdbLiteMovieGenreJunction> {
+            this.movieId == movieId
+        }
     }
 
     override suspend fun addMovieGenreJunctions(vararg junctions: TmdbLiteMovieGenreJunction) {
-        TODO("Not yet implemented")
+        for (junction in junctions) {
+            database.insert(junction)
+        }
     }
 }
 

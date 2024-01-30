@@ -46,7 +46,7 @@ class LongCounter(private var value: Long = 0L) {
 }
 
 private val customMediaId = LongCounter()
-private val tmdbLiteMovieId = IntCounter()
+private val tmdbLiteMovieId = LongCounter()
 private val mediaReviewId = IntCounter()
 
 private fun generateCustomMedia(): CustomMedia {

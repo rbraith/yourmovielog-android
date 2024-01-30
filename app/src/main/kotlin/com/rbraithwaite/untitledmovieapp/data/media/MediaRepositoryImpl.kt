@@ -87,12 +87,12 @@ class MediaRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {
+    override suspend fun addTmdbMovieReview(tmdbMovieId: Long, review: MediaReview) {
         externalScope.launch(coroutineDispatcher) {
             // REFACTOR [23-12-27 2:19p.m.] -- extract entity creation to a helper function.
             val mediaReviewEntity = MediaReviewEntity(
-                mediaId = tmdbMovieId.toLong(),
-                mediaType = "tmdb_movie",
+                mediaId = tmdbMovieId,
+                mediaType = MediaReviewEntity.Type.TMDB_MOVIE.value,
                 rating = review.rating,
                 review = review.review,
                 reviewDate = review.reviewDate,

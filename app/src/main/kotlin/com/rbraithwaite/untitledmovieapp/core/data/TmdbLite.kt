@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 sealed interface TmdbLite {
     data class Movie(
-        val id: Int,
+        val id: Long,
         val title: String,
         val overview: String,
         val posterPath: String?,

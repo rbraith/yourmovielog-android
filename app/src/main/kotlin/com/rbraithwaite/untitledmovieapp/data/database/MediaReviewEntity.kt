@@ -17,6 +17,7 @@ data class MediaReviewEntity(
     @ColumnInfo(name = "watch_context") val watchContext: String?
 ) {
     enum class Type(val value: String) {
-        CUSTOM("custom")
+        CUSTOM("custom"),
+        TMDB_MOVIE("tmdb_movie")
     }
 }

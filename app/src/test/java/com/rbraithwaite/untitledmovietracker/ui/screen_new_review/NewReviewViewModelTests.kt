@@ -89,7 +89,7 @@ class NewReviewViewModelTests {
         // GIVEN a new review for a tmdb movie
         // -------------------------------------------
 
-        val expectedId = 123
+        val expectedId = 123L
 
         val searchResult = SearchResult.TmdbMovie(tmdbLiteMovie().withId(expectedId).build())
 

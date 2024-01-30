@@ -1,18 +1,21 @@
 package com.rbraithwaite.untitledmovietracker.ui.screens.review_history
 
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.ui.screens.review_history.ReviewHistoryUiState
 import com.rbraithwaite.untitledmovieapp.ui.screens.review_history.ReviewHistoryViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMedia
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.mediaReview
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.tmdbLiteMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
+import kotlin.math.exp
 
 class ReviewHistoryViewModelTests {
     @get:Rule
@@ -55,10 +58,14 @@ class ReviewHistoryViewModelTests {
         // -------------------------------------------
 
         val expectedCustomMediaId = 1L
+        val expectedTmdbMovieId = 123L
 
         testDependencyManager.initializeTestState {
             withCustomMedia(aCustomMedia())
             withMediaReviewsForCustomMedia(mediaReview() to expectedCustomMediaId)
+
+            withTmdbLiteMovies(tmdbLiteMovie().withId(expectedTmdbMovieId))
+            withMediaReviewsForTmdbMovie(mediaReview() to expectedTmdbMovieId)
         }
 
         // WHEN the ReviewHistoryViewModel is instantiated
@@ -72,11 +79,17 @@ class ReviewHistoryViewModelTests {
         // -------------------------------------------
 
         val successState = uiState.value as ReviewHistoryUiState.Success
-        assertThat(successState.reviews.size, willBe(1))
+        assertThat(successState.reviews.size, willBe(2))
 
-        val review = successState.reviews.first()
-        val relatedMedia = review.getExtra<MediaReview.Extras.RelatedMedia>()
-        val customRelated = relatedMedia as MediaReview.Extras.RelatedMedia.Custom
-        assert(customRelated.data.id == expectedCustomMediaId)
+        val reviews = successState.reviews
+        val firstReview = reviews.first()
+        val firstRelatedMedia = firstReview.getExtra<MediaReview.Extras.RelatedMedia>()
+        val firstCustomMedia = firstRelatedMedia as MediaReview.Extras.RelatedMedia.Custom
+        assert(firstCustomMedia.data.id == expectedCustomMediaId)
+
+        val secondReview = reviews[1]
+        val secondRelatedMedia = secondReview.getExtra<MediaReview.Extras.RelatedMedia>()
+        val firstTmdbMovie = (secondRelatedMedia as MediaReview.Extras.RelatedMedia.Tmdb).data as TmdbLite.Movie
+        assert(firstTmdbMovie.id == expectedTmdbMovieId)
     }
 }

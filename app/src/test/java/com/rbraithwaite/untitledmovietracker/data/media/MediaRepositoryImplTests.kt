@@ -50,7 +50,7 @@ class MediaRepositoryImplTests {
         // WHEN that review is added for a TmdbMovie
         // -------------------------------------------
 
-        val expectedTmdbMovieId = 123
+        val expectedTmdbMovieId = 123L
 
         mediaRepositoryImpl.addTmdbMovieReview(
             expectedTmdbMovieId,

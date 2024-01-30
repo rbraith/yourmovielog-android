@@ -63,11 +63,17 @@ class DelegateFakeMediaRepository(
     }
 
     override suspend fun addOrUpdateTmdbLite(tmdblite: TmdbLite) {
-        TODO("Not yet implemented")
+        if (mockEnabled) {
+            mock.addOrUpdateTmdbLite(tmdblite)
+        }
+        real.addOrUpdateTmdbLite(tmdblite)
     }
 
-    override suspend fun addTmdbMovieReview(tmdbMovieId: Int, review: MediaReview) {
-        TODO("Not yet implemented")
+    override suspend fun addTmdbMovieReview(tmdbMovieId: Long, review: MediaReview) {
+        if (mockEnabled) {
+            mock.addTmdbMovieReview(tmdbMovieId, review)
+        }
+        real.addTmdbMovieReview(tmdbMovieId, review)
     }
 
     override suspend fun findMedia(searchCriteria: String): List<SearchResult> {

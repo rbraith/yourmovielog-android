@@ -74,6 +74,23 @@ class FakeDatabase(
         }
     }
 
+    /**
+     * This keeps the entity's existing id. If an entity with that id is already found, that existing
+     * entity is replaced.
+     */
+    inline fun <reified T: Any, IdType: Any> insertOrUpdate(
+        entity: T,
+        crossinline getId: T.() -> IdType
+    ) {
+        val existing = find<T> { entity.getId() == this.getId() }
+
+        if (existing.isEmpty()) {
+            insert(entity)
+        } else {
+            update(entity) { entity.getId() == this.getId() }
+        }
+    }
+
     fun <T : Any> getTableFor(type: KClass<T>): Table<T>? {
         for (table in tables) {
             if (table.type == type) {

@@ -8,6 +8,6 @@ import androidx.room.Entity
     primaryKeys = ["movie_id", "genre_id"]
 )
 data class TmdbLiteMovieGenreJunction(
-    @ColumnInfo(name = "movie_id") val movieId: Int,
+    @ColumnInfo(name = "movie_id") val movieId: Long,
     @ColumnInfo(name = "genre_id") val genreId: Int
 )

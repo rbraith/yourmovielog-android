@@ -2,11 +2,14 @@ package com.rbraithwaite.untitledmovieapp.data
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.ReviewDao
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieWithGenres
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -62,9 +65,8 @@ class ReviewRepositoryImpl @Inject constructor(
         var groupedByMediaType = entitiesAndReviews.groupBy { it.entity.mediaType }
 
         groupedByMediaType = updateWithCustomRelatedMedia(groupedByMediaType)
+            .let { updateWithTmdbMovieRelatedMedia(it) }
 
-        // TODO [24-01-22 12:42a.m.] here, I need to pull tmdb lite movie data from the db
-        //  it'll need to be combined with the genre ids in the movie/genre junction.
 
         return groupedByMediaType.entries.flatMap { it.value }.sortedBy { it.entity.id }
     }
@@ -94,6 +96,50 @@ class ReviewRepositoryImpl @Inject constructor(
 
         return groupedReviewsByMediaType.toMutableMap().apply {
             put(customMediaTypeKey, reviewsWithCustomMedia)
+        }
+    }
+
+    private suspend fun updateWithTmdbMovieRelatedMedia(
+        groupedReviewsByMediaType: Map<String, List<ReviewEntityAndCoreData>>
+    ): Map<String, List<ReviewEntityAndCoreData>> {
+        val mediaTypeKey = MediaReviewEntity.Type.TMDB_MOVIE.value
+        val reviewGroup = groupedReviewsByMediaType[mediaTypeKey] ?: return groupedReviewsByMediaType
+
+        val movieIds = reviewGroup.map { (entity, _) -> entity.mediaId }
+        val movies = mediaDao.findTmdbLiteMoviesById(movieIds)
+
+        val reviewsWithMovies = reviewGroup.map { entityAndCore ->
+            val relatedMovie = movies.firstOrNull { it.tmdbMovie.id == entityAndCore.entity.mediaId }
+
+            if (relatedMovie == null) {
+                entityAndCore
+            } else {
+                entityAndCore.copy(
+                    coreData = entityAndCore.coreData.withExtras(
+                        MediaReview.Extras.RelatedMedia.Tmdb(relatedMovie.toTmdbLiteMovie())
+                    )
+                )
+            }
+        }
+
+        return groupedReviewsByMediaType.toMutableMap().apply {
+            put(mediaTypeKey, reviewsWithMovies)
+        }
+    }
+
+    private fun TmdbLiteMovieWithGenres.toTmdbLiteMovie(): TmdbLite.Movie {
+        with (this.tmdbMovie) {
+            return TmdbLite.Movie(
+                id = this.id,
+                title = this.title,
+                overview = this.overview,
+                posterPath = this.posterPath,
+                genreIds = this@toTmdbLiteMovie.genreIds.map { it.genreId },
+                popularity = this.popularity,
+                releaseDate = this.releaseDate,
+                voteAverage = this.voteAverage,
+                voteCount = this.voteCount
+            )
         }
     }
 

@@ -25,7 +25,7 @@ sealed interface SearchMultiResult {
         @SerializedName("backdrop_path")
         val backdropPath: String?,
         @SerializedName("id")
-        val id: Int,
+        val id: Long,
         @SerializedName("title")
         val title: String,
         @SerializedName("original_language")

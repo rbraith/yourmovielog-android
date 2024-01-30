@@ -5,9 +5,12 @@ import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
 import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.MediaReviewBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.TmdbLiteMovieBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeReviewRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeDatabase
@@ -27,7 +30,9 @@ class TestDependencyManager(
     private val localDatabase: FakeDatabase by lazy {
         FakeDatabase(listOf(
             CustomMediaEntity::class,
-            MediaReviewEntity::class
+            MediaReviewEntity::class,
+            TmdbLiteMovieEntity::class,
+            TmdbLiteMovieGenreJunction::class
         ))
     }
 
@@ -82,6 +87,13 @@ class TestDependencyManager(
          */
         suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder)
 
+        suspend fun withTmdbLiteMovies(vararg movies: TmdbLiteMovieBuilder)
+
+        /**
+         * @param reviews These are pairs of (review, tmdb movie id)
+         */
+        suspend fun withMediaReviewsForTmdbMovie(vararg reviews: Pair<MediaReviewBuilder, Long>)
+
         /**
          * @param mediaReviews These are pairs of (review, custom media id)
          */
@@ -103,6 +115,21 @@ class TestDependencyManager(
             }
         }
 
+        override suspend fun withTmdbLiteMovies(vararg movies: TmdbLiteMovieBuilder) {
+            movies.forEach { movie ->
+                this@TestDependencyManager.mediaRepository.addOrUpdateTmdbLite(movie.build())
+            }
+        }
+
+        override suspend fun withMediaReviewsForTmdbMovie(vararg reviews: Pair<MediaReviewBuilder, Long>) {
+            reviews.forEach { (mediaReview, tmdbMovieId) ->
+                this@TestDependencyManager.mediaRepository.addTmdbMovieReview(
+                    tmdbMovieId,
+                    mediaReview.build()
+                )
+            }
+        }
+
         override suspend fun withMediaReviewsForCustomMedia(vararg mediaReviews: Pair<MediaReviewBuilder, Long>) {
             mediaReviews.forEach { (mediaReview, customMediaId) ->
                 this@TestDependencyManager.reviewRepository.addReviewForCustomMedia(
@@ -120,7 +147,7 @@ class TestDependencyManager(
             val depManager = this@TestDependencyManager
 
             for (movie in movies) {
-                depManager.backend.insert(movie) { copy(id = it.toInt()) }
+                depManager.backend.insert(movie) { copy(id = it) }
             }
             for (tvShow in tvShows) {
                 depManager.backend.insert(tvShow) { copy(id = it.toInt()) }
