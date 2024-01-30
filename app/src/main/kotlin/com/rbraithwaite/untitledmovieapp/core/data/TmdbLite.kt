@@ -16,7 +16,7 @@ sealed interface TmdbLite {
     ): TmdbLite
 
     data class TvShow(
-        val id: Int,
+        val id: Long,
         val name: String,
         val overview: String,
         val posterPath: String?,
@@ -28,7 +28,7 @@ sealed interface TmdbLite {
     ): TmdbLite
 
     data class Person(
-        val id: Int,
+        val id: Long,
         val name: String,
         val popularity: Float,
         // TODO [23-11-19 3:58p.m.] -- gender should be an enum.

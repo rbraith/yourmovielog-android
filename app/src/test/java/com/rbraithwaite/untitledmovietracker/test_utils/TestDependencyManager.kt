@@ -150,10 +150,10 @@ class TestDependencyManager(
                 depManager.backend.insert(movie) { copy(id = it) }
             }
             for (tvShow in tvShows) {
-                depManager.backend.insert(tvShow) { copy(id = it.toInt()) }
+                depManager.backend.insert(tvShow) { copy(id = it) }
             }
             for (person in people) {
-                depManager.backend.insert(person) { copy(id = it.toInt()) }
+                depManager.backend.insert(person) { copy(id = it) }
             }
         }
     }

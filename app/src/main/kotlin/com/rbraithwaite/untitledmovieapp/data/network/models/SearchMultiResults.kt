@@ -58,7 +58,7 @@ sealed interface SearchMultiResult {
         @SerializedName("backdrop_path")
         val backdropPath: String?,
         @SerializedName("id")
-        val id: Int,
+        val id: Long,
         @SerializedName("name")
         val name: String,
         @SerializedName("original_language")
@@ -89,7 +89,7 @@ sealed interface SearchMultiResult {
         @SerializedName("adult")
         val adult: Boolean,
         @SerializedName("id")
-        val id: Int,
+        val id: Long,
         @SerializedName("name")
         val name: String,
         @SerializedName("original_name")
