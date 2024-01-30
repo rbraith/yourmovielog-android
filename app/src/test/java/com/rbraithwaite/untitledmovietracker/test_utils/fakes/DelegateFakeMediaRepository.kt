@@ -1,7 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.Media
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
