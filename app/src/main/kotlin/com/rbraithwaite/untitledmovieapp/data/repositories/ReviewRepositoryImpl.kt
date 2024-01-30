@@ -1,15 +1,14 @@
-package com.rbraithwaite.untitledmovieapp.data
+package com.rbraithwaite.untitledmovieapp.data.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.ReviewDao
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieWithGenres
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
+import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

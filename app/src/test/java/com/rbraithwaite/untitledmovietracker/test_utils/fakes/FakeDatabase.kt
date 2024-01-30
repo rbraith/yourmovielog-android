@@ -1,7 +1,5 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
-import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
 import kotlin.reflect.KClass
 
 class FakeDatabase(

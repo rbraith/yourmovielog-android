@@ -1,8 +1,9 @@
-package com.rbraithwaite.untitledmovieapp.data.database
+package com.rbraithwaite.untitledmovieapp.data.database.entities.combined
 
 import androidx.room.Embedded
-import androidx.room.Junction
 import androidx.room.Relation
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 
 data class TmdbLiteMovieWithGenres(
     @Embedded

@@ -1,10 +1,15 @@
-package com.rbraithwaite.untitledmovieapp.data.database
+package com.rbraithwaite.untitledmovieapp.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 
 @Dao
 abstract class MediaDao {

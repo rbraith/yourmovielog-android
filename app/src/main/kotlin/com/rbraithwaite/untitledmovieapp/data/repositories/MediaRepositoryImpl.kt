@@ -1,21 +1,19 @@
-package com.rbraithwaite.untitledmovieapp.data.media
+package com.rbraithwaite.untitledmovieapp.data.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
-import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
+import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
@@ -143,42 +141,56 @@ class MediaRepositoryImpl @Inject constructor(
     }
 
     private fun SearchMultiResult.Movie.toCoreSearchResult(): SearchResult.TmdbMovie {
-        return SearchResult.TmdbMovie(TmdbLite.Movie(
-            id,
-            title,
-            overview,
-            posterPath,
-            genreIds,
-            popularity,
-            parseTmdbDateString(releaseDate),
-            voteAverage,
-            voteCount
-        ))
+        return SearchResult.TmdbMovie(
+            TmdbLite.Movie(
+                id,
+                title,
+                overview,
+                posterPath,
+                genreIds,
+                popularity,
+                parseTmdbDateString(releaseDate),
+                voteAverage,
+                voteCount
+            )
+        )
     }
 
     private fun SearchMultiResult.TvShow.toCoreSearchResult(): SearchResult.TmdbTvShow {
-        return SearchResult.TmdbTvShow(TmdbLite.TvShow(
-            id,
-            name,
-            overview,
-            posterPath,
-            genreIds,
-            popularity,
-            parseTmdbDateString(firstAirDate),
-            voteAverage,
-            voteCount
-        ))
+        return SearchResult.TmdbTvShow(
+            TmdbLite.TvShow(
+                id,
+                name,
+                overview,
+                posterPath,
+                genreIds,
+                popularity,
+                parseTmdbDateString(firstAirDate),
+                voteAverage,
+                voteCount
+            )
+        )
     }
 
     private fun SearchMultiResult.Person.toCoreSearchResult(): SearchResult.TmdbPerson {
-        return SearchResult.TmdbPerson(TmdbLite.Person(
-            id,
-            name,
-            popularity,
-            gender,
-            knownForDepartment,
-            profilePath
-        ))
+        return SearchResult.TmdbPerson(
+            TmdbLite.Person(
+                id,
+                name,
+                popularity,
+                gender,
+                knownForDepartment,
+                profilePath
+            )
+        )
+    }
+
+    // REFACTOR [23-11-19 3:56p.m.] -- move this somewhere.
+    private fun parseTmdbDateString(dateString: String): LocalDate? {
+        if (dateString.isEmpty()) {
+            return null
+        }
+        return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
     }
 
     // REFACTOR [23-11-19 3:43p.m.] -- should delete this.
@@ -192,12 +204,4 @@ class MediaRepositoryImpl @Inject constructor(
             block()
         }.join()
     }
-}
-
-// REFACTOR [23-11-19 3:56p.m.] -- move this somewhere.
-private fun parseTmdbDateString(dateString: String): LocalDate? {
-    if (dateString.isEmpty()) {
-        return null
-    }
-    return LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
 }

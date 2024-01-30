@@ -1,11 +1,11 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
-import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieWithGenres
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
+import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 
 class FakeMediaDao(
     private val database: FakeDatabase

@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.data.database
+package com.rbraithwaite.untitledmovieapp.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

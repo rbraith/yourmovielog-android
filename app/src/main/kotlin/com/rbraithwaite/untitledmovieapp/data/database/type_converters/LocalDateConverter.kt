@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovieapp.data.database
+package com.rbraithwaite.untitledmovieapp.data.database.type_converters
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

@@ -1,12 +1,10 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
 import com.rbraithwaite.test_data_utils.valueOf
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
-import com.rbraithwaite.untitledmovieapp.data.database.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.TmdbLiteMovieGenreJunction
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.MediaReviewBuilder

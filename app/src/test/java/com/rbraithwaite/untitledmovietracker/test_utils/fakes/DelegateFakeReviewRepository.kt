@@ -2,7 +2,7 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.ReviewRepositoryImpl
+import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass

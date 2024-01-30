@@ -6,11 +6,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.ReviewRepositoryImpl
+import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.database.AppDatabase
-import com.rbraithwaite.untitledmovieapp.data.database.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.ReviewDao
-import com.rbraithwaite.untitledmovieapp.data.media.MediaRepositoryImpl
+import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
+import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultDeserializer

@@ -5,8 +5,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
-import com.rbraithwaite.untitledmovieapp.data.media.MediaRepositoryImpl
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.CustomMediaBuilder
+import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import org.mockito.kotlin.mock
