@@ -1,7 +1,6 @@
 package com.rbraithwaite.untitledmovieapp
 
-import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReviewExtrasType
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
@@ -9,26 +8,29 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 object TempWipData {
-    val allReviews: List<MediaReview> by lazy {
-        generateMediaReviews(
-            count = 50,
-            extras = setOf(MediaReview.Extras.RelatedMedia::class)
-        )
-    }
+    // TODO [24-02-2 12:17a.m.] broken.
+//    val allReviews: List<Review> by lazy {
+//        generateMediaReviews(
+//            count = 50,
+//            extras = setOf(Review.Extras.RelatedMedia::class)
+//        )
+//    }
 
-    val allCustomMedia: List<CustomMedia> by lazy {
-        buildList {
-            repeat(20) {
-                add(generateCustomMedia())
-            }
-        }
-    }
+    // TODO [24-02-2 12:17a.m.] broken.
+//    val allCustomMedia: List<CustomMovie> by lazy {
+//        buildList {
+//            repeat(20) {
+//                add(generateCustomMedia())
+//            }
+//        }
+//    }
 
-    val allTmdbLiteMedia: List<TmdbLite> by lazy {
-        generateTmdbLiteMedia(
-            movies = 40
-        )
-    }
+    // TODO [24-02-2 12:17a.m.] broken.
+//    val allTmdbLiteMedia: List<TmdbLite> by lazy {
+//        generateTmdbLiteMedia(
+//            movies = 40
+//        )
+//    }
 }
 
 class IntCounter(private var value: Int = 0) {
@@ -49,81 +51,87 @@ private val customMediaId = LongCounter()
 private val tmdbLiteMovieId = LongCounter()
 private val mediaReviewId = IntCounter()
 
-private fun generateCustomMedia(): CustomMedia {
-    return CustomMedia(
-        id = customMediaId.increment(),
-        title = RandomText.generateByWordCount(min = 2, max = 5)
-    )
-}
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateCustomMedia(): CustomMovie {
+//    return CustomMovie(
+//        id = customMediaId.increment(),
+//        title = RandomText.generateByWordCount(min = 2, max = 5)
+//    )
+//}
 
-private fun generateTmdbLiteMedia(movies: Int): List<TmdbLite> {
-    val moviesList: List<TmdbLite.Movie> = buildList {
-        repeat(movies) {
-            add(generateTmdbLiteMovie())
-        }
-    }
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateTmdbLiteMedia(movies: Int): List<TmdbLite> {
+//    val moviesList: List<TmdbLite.Movie> = buildList {
+//        repeat(movies) {
+//            add(generateTmdbLiteMovie())
+//        }
+//    }
+//
+//    // TODO [24-01-6 10:52p.m.] -- just adding movies for now, later randomly mix with other data
+//    //  (tv shows, people).
+//    return moviesList
+//}
 
-    // TODO [24-01-6 10:52p.m.] -- just adding movies for now, later randomly mix with other data
-    //  (tv shows, people).
-    return moviesList
-}
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateTmdbLiteMovie(): TmdbLite.Movie {
+//    return TmdbLite.Movie(
+//        id = tmdbLiteMovieId.increment(),
+//        title = RandomText.generateByWordCount(min = 2, max = 5),
+//        overview = RandomText.generateByWordCount(min = 12, max = 24),
+//        posterPath = null,
+//        genreIds = emptyList(),
+//        popularity = RANDOM.nextFloat() * 100.0f,
+//        releaseDate = null,
+//        voteAverage = RANDOM.nextFloat() * 10.0f,
+//        voteCount = RANDOM.nextInt(from = 1000, until = 5000)
+//    )
+//}
 
-private fun generateTmdbLiteMovie(): TmdbLite.Movie {
-    return TmdbLite.Movie(
-        id = tmdbLiteMovieId.increment(),
-        title = RandomText.generateByWordCount(min = 2, max = 5),
-        overview = RandomText.generateByWordCount(min = 12, max = 24),
-        posterPath = null,
-        genreIds = emptyList(),
-        popularity = RANDOM.nextFloat() * 100.0f,
-        releaseDate = null,
-        voteAverage = RANDOM.nextFloat() * 10.0f,
-        voteCount = RANDOM.nextInt(from = 1000, until = 5000)
-    )
-}
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateMediaReviews(count: Int, extras: Set<MediaReviewExtrasType>): List<Review> {
+//    return buildList {
+//        repeat(count) {
+//            var mediaReview = generateMediaReview()
+//            for (extrasType in extras) {
+//                when (extrasType) {
+//                    Review.Extras.RelatedMedia::class -> {
+//                        mediaReview = mediaReview.withExtras(generateRandomMediaReviewRelatedMedia())
+//                    }
+//                }
+//            }
+//            add(mediaReview)
+//        }
+//    }
+//}
 
-private fun generateMediaReviews(count: Int, extras: Set<MediaReviewExtrasType>): List<MediaReview> {
-    return buildList {
-        repeat(count) {
-            var mediaReview = generateMediaReview()
-            for (extrasType in extras) {
-                when (extrasType) {
-                    MediaReview.Extras.RelatedMedia::class -> {
-                        mediaReview = mediaReview.withExtras(generateRandomMediaReviewRelatedMedia())
-                    }
-                }
-            }
-            add(mediaReview)
-        }
-    }
-}
-
-private fun generateRandomMediaReviewRelatedMedia(): MediaReview.Extras.RelatedMedia {
-    val isCustomMedia = RANDOM.nextFloat() <= 0.25f
-    if (isCustomMedia) {
-        return MediaReview.Extras.RelatedMedia.Custom(data = TempWipData.allCustomMedia.random())
-    }
-    return MediaReview.Extras.RelatedMedia.Tmdb(data = TempWipData.allTmdbLiteMedia.random())
-}
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateRandomMediaReviewRelatedMedia(): Review.Extras.RelatedMedia {
+//    val isCustomMedia = RANDOM.nextFloat() <= 0.25f
+//    if (isCustomMedia) {
+//        return Review.Extras.RelatedMedia.Custom(data = TempWipData.allCustomMedia.random())
+//    }
+//    return Review.Extras.RelatedMedia.Tmdb(data = TempWipData.allTmdbLiteMedia.random())
+//}
 
 /**
  * Generate MediaReview without extras.
  */
-private fun generateMediaReview(): MediaReview {
-    return MediaReview(
-        id = mediaReviewId.increment(),
-        rating = nullable(0.2f) { RANDOM.nextInt(0..100) },
-        review = nullable(0.2f) {
-            RandomText.generateByWordCount(min = 5, max = 20)
-        },
-        reviewDate = nullable(0.2f) {
-            generateRandomReviewDate()
-        },
-        watchContext = nullable(0.4f) {
-            RandomText.randomWord()
-        }
-    )
-}
+// TODO [24-02-2 12:17a.m.] broken.
+//private fun generateMediaReview(): Review {
+//    return Review(
+//        id = mediaReviewId.increment(),
+//        rating = nullable(0.2f) { RANDOM.nextInt(0..100) },
+//        review = nullable(0.2f) {
+//            RandomText.generateByWordCount(min = 5, max = 20)
+//        },
+//        reviewDate = nullable(0.2f) {
+//            generateRandomReviewDate()
+//        },
+//        watchContext = nullable(0.4f) {
+//            RandomText.randomWord()
+//        }
+//    )
+//}
 
 private fun generateRandomReviewDate(): ReviewDate {
     var reviewDate = ReviewDate(

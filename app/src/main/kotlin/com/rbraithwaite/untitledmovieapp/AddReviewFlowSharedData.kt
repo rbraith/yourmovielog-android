@@ -1,7 +1,6 @@
 package com.rbraithwaite.untitledmovieapp
 
 import androidx.lifecycle.ViewModel
-import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -10,5 +9,6 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddReviewFlowSharedData @Inject constructor(): ViewModel() {
-    var newReviewSearchResult: SearchResult? = null
+    // TODO [24-02-2 12:13a.m.] broken.
+//    var newReviewSearchResult: SearchResult? = null
 }

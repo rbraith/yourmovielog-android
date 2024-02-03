@@ -4,10 +4,25 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(
-    tableName = "movie_x_genre",
-    primaryKeys = ["movie_id", "genre_id"]
+    tableName = TmdbLiteMovieGenreJunction.Contract.TABLE_NAME,
+    primaryKeys = [
+        TmdbLiteMovieGenreJunction.Contract.Columns.MOVIE_ID,
+        TmdbLiteMovieGenreJunction.Contract.Columns.GENRE_ID
+    ]
 )
 data class TmdbLiteMovieGenreJunction(
-    @ColumnInfo(name = "movie_id") val movieId: Long,
-    @ColumnInfo(name = "genre_id") val genreId: Int
-)
+    @ColumnInfo(name = Contract.Columns.MOVIE_ID)
+    val movieId: Long,
+
+    @ColumnInfo(name = Contract.Columns.GENRE_ID)
+    val genreId: Int
+) {
+    object Contract {
+        const val TABLE_NAME = "movie_x_genre"
+
+        object Columns {
+            const val MOVIE_ID = "movie_id"
+            const val GENRE_ID = "genre_id"
+        }
+    }
+}

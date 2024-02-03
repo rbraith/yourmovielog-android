@@ -1,14 +1,14 @@
 package com.rbraithwaite.untitledmovieapp.data.repositories
 
-import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
+import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
+import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toCustomMovie
+import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
+import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toReview
+import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
+import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toTmdbLiteMovie
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -18,167 +18,103 @@ import kotlin.reflect.KClass
 
 class ReviewRepositoryImpl @Inject constructor(
     private val reviewDao: ReviewDao,
-    private val mediaDao: MediaDao,
+    private val tmdbDao: TmdbDao,
+    private val customMediaDao: CustomMediaDao,
     private val externalScope: CoroutineScope,
     @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher
 ): ReviewRepository {
-    private suspend fun launchCoroutine(block: suspend () -> Unit) {
+    override suspend fun addOrUpdateReviews(vararg reviews: Review) {
+        launchExternal {
+            val entities = reviews.map { it.toEntity() }.toTypedArray()
+            reviewDao.insertOrUpdateReviews(*entities)
+        }
+    }
+
+    private suspend fun launchExternal(block: suspend () -> Unit) {
         externalScope.launch(coroutineDispatcher) {
             block()
         }.join()
     }
 
-    private data class ReviewEntityAndCoreData(
-        val entity: ReviewEntity,
-        val coreData: MediaReview
-    )
-
     // TODO [24-01-21 1:33a.m.] -- I need a transaction helper here to wrap the multiple dao calls.
-    override suspend fun getAllReviews(extras: Set<KClass<out MediaReview.Extras>>): List<MediaReview> {
-        val reviews = reviewDao.getAllReviews()
-        if (extras.isEmpty()) {
-            return reviews.map { it.toMediaReview() }
-        }
+    override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {
+        var reviews = reviewDao.getAllReviews().map { it.toReview() }
 
-        // keep the entity and core data together for now, since the entity has information
-        // about the extras.
-        var reviewEntitiesAndCoreData = reviews.map { ReviewEntityAndCoreData(it, it.toMediaReview()) }
-
-        // apply extra data to the core data
         for (extrasType in extras) {
             when (extrasType) {
-                MediaReview.Extras.RelatedMedia::class -> {
-                    reviewEntitiesAndCoreData = applyRelatedMediaExtraDataTo(reviewEntitiesAndCoreData)
+                Review.Extras.RelatedMedia::class -> {
+                    reviews = applyRelatedMediaExtraDataTo(reviews)
                 }
             }
         }
 
-        // isolate and return the core data
-        return reviewEntitiesAndCoreData.map { it.coreData }
+        return reviews
     }
 
-    private suspend fun applyRelatedMediaExtraDataTo(
-        entitiesAndReviews: List<ReviewEntityAndCoreData>
-    ): List<ReviewEntityAndCoreData> {
-        var groupedByMediaType = entitiesAndReviews.groupBy { it.entity.mediaType }
-
-        groupedByMediaType = updateWithCustomRelatedMedia(groupedByMediaType)
+    private suspend fun applyRelatedMediaExtraDataTo(reviews: List<Review>): List<Review> {
+        return reviews
+            .groupBy { it.mediaType::class }
+            .let { updateWithCustomRelatedMedia(it) }
             .let { updateWithTmdbMovieRelatedMedia(it) }
-
-
-        return groupedByMediaType.entries.flatMap { it.value }.sortedBy { it.entity.id }
+            .entries.flatMap { it.value }.sortedBy { it.id }
     }
 
     private suspend fun updateWithCustomRelatedMedia(
-        groupedReviewsByMediaType: Map<String, List<ReviewEntityAndCoreData>>
-    ): Map<String, List<ReviewEntityAndCoreData>> {
-        val customMediaTypeKey = ReviewEntity.Type.CUSTOM.value
-        val customMediaReviewGroup = groupedReviewsByMediaType[customMediaTypeKey] ?: return groupedReviewsByMediaType
+        groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>
+    ): Map<KClass<out Review.MediaType>, List<Review>> {
+        val groupKey = Review.MediaType.CustomMovie::class
+        val customMovieReviewGroup =
+            groupedReviewsByMediaType[groupKey]
+                ?: return groupedReviewsByMediaType
 
-        val customMediaIds = customMediaReviewGroup.map { (entity, _) -> entity.mediaId }
-        val customMedia = mediaDao.findCustomMediaWithIds(customMediaIds)
+        val customMovieIds = customMovieReviewGroup.map { (it.mediaType as Review.MediaType.CustomMovie).id }
+        val customMovies = customMediaDao.findCustomMoviesWithIds(customMovieIds)
 
-        val reviewsWithCustomMedia = customMediaReviewGroup.map { entityAndCore ->
-            val relatedMedia = customMedia.firstOrNull { it.id == entityAndCore.entity.mediaId }
+        val reviewsWithCustomMedia = customMovieReviewGroup.map { review ->
+            val relatedMedia = customMovies.firstOrNull {
+                it.id == (review.mediaType as Review.MediaType.CustomMovie).id
+            }
 
             if (relatedMedia == null) {
-                entityAndCore// return unchanged if related media id isn't found
+                review// return unchanged if related media id isn't found
             } else {
-                entityAndCore.copy(
-                    coreData = entityAndCore.coreData.withExtras(
-                        MediaReview.Extras.RelatedMedia.Custom(relatedMedia.toCustomMedia())
-                    )
-                )
+                review.withExtras(Review.Extras.RelatedMedia.Custom(relatedMedia.toCustomMovie()))
             }
         }
 
         return groupedReviewsByMediaType.toMutableMap().apply {
-            put(customMediaTypeKey, reviewsWithCustomMedia)
+            put(groupKey, reviewsWithCustomMedia)
         }
     }
 
     private suspend fun updateWithTmdbMovieRelatedMedia(
-        groupedReviewsByMediaType: Map<String, List<ReviewEntityAndCoreData>>
-    ): Map<String, List<ReviewEntityAndCoreData>> {
-        val mediaTypeKey = ReviewEntity.Type.TMDB_MOVIE.value
-        val reviewGroup = groupedReviewsByMediaType[mediaTypeKey] ?: return groupedReviewsByMediaType
+        groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>
+    ): Map<KClass<out Review.MediaType>, List<Review>> {
+        val groupKey = Review.MediaType.TmdbMovie::class
+        val reviewGroup =
+            groupedReviewsByMediaType[groupKey]
+                ?: return groupedReviewsByMediaType
 
-        val movieIds = reviewGroup.map { (entity, _) -> entity.mediaId }
-        val movies = mediaDao.findTmdbLiteMoviesById(movieIds)
+        val movieIds = reviewGroup.map { (it.mediaType as Review.MediaType.TmdbMovie).id }
+        val movies = tmdbDao.findTmdbLiteMoviesById(movieIds)
 
-        val reviewsWithMovies = reviewGroup.map { entityAndCore ->
-            val relatedMovie = movies.firstOrNull { it.tmdbMovie.id == entityAndCore.entity.mediaId }
+        val reviewsWithMovies = reviewGroup.map { review ->
+            val relatedMovie = movies.firstOrNull {
+                it.tmdbMovie.id == (review as Review.MediaType.TmdbMovie).id
+            }
 
             if (relatedMovie == null) {
-                entityAndCore
+                review
             } else {
-                entityAndCore.copy(
-                    coreData = entityAndCore.coreData.withExtras(
-                        MediaReview.Extras.RelatedMedia.Tmdb(relatedMovie.toTmdbLiteMovie())
-                    )
+                review.withExtras(
+                    Review.Extras.RelatedMedia.Tmdb(relatedMovie.toTmdbLiteMovie())
                 )
             }
         }
 
         return groupedReviewsByMediaType.toMutableMap().apply {
-            put(mediaTypeKey, reviewsWithMovies)
+            put(groupKey, reviewsWithMovies)
         }
     }
-
-    private fun TmdbLiteMovieWithGenres.toTmdbLiteMovie(): TmdbLite.Movie {
-        with (this.tmdbMovie) {
-            return TmdbLite.Movie(
-                id = this.id,
-                title = this.title,
-                overview = this.overview,
-                posterPath = this.posterPath,
-                genreIds = this@toTmdbLiteMovie.genreIds.map { it.genreId },
-                popularity = this.popularity,
-                releaseDate = this.releaseDate,
-                voteAverage = this.voteAverage,
-                voteCount = this.voteCount
-            )
-        }
-    }
-
-    private fun ReviewEntity.toMediaReview(): MediaReview {
-        return MediaReview(
-            id = id.toInt(),
-            rating = rating,
-            review = review,
-            reviewDate = reviewDate,
-            watchContext = watchContext
-        )
-    }
-
-    private fun CustomMediaEntity.toCustomMedia(): CustomMedia {
-        return CustomMedia(
-            id = id,
-            title = title
-        )
-    }
-
-    override suspend fun addReviewForCustomMedia(review: MediaReview, customMediaId: Long) {
-        launchCoroutine {
-            val reviewEntity = review.toEntityForMedia(
-                mediaType = ReviewEntity.Type.CUSTOM,
-                mediaId = customMediaId
-            )
-
-            mediaDao.addReview(reviewEntity)
-        }
-    }
-}
-
-fun MediaReview.toEntityForMedia(mediaType: ReviewEntity.Type, mediaId: Long): ReviewEntity {
-    return ReviewEntity(
-        id = id.toLong(),
-        mediaId = mediaId,
-        mediaType = mediaType.value,
-        rating = rating,
-        review = review,
-        reviewDate = reviewDate,
-        watchContext = watchContext
-    )
 }

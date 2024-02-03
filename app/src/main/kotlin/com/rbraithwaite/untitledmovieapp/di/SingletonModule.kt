@@ -4,17 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
+import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
+import com.rbraithwaite.untitledmovieapp.core.repositories.TmdbRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.database.AppDatabase
-import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
-import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
+import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultDeserializer
 import com.rbraithwaite.untitledmovieapp.data.network.result_call_adapter.ResultCallAdapterFactory
+import com.rbraithwaite.untitledmovieapp.data.repositories.TmdbRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.BuildConfig
 import dagger.Binds
 import dagger.Module
@@ -42,7 +45,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class SingletonBinderModule {
     @Binds
-    abstract fun bindMediaRepository(mediaRepositoryImpl: MediaRepositoryImpl): MediaRepository
+    abstract fun bindTmdbRepository(tmdbRepositoryImpl: TmdbRepositoryImpl): TmdbRepository
+
+    @Binds
+    abstract fun bindCustomMediaRepository(customMediaRepositoryImpl: CustomMediaRepositoryImpl): CustomMediaRepository
 
     @Binds
     abstract fun bindReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
@@ -92,8 +98,14 @@ object SingletonModule {
 
     @Singleton
     @Provides
-    fun provideMediaDao(database: AppDatabase): MediaDao {
-        return database.mediaDao()
+    fun provideTmdbDao(database: AppDatabase): TmdbDao {
+        return database.tmdbDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCustomMediaDao(database: AppDatabase): CustomMediaDao {
+        return database.customMediaDao()
     }
 
     @Singleton

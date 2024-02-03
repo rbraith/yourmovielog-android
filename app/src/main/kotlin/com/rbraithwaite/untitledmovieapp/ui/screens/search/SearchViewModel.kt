@@ -2,8 +2,7 @@ package com.rbraithwaite.untitledmovieapp.ui.screens.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
-import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
+import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,15 +27,16 @@ sealed interface SearchResults {
         val newCustomMediaTitle: String
     ): SearchResults
 
+    // TODO [24-02-2 12:14a.m.] broken.
     data class Success(
         val newCustomMediaTitle: String,
-        val searchResults: List<SearchResult>
+//        val searchResults: List<SearchResult>
     ): SearchResults
 }
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val mediaRepository: MediaRepository
+    private val customMediaRepository: CustomMediaRepository
 ): ViewModel() {
     private val _searchInput = MutableStateFlow<SearchInput>(
         SearchInput.Quick(updateInput = ::updateQuickSearchInput)
@@ -85,11 +85,12 @@ class SearchViewModel @Inject constructor(
                                 //  logic.
                                 //  I'll need to compose the quick-search criteria here (setting user input to the
                                 //  title, director, cast, etc).
-                                val media = mediaRepository.findMedia(newInput.input)
+                                val media = customMediaRepository.findMedia(newInput.input)
 
+                                // TODO [24-02-2 12:15a.m.] broken.
                                 SearchResults.Success(
                                     newInput.input,
-                                    media
+//                                    media
                                 )
                             }
                         }

@@ -5,11 +5,6 @@ import kotlin.reflect.KClass
 class FakeDatabase(
     entityTypes: List<KClass<out Any>>
 ) {
-    companion object {
-        const val ID_ORIGINAL = -1L
-        const val ID_FAILED = -2L
-    }
-
     class Table<T: Any>(
         val type: KClass<T>
     ) {
@@ -18,24 +13,33 @@ class FakeDatabase(
 
     private val tables: List<Table<out Any>> = entityTypes.map { Table(it) }
 
-    inline fun <reified T : Any> insert(entity: T, noinline idUpdateBlock: (T.(Long) -> T)? = null): Long {
-        val table = getTableFor(T::class) ?: return ID_FAILED
+    inline fun <reified T : Any, IdType: Any> insert(
+        entity: T,
+        idSelector: IdSelector<T, IdType>
+    ): IdType {
+        val table = getTableFor(T::class)
 
-        return if (idUpdateBlock == null) {
-            table.rows.add(entity)
-            ID_ORIGINAL
-        } else {
-            val newId = (table.rows.size + 1).toLong()
-            val updatedEntity = entity.idUpdateBlock(newId)
+        return if (idSelector.isNewEntity(entity)) {
+            val currentHighestId = if (table.rows.isEmpty()) {
+                idSelector.getId(entity)
+            } else {
+                idSelector.getId(table.rows.last())
+            }
+
+            val newId = idSelector.incrementId(currentHighestId)
+            val updatedEntity = idSelector.updateId(entity, newId)
             table.rows.add(updatedEntity)
             newId
+        } else {
+            table.rows.add(entity)
+            idSelector.getId(entity)
         }
     }
 
     inline fun <reified T : Any> find(noinline where: (T.() -> Boolean)? = null): List<T> {
         val result = mutableListOf<T>()
 
-        val table = getTableFor(T::class) ?: return result
+        val table = getTableFor(T::class)
 
         return if (where == null) {
             result.apply { addAll(table.rows) }
@@ -51,7 +55,7 @@ class FakeDatabase(
     }
 
     inline fun <reified T : Any> delete(noinline where: (T.() -> Boolean)? = null) {
-        val table = getTableFor(T::class) ?: return
+        val table = getTableFor(T::class)
 
         if (where == null) {
             table.rows.clear()
@@ -61,7 +65,7 @@ class FakeDatabase(
     }
 
     inline fun <reified T : Any> update(newEntity: T, noinline where: (T.() -> Boolean)) {
-        val table = getTableFor(T::class) ?: return
+        val table = getTableFor(T::class)
 
         table.rows.replaceAll {
             if (it.where()) {
@@ -72,29 +76,53 @@ class FakeDatabase(
         }
     }
 
-    /**
-     * This keeps the entity's existing id. If an entity with that id is already found, that existing
-     * entity is replaced.
-     */
     inline fun <reified T: Any, IdType: Any> insertOrUpdate(
         entity: T,
-        crossinline getId: T.() -> IdType
-    ) {
-        val existing = find<T> { entity.getId() == this.getId() }
+        idSelector: IdSelector<T, IdType>
+    ): IdType {
+        val existing = find<T> { idSelector.getId(entity) == idSelector.getId(this) }
 
-        if (existing.isEmpty()) {
-            insert(entity)
+        return if (existing.isEmpty()) {
+            insert(entity, idSelector)
         } else {
-            update(entity) { entity.getId() == this.getId() }
+            update(entity) { idSelector.getId(entity) == idSelector.getId(this) }
+            idSelector.getId(entity)
         }
     }
 
-    fun <T : Any> getTableFor(type: KClass<T>): Table<T>? {
+    inline fun <reified T: Any, IdType: Any> insertOrUpdateMultiple(
+        entities: List<T>,
+        idSelector: IdSelector<T, IdType>
+    ): List<IdType> {
+        return entities.map { insertOrUpdate(it, idSelector) }
+    }
+
+    fun <T : Any> getTableFor(type: KClass<T>): Table<T> {
         for (table in tables) {
             if (table.type == type) {
                 return table as Table<T>
             }
         }
-        return null
+        throw IllegalArgumentException("No table found in the fake database for ${type.simpleName}")
+    }
+}
+
+interface IdSelector<T, IdType> {
+    fun getId(entity: T): IdType
+
+    fun updateId(entity: T, newId: IdType): T
+
+    fun isNewEntity(entity: T): Boolean
+
+    fun incrementId(id: IdType): IdType
+}
+
+abstract class LongIdSelector<T>: IdSelector<T, Long> {
+    override fun isNewEntity(entity: T): Boolean {
+        return getId(entity) == 0L
+    }
+
+    override fun incrementId(id: Long): Long {
+        return id + 1
     }
 }

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 
@@ -76,7 +76,7 @@ fun ReviewHistoryList(uiState: ReviewHistoryUiState.Success) {
 }
 
 // REFACTOR [24-01-7 8:07p.m.] -- I guess I should move all this formatting stuff into the viewmodel.
-private fun MediaReview.formatRating(): String {
+private fun Review.formatRating(): String {
     if (this.rating == null) {
         return "---"
     }
@@ -86,12 +86,12 @@ private fun MediaReview.formatRating(): String {
     return "${tens}.${remainder}"
 }
 
-private fun MediaReview.formatMediaType(): String {
-    val relatedMedia = getExtra<MediaReview.Extras.RelatedMedia>() ?: return "?"
+private fun Review.formatMediaType(): String {
+    val relatedMedia = getExtra<Review.Extras.RelatedMedia>() ?: return "?"
 
     return when (relatedMedia) {
-        is MediaReview.Extras.RelatedMedia.Custom -> "custom"
-        is MediaReview.Extras.RelatedMedia.Tmdb -> {
+        is Review.Extras.RelatedMedia.Custom -> "custom"
+        is Review.Extras.RelatedMedia.Tmdb -> {
             when (relatedMedia.data) {
                 is TmdbLite.Movie -> "tmdb movie"
                 else -> {
@@ -103,12 +103,14 @@ private fun MediaReview.formatMediaType(): String {
     }
 }
 
-private fun MediaReview.formatMediaTitle(): String {
-    val relatedMedia = getExtra<MediaReview.Extras.RelatedMedia>() ?: return "??"
+private fun Review.formatMediaTitle(): String {
+    val relatedMedia = getExtra<Review.Extras.RelatedMedia>() ?: return "??"
 
     return when (relatedMedia) {
-        is MediaReview.Extras.RelatedMedia.Custom -> relatedMedia.data.title
-        is MediaReview.Extras.RelatedMedia.Tmdb -> {
+        // TODO [24-02-2 12:17a.m.] broken.
+//        is Review.Extras.RelatedMedia.Custom -> relatedMedia.data.title
+        is Review.Extras.RelatedMedia.Custom -> ""
+        is Review.Extras.RelatedMedia.Tmdb -> {
             when (val media = relatedMedia.data) {
                 is TmdbLite.Movie -> media.title
                 else -> {

@@ -1,34 +1,38 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
-import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMediaEntity
-import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 
-class FakeMediaDao(
+class FakeTmdbDao(
     private val database: FakeDatabase
-): MediaDao() {
-
-    override suspend fun addCustomMedia(customMedia: CustomMediaEntity): Long {
-        return database.insert(customMedia, updateCustomMediaId)
+): TmdbDao() {
+    override suspend fun insertOrUpdateTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long> {
+        TODO("Not yet implemented")
     }
 
-    override suspend fun addReview(mediaReview: ReviewEntity): Long {
-        return database.insert(mediaReview, updateMediaReviewId)
-    }
-
-    override suspend fun searchCustomMedia(searchCriteria: String): List<CustomMediaEntity> {
-        val allCustomMedia = database.find<CustomMediaEntity>()
-        return allCustomMedia.filter { it.title.contains(searchCriteria) }
-    }
-
-    override suspend fun findCustomMediaWithIds(customMediaIds: List<Long>): List<CustomMediaEntity> {
-        return database.find {
-            customMediaIds.contains(this.id)
-        }
-    }
+    // TODO [24-02-2 12:07a.m.] broken.
+//    override suspend fun addCustomMedia(customMedia: CustomMovieEntity): Long {
+//        return database.insert(customMedia, updateCustomMediaId)
+//    }
+//
+//    override suspend fun addReview(mediaReview: ReviewEntity): Long {
+//        return database.insert(mediaReview, updateMediaReviewId)
+//    }
+//
+//    override suspend fun searchCustomMedia(searchCriteria: String): List<CustomMovieEntity> {
+//        val allCustomMedia = database.find<CustomMovieEntity>()
+//        return allCustomMedia.filter { it.title.contains(searchCriteria) }
+//    }
+//
+//    override suspend fun findCustomMediaWithIds(customMediaIds: List<Long>): List<CustomMovieEntity> {
+//        return database.find {
+//            customMediaIds.contains(this.id)
+//        }
+//    }
 
     override suspend fun findTmdbLiteMoviesById(movieIds: List<Long>): List<TmdbLiteMovieWithGenres> {
         val movies = database.find<TmdbLiteMovieEntity> { movieIds.contains(id) }
@@ -46,15 +50,16 @@ class FakeMediaDao(
         }
     }
 
-    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
-        val found = database.find<TmdbLiteMovieEntity> { id == movie.id }
-
-        if (found.isEmpty()) {
-            database.insert(movie)
-        } else {
-            database.update(movie) { id == movie.id }
-        }
-    }
+    // TODO [24-02-2 12:07a.m.] broken.
+//    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
+//        val found = database.find<TmdbLiteMovieEntity> { id == movie.id }
+//
+//        if (found.isEmpty()) {
+//            database.insert(movie)
+//        } else {
+//            database.update(movie) { id == movie.id }
+//        }
+//    }
 
     override suspend fun clearGenreIdsForMovie(movieId: Long) {
         database.delete<TmdbLiteMovieGenreJunction> {
@@ -63,14 +68,15 @@ class FakeMediaDao(
     }
 
     override suspend fun addMovieGenreJunctions(vararg junctions: TmdbLiteMovieGenreJunction) {
-        for (junction in junctions) {
-            database.insert(junction)
-        }
+        // TODO [24-02-2 10:04p.m.]
+//        for (junction in junctions) {
+//            database.insert(junction)
+//        }
     }
 }
 
 // REFACTOR [23-10-29 3:55p.m.] -- move this
-private val updateCustomMediaId: (CustomMediaEntity.(Long) -> CustomMediaEntity) = {
+private val updateCustomMediaId: (CustomMovieEntity.(Long) -> CustomMovieEntity) = {
     if (this.id == 0L) {
         this.copy(id = it)
     } else {

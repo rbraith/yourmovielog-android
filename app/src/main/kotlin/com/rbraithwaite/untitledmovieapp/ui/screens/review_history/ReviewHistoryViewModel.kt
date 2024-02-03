@@ -2,7 +2,7 @@ package com.rbraithwaite.untitledmovieapp.ui.screens.review_history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 sealed interface ReviewHistoryUiState {
     data object Loading: ReviewHistoryUiState
-    data class Success(val reviews: List<MediaReview>): ReviewHistoryUiState
+    data class Success(val reviews: List<Review>): ReviewHistoryUiState
 }
 
 @HiltViewModel
@@ -26,7 +26,7 @@ class ReviewHistoryViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val reviews = reviewRepository.getAllReviews(
-                extras = setOf(MediaReview.Extras.RelatedMedia::class)
+                extras = setOf(Review.Extras.RelatedMedia::class)
             )
 
             _uiState.update {

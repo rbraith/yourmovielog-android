@@ -1,7 +1,8 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
+import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +13,8 @@ import org.mockito.kotlin.mock
 //  maybe another annotation codegen library.
 class DelegateFakeReviewRepository(
     reviewDao: FakeReviewDao,
-    mediaDao: FakeMediaDao,
+    tmdbDao: FakeTmdbDao,
+    customMediaDao: FakeCustomMediaDao,
     externalScope: CoroutineScope,
     coroutineDispatcher: CoroutineDispatcher,
 ): ReviewRepository {
@@ -20,7 +22,8 @@ class DelegateFakeReviewRepository(
 
     private val real: ReviewRepository = ReviewRepositoryImpl(
         reviewDao,
-        mediaDao,
+        tmdbDao,
+        customMediaDao,
         externalScope,
         coroutineDispatcher
     )
@@ -37,17 +40,17 @@ class DelegateFakeReviewRepository(
         this.mockEnabled = oldMockEnabled
     }
 
-    override suspend fun getAllReviews(extras: Set<KClass<out MediaReview.Extras>>): List<MediaReview> {
+    override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {
         if (mockEnabled) {
             mock.getAllReviews(extras)
         }
         return real.getAllReviews(extras)
     }
 
-    override suspend fun addReviewForCustomMedia(review: MediaReview, customMediaId: Long) {
+    override suspend fun addOrUpdateReviews(vararg reviews: Review) {
         if (mockEnabled) {
-            mock.addReviewForCustomMedia(review, customMediaId)
+            mock.addOrUpdateReviews(*reviews)
         }
-        real.addReviewForCustomMedia(review, customMediaId)
+        real.addOrUpdateReviews(*reviews)
     }
 }

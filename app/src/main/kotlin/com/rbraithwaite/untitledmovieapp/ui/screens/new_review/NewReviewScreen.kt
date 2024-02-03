@@ -113,21 +113,25 @@ private fun NewReviewScreenContent(
                 Text("title")
                 if (mediaUiState.isTitleEditable) {
                     TextField(
-                        value = mediaUiState.media.data.title,
+                        // TODO [24-02-2 12:22a.m.] broken.
+                        value = "",
+//                        value = mediaUiState.media.data.title,
                         onValueChange = {
-                            mediaUiState.editTitle(it)
+                            // TODO [24-02-2 12:17a.m.] broken.
+//                            mediaUiState.editTitle(it)
                         }
                     )
                 }
                 // TODO [23-12-20 2:06a.m.] -- define (!isTitleEditable) UI.
             }
-            is TmdbMovieUiState -> {
-                val tmdbMovie = mediaUiState.tmdbMovie
-
-                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
-                Text("overview: ${tmdbMovie.data.overview}")
-                Divider()
-            }
+            // TODO [24-02-2 12:22a.m.] broken.
+//            is TmdbMovieUiState -> {
+//                val tmdbMovie = mediaUiState.tmdbMovie
+//
+//                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
+//                Text("overview: ${tmdbMovie.data.overview}")
+//                Divider()
+//            }
         }
 
         Text("rating")

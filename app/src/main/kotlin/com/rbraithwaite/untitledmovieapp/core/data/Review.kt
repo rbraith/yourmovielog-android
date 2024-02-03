@@ -2,16 +2,22 @@ package com.rbraithwaite.untitledmovieapp.core.data
 
 import kotlin.reflect.KClass
 
-typealias MediaReviewExtrasType = KClass<out MediaReview.Extras>
+typealias MediaReviewExtrasType = KClass<out Review.Extras>
 
-data class MediaReview(
-    val id: Int = 0,
+data class Review(
+    val id: Long = 0,
     val rating: Int? = null,
     val review: String? = null,
     val reviewDate: ReviewDate? = null,
     val watchContext: String? = null,
+    val mediaType: MediaType,
     val extras: List<Extras> = emptyList()
 ) {
+    sealed interface MediaType {
+        data class CustomMovie(val id: Long): MediaType
+        data class TmdbMovie(val id: Long): MediaType
+    }
+
     inline fun <reified ExtrasType : Extras> getExtra(): ExtrasType? {
         for (extraData in extras) {
             if (extraData is ExtrasType) {
@@ -21,7 +27,7 @@ data class MediaReview(
         return null
     }
 
-    fun <T: Extras> withExtras(extras: T): MediaReview {
+    fun <T: Extras> withExtras(extras: T): Review {
         return copy(extras = this.extras.toMutableList().apply { add(extras) })
     }
 
@@ -32,3 +38,5 @@ data class MediaReview(
         }
     }
 }
+
+

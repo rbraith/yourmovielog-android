@@ -53,13 +53,14 @@ class MainActivity: ComponentActivity() {
                             scopeRoute = "add_review_flow"
                         )
 
-                        SearchScreen(
-                            hiltViewModel(),
-                            onNavToNewReviewScreen = { searchResult ->
-                                addReviewFlowSharedData.newReviewSearchResult = searchResult
-                                navController.navigate(route = "new_review")
-                            }
-                        )
+                        // TODO [24-02-2 12:14a.m.] broken.
+//                        SearchScreen(
+//                            hiltViewModel(),
+//                            onNavToNewReviewScreen = { searchResult ->
+//                                addReviewFlowSharedData.newReviewSearchResult = searchResult
+//                                navController.navigate(route = "new_review")
+//                            }
+//                        )
                     }
 
                     composable(route = "new_review") { navBackStackEntry ->
@@ -70,21 +71,22 @@ class MainActivity: ComponentActivity() {
 
                         val viewModel = hiltViewModel<NewReviewViewModel>()
 
-                        val viewModelInitialized = waitFor(navBackStackEntry) {
-                            viewModel.init(addReviewFlowSharedData.newReviewSearchResult)
-                        }
-
-                        if (viewModelInitialized) {
-                            NewReviewScreen(
-                                viewModel = viewModel,
-                                onConfirmReview = {
-                                    // TO IMPLEMENT
-                                },
-                                onNavBack = {
-                                    // TO IMPLEMENT
-                                }
-                            )
-                        }
+                        // TODO [24-02-2 12:14a.m.] broken.
+//                        val viewModelInitialized = waitFor(navBackStackEntry) {
+//                            viewModel.init(addReviewFlowSharedData.newReviewSearchResult)
+//                        }
+//
+//                        if (viewModelInitialized) {
+//                            NewReviewScreen(
+//                                viewModel = viewModel,
+//                                onConfirmReview = {
+//                                    // TO IMPLEMENT
+//                                },
+//                                onNavBack = {
+//                                    // TO IMPLEMENT
+//                                }
+//                            )
+//                        }
                     }
                 }
             }

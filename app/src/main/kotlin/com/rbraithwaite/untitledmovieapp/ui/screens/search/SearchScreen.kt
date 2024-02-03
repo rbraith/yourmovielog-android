@@ -26,15 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
-    onNavToNewReviewScreen: (SearchResult) -> Unit
+    // TODO [24-02-2 12:15a.m.] broken.
+//    onNavToNewReviewScreen: (SearchResult) -> Unit
 ) {
     val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
@@ -66,9 +65,10 @@ fun SearchScreen(
 
         SearchResults(
             searchResults = searchResults,
-            onSelectResult = {
-                onNavToNewReviewScreen(it)
-            }
+//            onSelectResult = {
+//                // TODO [24-02-2 12:16a.m.] broken.
+////                onNavToNewReviewScreen(it)
+//            }
         )
     }
 }
@@ -145,15 +145,17 @@ private fun ResultItemLoading() {
 @Composable
 fun ResultItemNewCustomMedia(
     title: String,
-    onSelect: (SearchResult.CustomMedia) -> Unit
+    // TODO [24-02-2 12:16a.m.] broken.
+//    onSelect: (SearchResult.CustomMedia) -> Unit
 ) {
     Button(
         onClick = {
             // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
-            onSelect(SearchResult.CustomMedia(CustomMedia(
-                id=0L,
-                title=title
-            )))
+            // TODO [24-02-2 12:16a.m.] broken.
+//            onSelect(SearchResult.CustomMedia(CustomMovie(
+//                id=0L,
+//                title=title
+//            )))
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -165,7 +167,8 @@ fun ResultItemNewCustomMedia(
 
 fun LazyListScope.SearchResults(
     searchResults: SearchResults,
-    onSelectResult: (SearchResult) -> Unit
+    // TODO [24-02-2 12:16a.m.] broken.
+//    onSelectResult: (SearchResult) -> Unit
 ) = when (searchResults) {
     is SearchResults.NoInput -> {
         item {
@@ -176,7 +179,8 @@ fun LazyListScope.SearchResults(
         item {
             ResultItemNewCustomMedia(
                 title = searchResults.newCustomMediaTitle,
-                onSelect = { onSelectResult(it) }
+                // TODO [24-02-2 12:16a.m.] broken.
+//                onSelect = { onSelectResult(it) }
             )
         }
         item {
@@ -188,58 +192,61 @@ fun LazyListScope.SearchResults(
             // REFACTOR [23-10-21 3:44p.m.] -- duplicated in SearchResults.Loading type.
             ResultItemNewCustomMedia(
                 title = searchResults.newCustomMediaTitle,
-                onSelect = { onSelectResult(it) }
+                // TODO [24-02-2 12:16a.m.] broken.
+//                onSelect = { onSelectResult(it) }
             )
         }
-        items(
-            items = searchResults.searchResults,
-            key = {
-                when (it) {
-                    is SearchResult.CustomMedia -> "custom/${it.data.id}"
-                    is SearchResult.TmdbMovie -> "movie/${it.data.id}"
-                    is SearchResult.TmdbTvShow -> "tv_show/${it.data.id}"
-                    is SearchResult.TmdbPerson -> "person/${it.data.id}"
-                }
-            }
-        ) { searchResult ->
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-                    .randomBackgroundColor()
-                    .clickable {
-                        onSelectResult(searchResult)
-                    }
-            ) {
-                when (searchResult) {
-                    is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
-                    is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
-                    is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
-                    // TODO [23-12-17 12:20a.m.] -- get rid of TmdbPerson results, these don't
-                    //  work for adding new reviews.
-                    is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
-                }
-            }
-        }
+        // TODO [24-02-2 12:16a.m.] broken.
+//        items(
+//            items = searchResults.searchResults,
+//            key = {
+//                when (it) {
+//                    is SearchResult.CustomMedia -> "custom/${it.data.id}"
+//                    is SearchResult.TmdbMovie -> "movie/${it.data.id}"
+//                    is SearchResult.TmdbTvShow -> "tv_show/${it.data.id}"
+//                    is SearchResult.TmdbPerson -> "person/${it.data.id}"
+//                }
+//            }
+//        ) { searchResult ->
+//            Surface(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(30.dp)
+//                    .randomBackgroundColor()
+//                    .clickable {
+//                        onSelectResult(searchResult)
+//                    }
+//            ) {
+//                when (searchResult) {
+//                    is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
+//                    is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
+//                    is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
+//                    // TODO [23-12-17 12:20a.m.] -- get rid of TmdbPerson results, these don't
+//                    //  work for adding new reviews.
+//                    is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
+//                }
+//            }
+//        }
     }
 }
 
-@Composable
-private fun ResultItemContentCustomMedia(result: SearchResult.CustomMedia) {
-    Text("custom media: ${result.data.title}")
-}
-
-@Composable
-private fun ResultItemContentTmdbMovie(result: SearchResult.TmdbMovie) {
-    Text("tmdb movie: ${result.data.title}")
-}
-
-@Composable
-private fun ResultItemContentTmdbTvShow(result: SearchResult.TmdbTvShow) {
-    Text("tmdb show: ${result.data.name}")
-}
-
-@Composable
-private fun ResultItemContentTmdbPerson(result: SearchResult.TmdbPerson) {
-    Text("tmdb person: ${result.data.name}")
-}
+// TODO [24-02-2 12:16a.m.] broken.
+//@Composable
+//private fun ResultItemContentCustomMedia(result: SearchResult.CustomMedia) {
+//    Text("custom media: ${result.data.title}")
+//}
+//
+//@Composable
+//private fun ResultItemContentTmdbMovie(result: SearchResult.TmdbMovie) {
+//    Text("tmdb movie: ${result.data.title}")
+//}
+//
+//@Composable
+//private fun ResultItemContentTmdbTvShow(result: SearchResult.TmdbTvShow) {
+//    Text("tmdb show: ${result.data.name}")
+//}
+//
+//@Composable
+//private fun ResultItemContentTmdbPerson(result: SearchResult.TmdbPerson) {
+//    Text("tmdb person: ${result.data.name}")
+//}
