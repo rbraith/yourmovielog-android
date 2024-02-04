@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.data.repositories
 
+import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
 import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
@@ -9,6 +10,7 @@ import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.aCustomMovieEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -64,6 +66,34 @@ class CustomMediaRepositoryImplTests {
             val entity = allValues.first().asVarArg()[0]
             assertThat(entity.title, willBe(expectedTitle))
         }
+    }
+
+    @Test
+    fun findMedia_test() = testScope.runTest {
+        // GIVEN several saved custom media
+        // -------------------------------------------
+
+        val titleExpected = "what the"
+
+        testDependencyManager.initializeDatabaseState {
+            withCustomMovies(
+                aCustomMovieEntity().withTitle(titleExpected),
+                aCustomMovieEntity().withTitle("skip this title")
+            )
+        }
+
+        // WHEN findMedia is run
+        // -------------------------------------------
+
+        val foundMedia = customMediaRepository.findMedia("what")
+
+        // THEN the correct media is found
+        // -------------------------------------------
+
+        assertThat(foundMedia.size, willBe(1))
+
+        val foundMovie = foundMedia.first() as CustomMedia.Movie
+        assertThat(foundMovie.title, willBe(titleExpected))
     }
 
     // REFACTOR [24-02-2 10:50p.m.] -- move this.

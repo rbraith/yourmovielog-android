@@ -41,7 +41,6 @@ class CustomMediaRepositoryImpl @Inject constructor(
         }.join()
     }
 
-    // TEST NEEDED [24-02-2 11:07p.m.]
     override suspend fun findMedia(searchCriteria: String): List<CustomMedia> {
         val foundMovies = customMediaDao.searchCustomMoviesByTitle(searchCriteria)
         return foundMovies.map { it.toCustomMovie() }

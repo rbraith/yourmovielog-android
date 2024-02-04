@@ -6,6 +6,8 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.CustomMovieEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeCustomMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeReviewRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeCustomMediaDao
@@ -13,6 +15,7 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeDatabase
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeReviewDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbApiV3
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.LongIdSelector
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
@@ -81,6 +84,18 @@ class TestDependencyManager(
     // Test State Initialization
     // *********************************************************
     //region Test State Initialization
+
+    interface TestDatabaseStateInitializer {
+        suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder)
+    }
+
+    private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
+        override suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder) {
+            customMovies.map { it.build() }.forEach {
+                this@TestDependencyManager.localDatabase.insert(it, CustomMovieEntityIdSelector())
+            }
+        }
+    }
 
     interface TestStateInitializer {
         // TODO [24-02-2 12:27a.m.] broken.
@@ -163,6 +178,10 @@ class TestDependencyManager(
 //                depManager.backend.insert(person) { copy(id = it) }
 //            }
         }
+    }
+
+    suspend fun initializeDatabaseState(initBlock: suspend TestDatabaseStateInitializer.() -> Unit) {
+        TestDatabaseStateInitializerImpl().initBlock()
     }
 
     suspend fun initializeTestState(initialize: suspend TestStateInitializer.() -> Unit) {
