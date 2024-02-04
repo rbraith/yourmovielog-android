@@ -2,29 +2,35 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes
 
 import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
+import org.mockito.kotlin.mock
 
 class FakeReviewDao(
     private val database: FakeDatabase
 ): ReviewDao() {
+    val mock: ReviewDao = mock()
+
     override suspend fun getAllReviews(): List<ReviewEntity> {
+        mock.getAllReviews()
+
         return database.find()
     }
 
     override suspend fun insertOrUpdateReviews(vararg entities: ReviewEntity): List<Long> {
-        val ids = mutableListOf<Long>()
+        mock.insertOrUpdateReviews(*entities)
 
-        for (entity in entities) {
-            // REFACTOR [24-02-2 12:31a.m.] -- hardcoded.
-            if (entity.id == 0L) {
-                TODO("fix")
-//                val id = database.insert(entity) { copy(id = it) }
-//                ids.add(id)
-            } else {
-                database.update(entity) { id == entity.id }
-                ids.add(entity.id)
-            }
-        }
+        return database.insertOrUpdateMultiple(
+            entities.toList(),
+            ReviewEntityIdSelector()
+        )
+    }
+}
 
-        return ids
+class ReviewEntityIdSelector: LongIdSelector<ReviewEntity>() {
+    override fun getId(entity: ReviewEntity): Long {
+        return entity.id
+    }
+
+    override fun updateId(entity: ReviewEntity, newId: Long): ReviewEntity {
+        return entity.copy(id = newId)
     }
 }

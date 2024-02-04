@@ -15,7 +15,9 @@ class FakeCustomMediaDao(
     }
 
     override suspend fun findCustomMoviesWithIds(customMovieIds: List<Long>): List<CustomMovieEntity> {
-        TODO("Not yet implemented")
+        return database.find {
+            customMovieIds.contains(id)
+        }
     }
 
     override suspend fun searchCustomMoviesByTitle(searchCriteria: String): List<CustomMovieEntity> {

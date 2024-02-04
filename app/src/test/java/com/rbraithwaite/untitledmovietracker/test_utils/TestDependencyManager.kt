@@ -7,6 +7,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEnt
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.CustomMovieEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeCustomMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.DelegateFakeReviewRepository
@@ -16,6 +17,7 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeReviewDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.FakeTmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.LongIdSelector
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.ReviewEntityIdSelector
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
@@ -46,7 +48,7 @@ class TestDependencyManager(
         ))
     }
 
-    val mediaDao: FakeTmdbDao by lazy {
+    val tmdbDao: FakeTmdbDao by lazy {
         FakeTmdbDao(localDatabase)
     }
 
@@ -65,7 +67,7 @@ class TestDependencyManager(
     val reviewRepository: DelegateFakeReviewRepository by lazy {
         DelegateFakeReviewRepository(
             reviewDao,
-            mediaDao,
+            tmdbDao,
             customMediaDao,
             externalScope,
             coroutineDispatcher
@@ -87,12 +89,19 @@ class TestDependencyManager(
 
     interface TestDatabaseStateInitializer {
         suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder)
+        suspend fun withReviews(vararg reviews: ReviewEntityBuilder)
     }
 
     private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
         override suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder) {
             customMovies.map { it.build() }.forEach {
                 this@TestDependencyManager.localDatabase.insert(it, CustomMovieEntityIdSelector())
+            }
+        }
+
+        override suspend fun withReviews(vararg reviews: ReviewEntityBuilder) {
+            reviews.map { it.build() }.forEach {
+                this@TestDependencyManager.localDatabase.insert(it, ReviewEntityIdSelector())
             }
         }
     }

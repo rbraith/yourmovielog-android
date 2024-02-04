@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
+import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.aCustomMovieEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
@@ -95,9 +96,6 @@ class CustomMediaRepositoryImplTests {
         val foundMovie = foundMedia.first() as CustomMedia.Movie
         assertThat(foundMovie.title, willBe(titleExpected))
     }
-
-    // REFACTOR [24-02-2 10:50p.m.] -- move this.
-    private fun <T> T.asVarArg(): Array<T> = this as Array<T>
 
     @Test
     fun addTmdbMovieReview_test() = testScope.runTest {
