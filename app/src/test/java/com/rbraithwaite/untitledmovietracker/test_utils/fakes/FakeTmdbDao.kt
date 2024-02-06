@@ -27,26 +27,6 @@ class FakeTmdbDao(
         super.addOrUpdateGenreIdsForMovie(movieId, genreIds)
     }
 
-    // TODO [24-02-2 12:07a.m.] broken.
-//    override suspend fun addCustomMedia(customMedia: CustomMovieEntity): Long {
-//        return database.insert(customMedia, updateCustomMediaId)
-//    }
-//
-//    override suspend fun addReview(mediaReview: ReviewEntity): Long {
-//        return database.insert(mediaReview, updateMediaReviewId)
-//    }
-//
-//    override suspend fun searchCustomMedia(searchCriteria: String): List<CustomMovieEntity> {
-//        val allCustomMedia = database.find<CustomMovieEntity>()
-//        return allCustomMedia.filter { it.title.contains(searchCriteria) }
-//    }
-//
-//    override suspend fun findCustomMediaWithIds(customMediaIds: List<Long>): List<CustomMovieEntity> {
-//        return database.find {
-//            customMediaIds.contains(this.id)
-//        }
-//    }
-
     override suspend fun findTmdbLiteMoviesById(movieIds: List<Long>): List<TmdbLiteMovieWithGenres> {
         val movies = database.find<TmdbLiteMovieEntity> { movieIds.contains(id) }
 
@@ -62,17 +42,6 @@ class FakeTmdbDao(
             )
         }
     }
-
-    // TODO [24-02-2 12:07a.m.] broken.
-//    override suspend fun addOrUpdateTmdbLiteMovie(movie: TmdbLiteMovieEntity) {
-//        val found = database.find<TmdbLiteMovieEntity> { id == movie.id }
-//
-//        if (found.isEmpty()) {
-//            database.insert(movie)
-//        } else {
-//            database.update(movie) { id == movie.id }
-//        }
-//    }
 
     override suspend fun clearGenreIdsForMovie(movieId: Long) {
         database.delete<TmdbLiteMovieGenreJunction> {
@@ -95,24 +64,5 @@ private class TmdbLiteMovieIdSelector: LongIdSelector<TmdbLiteMovieEntity>() {
 
     override fun updateId(entity: TmdbLiteMovieEntity, newId: Long): TmdbLiteMovieEntity {
         return entity.copy(id = newId)
-    }
-}
-
-// REFACTOR [23-10-29 3:55p.m.] -- move this
-private val updateCustomMediaId: (CustomMovieEntity.(Long) -> CustomMovieEntity) = {
-    if (this.id == 0L) {
-        this.copy(id = it)
-    } else {
-        this
-    }
-}
-
-// REFACTOR [23-10-29 4:03p.m.] -- might be good to refactor entities with some common data class
-//  holding a primary key long id?
-private val updateMediaReviewId: (ReviewEntity.(Long) -> ReviewEntity) = {
-    if (this.id == 0L) {
-        this.copy(id = it)
-    } else {
-        this
     }
 }

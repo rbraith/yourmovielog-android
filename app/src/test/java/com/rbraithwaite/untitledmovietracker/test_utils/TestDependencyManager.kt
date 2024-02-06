@@ -117,69 +117,7 @@ class TestDependencyManager(
         }
     }
 
-    interface TestStateInitializer {
-        // TODO [24-02-2 12:27a.m.] broken.
-//        // TODO [24-01-19 11:27p.m.] -- this doesn't allow for custom ids, since adding through
-//        //  the repo ignores the given id (also see impl of FakeMediaDao, the FakeDatabase sets the id).
-//        /**
-//         * @param customMedia The custom media to initialize the repo with
-//         */
-//        suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder)
-//
-//        suspend fun withTmdbLiteMovies(vararg movies: TmdbLiteMovieBuilder)
-//
-//        /**
-//         * @param reviews These are pairs of (review, tmdb movie id)
-//         */
-//        suspend fun withMediaReviewsForTmdbMovie(vararg reviews: Pair<MediaReviewBuilder, Long>)
-//
-//        /**
-//         * @param mediaReviews These are pairs of (review, custom media id)
-//         */
-//        suspend fun withMediaReviewsForCustomMedia(vararg mediaReviews: Pair<MediaReviewBuilder, Long>)
-
-        suspend fun withBackendSearchResults(
-            movies: List<SearchMultiResult.Movie>,
-            tvShows: List<SearchMultiResult.TvShow>,
-            people: List<SearchMultiResult.Person>
-        )
-    }
-
     private inner class TestBackendStateInitializerImpl: TestBackendStateInitializer {
-        // TODO [24-02-2 12:28a.m.] broken.
-//        override suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder) {
-//            customMedia.forEach {
-//                this@TestDependencyManager.mediaRepository.withMockEnabled(false) {
-                // TODO [24-02-2 12:28a.m.] broken.
-////                    addOrUpdateCustomMovies(valueOf(it))
-//                }
-//            }
-//        }
-//
-//        override suspend fun withTmdbLiteMovies(vararg movies: TmdbLiteMovieBuilder) {
-//            movies.forEach { movie ->
-//                this@TestDependencyManager.mediaRepository.addOrUpdateTmdbLite(movie.build())
-//            }
-//        }
-//
-//        override suspend fun withMediaReviewsForTmdbMovie(vararg reviews: Pair<MediaReviewBuilder, Long>) {
-//            reviews.forEach { (mediaReview, tmdbMovieId) ->
-//                this@TestDependencyManager.mediaRepository.addTmdbMovieReview(
-//                    tmdbMovieId,
-//                    mediaReview.build()
-//                )
-//            }
-//        }
-//
-//        override suspend fun withMediaReviewsForCustomMedia(vararg mediaReviews: Pair<MediaReviewBuilder, Long>) {
-//            mediaReviews.forEach { (mediaReview, customMediaId) ->
-//                this@TestDependencyManager.reviewRepository.addReviewForCustomMovie(
-//                    mediaReview.build(),
-//                    customMediaId
-//                )
-//            }
-//        }
-
         override suspend fun withSearchMultiResults(
             movies: List<SearchMultiResult.Movie>,
             tvShows: List<SearchMultiResult.TvShow>,
