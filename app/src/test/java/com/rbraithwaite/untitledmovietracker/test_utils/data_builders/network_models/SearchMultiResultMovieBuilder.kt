@@ -1,6 +1,8 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models
 
 import com.rbraithwaite.test_data_utils.Builder
+import com.rbraithwaite.test_data_utils.TestDataBuilder
+import com.rbraithwaite.test_data_utils.builder_base.BaseBuilder
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 
 fun aSearchMultiResultMovie(
@@ -9,10 +11,11 @@ fun aSearchMultiResultMovie(
     return SearchMultiResultMovieBuilder().apply(buildBlock)
 }
 
-// REFACTOR [23-11-19 11:46p.m.] -- It would be much nicer to create these builders via some
-//  kind of annotation processing / code generation.
-class SearchMultiResultMovieBuilder: Builder<SearchMultiResult.Movie> {
-    private var data = SearchMultiResult.Movie(
+@BaseBuilder
+abstract class AbstractSearchMultiResultMovieBuilder: TestDataBuilder<SearchMultiResult.Movie>()
+
+class SearchMultiResultMovieBuilder: BaseAbstractSearchMultiResultMovieBuilder<SearchMultiResultMovieBuilder>() {
+    override var data = SearchMultiResult.Movie(
         adult = false,
         backdropPath = null,
         id = 0,
@@ -29,10 +32,4 @@ class SearchMultiResultMovieBuilder: Builder<SearchMultiResult.Movie> {
         voteAverage = 6.7f,
         voteCount = 1234
     )
-
-    override fun build(): SearchMultiResult.Movie {
-        return data.copy()
-    }
-
-    fun withTitle(title: String) = apply { data = data.copy(title = title) }
 }

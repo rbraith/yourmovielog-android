@@ -6,12 +6,25 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
+import org.mockito.kotlin.mock
 
 class FakeTmdbDao(
     private val database: FakeDatabase
 ): TmdbDao() {
+    val mock: TmdbDao = mock()
+
     override suspend fun insertOrUpdateTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long> {
-        TODO("Not yet implemented")
+        mock.insertOrUpdateTmdbLiteMovies(*movies)
+
+        return database.insertOrUpdateMultiple(
+            movies.toList(),
+            TmdbLiteMovieIdSelector()
+        )
+    }
+
+    override suspend fun addOrUpdateGenreIdsForMovie(movieId: Long, genreIds: List<Int>) {
+        mock.addOrUpdateGenreIdsForMovie(movieId, genreIds)
+        super.addOrUpdateGenreIdsForMovie(movieId, genreIds)
     }
 
     // TODO [24-02-2 12:07a.m.] broken.
@@ -72,6 +85,16 @@ class FakeTmdbDao(
 //        for (junction in junctions) {
 //            database.insert(junction)
 //        }
+    }
+}
+
+private class TmdbLiteMovieIdSelector: LongIdSelector<TmdbLiteMovieEntity>() {
+    override fun getId(entity: TmdbLiteMovieEntity): Long {
+        return entity.id
+    }
+
+    override fun updateId(entity: TmdbLiteMovieEntity, newId: Long): TmdbLiteMovieEntity {
+        return entity.copy(id = newId)
     }
 }
 

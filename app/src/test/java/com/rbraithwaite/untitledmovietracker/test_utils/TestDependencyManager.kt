@@ -92,6 +92,17 @@ class TestDependencyManager(
         suspend fun withReviews(vararg reviews: ReviewEntityBuilder)
     }
 
+    interface TestBackendStateInitializer {
+        // SMELL [24-02-6 12:12a.m.] -- this isn't good, it reveals information about which
+        //  api method is used. It'd be better to properly populate the backend as a database,
+        //  using full tmdb media detail objs.
+        suspend fun withSearchMultiResults(
+            movies: List<SearchMultiResult.Movie> = emptyList(),
+            tvShows: List<SearchMultiResult.TvShow> = emptyList(),
+            people: List<SearchMultiResult.Person> = emptyList()
+        )
+    }
+
     private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
         override suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder) {
             customMovies.map { it.build() }.forEach {
@@ -134,7 +145,7 @@ class TestDependencyManager(
         )
     }
 
-    private inner class TestStateInitializerImpl: TestStateInitializer {
+    private inner class TestBackendStateInitializerImpl: TestBackendStateInitializer {
         // TODO [24-02-2 12:28a.m.] broken.
 //        override suspend fun withCustomMedia(vararg customMedia: CustomMediaBuilder) {
 //            customMedia.forEach {
@@ -169,22 +180,27 @@ class TestDependencyManager(
 //            }
 //        }
 
-        override suspend fun withBackendSearchResults(
+        override suspend fun withSearchMultiResults(
             movies: List<SearchMultiResult.Movie>,
             tvShows: List<SearchMultiResult.TvShow>,
             people: List<SearchMultiResult.Person>
         ) {
             val depManager = this@TestDependencyManager
 
-            TODO("broken")
-//            for (movie in movies) {
-//                depManager.backend.insert(movie) { copy(id = it) }
-//            }
+            val movieIdSelector = SearchMultiResultMovieIdSelector()
+            for (movie in movies) {
+                depManager.backend.insert(
+                    movie,
+                    movieIdSelector
+                )
+            }
+
+            // TODO [24-02-6 12:17a.m.] -- eh let's worry about these later.
 //            for (tvShow in tvShows) {
-//                depManager.backend.insert(tvShow) { copy(id = it) }
+//                depManager.backend.insert(tvShow)
 //            }
 //            for (person in people) {
-//                depManager.backend.insert(person) { copy(id = it) }
+//                depManager.backend.insert(person)
 //            }
         }
     }
@@ -193,9 +209,19 @@ class TestDependencyManager(
         TestDatabaseStateInitializerImpl().initBlock()
     }
 
-    suspend fun initializeTestState(initialize: suspend TestStateInitializer.() -> Unit) {
-        TestStateInitializerImpl().initialize()
+    suspend fun initializeBackendState(initialize: suspend TestBackendStateInitializer.() -> Unit) {
+        TestBackendStateInitializerImpl().initialize()
     }
 
     //endregion
+}
+
+private class SearchMultiResultMovieIdSelector: LongIdSelector<SearchMultiResult.Movie>() {
+    override fun getId(entity: SearchMultiResult.Movie): Long {
+        return entity.id
+    }
+
+    override fun updateId(entity: SearchMultiResult.Movie, newId: Long): SearchMultiResult.Movie {
+        return entity.copy(id = newId)
+    }
 }
