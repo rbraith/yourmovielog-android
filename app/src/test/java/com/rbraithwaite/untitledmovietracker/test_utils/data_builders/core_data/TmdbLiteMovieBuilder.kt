@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovietracker.test_utils
+package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.core_data
 
 import com.rbraithwaite.test_data_utils.TestDataBuilder
 import com.rbraithwaite.test_data_utils.builder_base.BaseBuilder

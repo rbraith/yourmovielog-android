@@ -6,7 +6,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aReview
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.core_data.aReview
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.aCustomMovieEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.aReviewEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.equalsReview
@@ -16,7 +16,6 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.verify
 

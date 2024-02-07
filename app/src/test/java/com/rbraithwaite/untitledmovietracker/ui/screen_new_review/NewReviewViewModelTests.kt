@@ -1,21 +1,14 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 
-import com.rbraithwaite.test_data_utils.valueOf
-import com.rbraithwaite.untitledmovieapp.core.data.Review
-import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
-import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.CustomMediaUiState
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
+import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
-import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
-import org.mockito.kotlin.argForWhich
-import org.mockito.kotlin.verify
 
 class NewReviewViewModelTests {
     @get:Rule

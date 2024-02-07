@@ -3,9 +3,8 @@ package com.rbraithwaite.untitledmovietracker.data.repositories
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.TmdbRepositoryImpl
-import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
-import com.rbraithwaite.untitledmovietracker.test_utils.aTmdbLiteMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.core_data.aTmdbLiteMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe

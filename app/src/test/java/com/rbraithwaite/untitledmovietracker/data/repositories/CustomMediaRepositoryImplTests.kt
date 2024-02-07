@@ -1,16 +1,11 @@
 package com.rbraithwaite.untitledmovietracker.data.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.CustomMedia
-import com.rbraithwaite.untitledmovieapp.core.data.Review
-import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
-import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.aCustomMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.core_data.aCustomMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.aCustomMovieEntity
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,12 +13,8 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.check
 import org.mockito.kotlin.verify
-import kotlin.math.exp
 
 class CustomMediaRepositoryImplTests {
     private val testDispatcher = StandardTestDispatcher()

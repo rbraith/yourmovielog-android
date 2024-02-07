@@ -1,18 +1,13 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_search
 
-import com.rbraithwaite.test_data_utils.listValuesOf
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchInput
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchResults
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchViewModel
-import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
+import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultMovie
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultPerson
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultTvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

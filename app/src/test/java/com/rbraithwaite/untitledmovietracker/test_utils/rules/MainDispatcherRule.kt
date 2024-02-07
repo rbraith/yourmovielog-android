@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovietracker.test_utils
+package com.rbraithwaite.untitledmovietracker.test_utils.rules
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher

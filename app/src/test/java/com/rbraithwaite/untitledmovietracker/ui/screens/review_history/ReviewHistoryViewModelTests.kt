@@ -1,15 +1,11 @@
 package com.rbraithwaite.untitledmovietracker.ui.screens.review_history
 
-import com.rbraithwaite.untitledmovieapp.core.data.Review
-import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.ui.screens.review_history.ReviewHistoryUiState
 import com.rbraithwaite.untitledmovieapp.ui.screens.review_history.ReviewHistoryViewModel
-import com.rbraithwaite.untitledmovietracker.test_utils.MainDispatcherRule
+import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
-import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 
