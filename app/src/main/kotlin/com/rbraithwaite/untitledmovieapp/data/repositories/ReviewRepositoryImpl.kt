@@ -24,17 +24,17 @@ class ReviewRepositoryImpl @Inject constructor(
     @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher
 ): ReviewRepository {
+
+    // *********************************************************
+    // ReviewRepository
+    // *********************************************************
+    //region ReviewRepository
+
     override suspend fun upsertReviews(vararg reviews: Review) {
         launchExternal {
             val entities = reviews.map { it.toEntity() }.toTypedArray()
             reviewDao.upsertReviews(*entities)
         }
-    }
-
-    private suspend fun launchExternal(block: suspend () -> Unit) {
-        externalScope.launch(coroutineDispatcher) {
-            block()
-        }.join()
     }
 
     // TODO [24-01-21 1:33a.m.] -- I need a transaction helper here to wrap the multiple dao calls.
@@ -50,6 +50,14 @@ class ReviewRepositoryImpl @Inject constructor(
         }
 
         return reviews
+    }
+
+    //endregion
+
+    private suspend fun launchExternal(block: suspend () -> Unit) {
+        externalScope.launch(coroutineDispatcher) {
+            block()
+        }.join()
     }
 
     private suspend fun applyRelatedMediaExtraDataTo(reviews: List<Review>): List<Review> {

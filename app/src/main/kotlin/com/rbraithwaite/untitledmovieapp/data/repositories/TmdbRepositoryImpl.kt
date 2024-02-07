@@ -20,12 +20,11 @@ class TmdbRepositoryImpl @Inject constructor(
     @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher
 ): TmdbRepository {
-    // REFACTOR [24-01-31 11:28p.m.] -- duplicated in ReviewRepositoryImpl.
-    private suspend fun launchExternal(block: suspend () -> Unit) {
-        externalScope.launch(coroutineDispatcher) {
-            block()
-        }.join()
-    }
+
+    // *********************************************************
+    // TmdbRepository
+    // *********************************************************
+    //region TmdbRepository
 
     override suspend fun upsertTmdbLite(vararg tmdbLite: TmdbLite) {
         launchExternal {
@@ -56,5 +55,15 @@ class TmdbRepositoryImpl @Inject constructor(
         } else {
             emptyList()
         }
+    }
+
+    //endregion
+
+
+    // REFACTOR [24-01-31 11:28p.m.] -- duplicated in ReviewRepositoryImpl.
+    private suspend fun launchExternal(block: suspend () -> Unit) {
+        externalScope.launch(coroutineDispatcher) {
+            block()
+        }.join()
     }
 }

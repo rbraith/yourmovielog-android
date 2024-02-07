@@ -17,6 +17,12 @@ class CustomMediaRepositoryImpl @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher,
     private val customMediaDao: CustomMediaDao
 ): CustomMediaRepository {
+
+    // *********************************************************
+    // CustomMediaRepository
+    // *********************************************************
+    //region CustomMediaRepository
+
     override suspend fun upsertCustomMedia(vararg customMedia: CustomMedia) {
         launchExternal {
             // movies
@@ -29,15 +35,17 @@ class CustomMediaRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun findMedia(searchCriteria: String): List<CustomMedia> {
+        val foundMovies = customMediaDao.searchCustomMoviesByTitle(searchCriteria)
+        return foundMovies.map { it.toCustomMovie() }
+    }
+
+    //endregion
+
     // REFACTOR [24-01-31 11:28p.m.] -- duplicated in ReviewRepositoryImpl.
     private suspend fun launchExternal(block: suspend () -> Unit) {
         externalScope.launch(coroutineDispatcher) {
             block()
         }.join()
-    }
-
-    override suspend fun findMedia(searchCriteria: String): List<CustomMedia> {
-        val foundMovies = customMediaDao.searchCustomMoviesByTitle(searchCriteria)
-        return foundMovies.map { it.toCustomMovie() }
     }
 }
