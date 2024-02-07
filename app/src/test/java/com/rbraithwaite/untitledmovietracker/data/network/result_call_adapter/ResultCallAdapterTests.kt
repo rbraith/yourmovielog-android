@@ -1,41 +1,30 @@
 package com.rbraithwaite.untitledmovietracker.data.network.result_call_adapter
 
-import com.google.gson.GsonBuilder
 import com.rbraithwaite.untitledmovieapp.data.network.NetworkError
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultDeserializer
-import com.rbraithwaite.untitledmovieapp.data.network.result_call_adapter.ResultCallAdapterFactory
-import com.rbraithwaite.untitledmovieapp.di.SingletonModule
-import com.rbraithwaite.untitledmovietracker.test_utils.base_tests.RetrofitApiTests
+import com.rbraithwaite.untitledmovietracker.test_utils.ApiTestUtils
+import com.rbraithwaite.untitledmovietracker.test_utils.rules.MockWebServerRule
+import com.rbraithwaite.untitledmovietracker.test_utils.setBodyFromResourceFile
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
-import okio.buffer
-import okio.source
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.nio.charset.StandardCharsets
 
-class ResultCallAdapterTests: RetrofitApiTests() {
+class ResultCallAdapterTests {
 
-    lateinit var tmdbApiV3: TmdbApiV3
+    @get:Rule
+    val mockWebServerRule = MockWebServerRule()
+
+    private lateinit var tmdbApiV3: TmdbApiV3
 
     @Before
-    override fun setup() {
-        super.setup()
-
-        tmdbApiV3 = SingletonModule
-            .createRetrofitBuilder(
-                mockWebServer.url("/"),
-                SingletonModule.createGson()
-            )
-            .build()
-            .create(TmdbApiV3::class.java)
+    fun setup() {
+        // api needs to be created late, to let the mock server start first
+        tmdbApiV3 = ApiTestUtils.createTmdbApiV3(mockWebServerRule.server)
     }
 
     @Test
@@ -46,7 +35,7 @@ class ResultCallAdapterTests: RetrofitApiTests() {
         val response = MockResponse()
         response.setBodyFromResourceFile("ResultCallAdapterTests_SearchMultiResponse.json")
 
-        mockWebServer.enqueue(response)
+        mockWebServerRule.server.enqueue(response)
 
         // WHEN that api method returning a Result is called
         // -------------------------------------------
@@ -70,19 +59,6 @@ class ResultCallAdapterTests: RetrofitApiTests() {
         assertThat(firstResult.name, willBe("Better"))
     }
 
-    // REFACTOR [23-12-2 1:44p.m.] -- move this.
-    /**
-     * @param filepath This path should be relative to the resources/ directory
-     */
-    fun MockResponse.setBodyFromResourceFile(filepath: String): MockResponse {
-        val inputStream = javaClass.classLoader!!.getResourceAsStream(filepath)
-        val source = inputStream.source().buffer()
-
-        this.setBody(source.readString(StandardCharsets.UTF_8))
-
-        return this
-    }
-
     @Test
     fun httpFailureTest() = runTest {
         // GIVEN a response with an http error code
@@ -93,7 +69,7 @@ class ResultCallAdapterTests: RetrofitApiTests() {
         val response = MockResponse()
         response.setResponseCode(expectedCode)
 
-        mockWebServer.enqueue(response)
+        mockWebServerRule.server.enqueue(response)
 
         // WHEN a retrofit interface returning a result receives that response
         // -------------------------------------------
