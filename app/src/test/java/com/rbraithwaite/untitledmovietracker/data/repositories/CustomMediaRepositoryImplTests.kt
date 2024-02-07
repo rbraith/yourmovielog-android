@@ -45,13 +45,13 @@ class CustomMediaRepositoryImplTests {
         // WHEN that custom movie is added to the repository
         // -------------------------------------------
 
-        customMediaRepository.addOrUpdateCustomMedia(customMovie)
+        customMediaRepository.upsertCustomMedia(customMovie)
 
         // THEN a correct entity is added to the custom media dao
         // -------------------------------------------
 
         argumentCaptor<CustomMovieEntity>().apply {
-            verify(customMediaDao.mock).insertOrUpdateCustomMovies(capture())
+            verify(customMediaDao.mock).upsertCustomMovies(capture())
 
             assertThat(allValues.size, willBe(1))
 

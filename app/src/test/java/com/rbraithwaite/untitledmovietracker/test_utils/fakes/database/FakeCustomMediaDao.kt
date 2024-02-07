@@ -9,9 +9,9 @@ class FakeCustomMediaDao(
 ): CustomMediaDao() {
     val mock = mock<CustomMediaDao>()
 
-    override suspend fun insertOrUpdateCustomMovies(vararg customMovies: CustomMovieEntity): List<Long> {
-        mock.insertOrUpdateCustomMovies(*customMovies)
-        return database.insertOrUpdateMultiple(customMovies.toList(), CustomMovieEntityIdSelector())
+    override suspend fun upsertCustomMovies(vararg customMovies: CustomMovieEntity): List<Long> {
+        mock.upsertCustomMovies(*customMovies)
+        return database.upsertMultiple(customMovies.toList(), CustomMovieEntityIdSelector())
     }
 
     override suspend fun findCustomMoviesWithIds(customMovieIds: List<Long>): List<CustomMovieEntity> {

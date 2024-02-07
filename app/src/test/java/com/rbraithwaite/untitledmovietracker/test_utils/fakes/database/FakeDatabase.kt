@@ -76,7 +76,7 @@ class FakeDatabase(
         }
     }
 
-    inline fun <reified T: Any, IdType: Any> insertOrUpdate(
+    inline fun <reified T: Any, IdType: Any> upsert(
         entity: T,
         idSelector: IdSelector<T, IdType>
     ): IdType {
@@ -90,11 +90,11 @@ class FakeDatabase(
         }
     }
 
-    inline fun <reified T: Any, IdType: Any> insertOrUpdateMultiple(
+    inline fun <reified T: Any, IdType: Any> upsertMultiple(
         entities: List<T>,
         idSelector: IdSelector<T, IdType>
     ): List<IdType> {
-        return entities.map { insertOrUpdate(it, idSelector) }
+        return entities.map { upsert(it, idSelector) }
     }
 
     fun <T : Any> getTableFor(type: KClass<T>): Table<T> {

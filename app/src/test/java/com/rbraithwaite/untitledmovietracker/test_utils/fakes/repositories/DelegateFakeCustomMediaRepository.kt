@@ -39,7 +39,7 @@ class DelegateFakeCustomMediaRepository(
     // MediaRepository
     // *********************************************************
     //region MediaRepository
-    override suspend fun addOrUpdateCustomMedia(vararg customMedia: CustomMedia) {
+    override suspend fun upsertCustomMedia(vararg customMedia: CustomMedia) {
         TODO("Not yet implemented")
     }
 

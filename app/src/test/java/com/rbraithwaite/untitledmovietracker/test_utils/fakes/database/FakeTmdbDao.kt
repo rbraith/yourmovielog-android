@@ -11,18 +11,18 @@ class FakeTmdbDao(
 ): TmdbDao() {
     val mock: TmdbDao = mock()
 
-    override suspend fun insertOrUpdateTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long> {
-        mock.insertOrUpdateTmdbLiteMovies(*movies)
+    override suspend fun upsertTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long> {
+        mock.upsertTmdbLiteMovies(*movies)
 
-        return database.insertOrUpdateMultiple(
+        return database.upsertMultiple(
             movies.toList(),
             TmdbLiteMovieIdSelector()
         )
     }
 
-    override suspend fun addOrUpdateGenreIdsForMovie(movieId: Long, genreIds: List<Int>) {
-        mock.addOrUpdateGenreIdsForMovie(movieId, genreIds)
-        super.addOrUpdateGenreIdsForMovie(movieId, genreIds)
+    override suspend fun upsertGenreIdsForMovie(movieId: Long, genreIds: List<Int>) {
+        mock.upsertGenreIdsForMovie(movieId, genreIds)
+        super.upsertGenreIdsForMovie(movieId, genreIds)
     }
 
     override suspend fun findTmdbLiteMoviesById(movieIds: List<Long>): List<TmdbLiteMovieWithGenres> {

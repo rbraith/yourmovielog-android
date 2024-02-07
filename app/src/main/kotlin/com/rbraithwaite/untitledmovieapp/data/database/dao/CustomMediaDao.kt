@@ -9,7 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntit
 @Dao
 abstract class CustomMediaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertOrUpdateCustomMovies(vararg customMovies: CustomMovieEntity): List<Long>
+    abstract suspend fun upsertCustomMovies(vararg customMovies: CustomMovieEntity): List<Long>
 
     // TEST NEEDED [24-01-19 11:09p.m.] -- .
     @Query(

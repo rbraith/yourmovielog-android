@@ -3,7 +3,6 @@ package com.rbraithwaite.untitledmovieapp.data.repositories
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.TmdbRepository
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
@@ -28,14 +27,14 @@ class TmdbRepositoryImpl @Inject constructor(
         }.join()
     }
 
-    override suspend fun addOrUpdateTmdbLite(vararg tmdbLite: TmdbLite) {
+    override suspend fun upsertTmdbLite(vararg tmdbLite: TmdbLite) {
         launchExternal {
             val movies = tmdbLite.mapNotNull { it as? TmdbLite.Movie }
             val movieEntities = movies.map { it.toEntity() }.toTypedArray()
 
-            tmdbDao.insertOrUpdateTmdbLiteMovies(*movieEntities)
+            tmdbDao.upsertTmdbLiteMovies(*movieEntities)
             movies.forEach {
-                tmdbDao.addOrUpdateGenreIdsForMovie(it.id, it.genreIds)
+                tmdbDao.upsertGenreIdsForMovie(it.id, it.genreIds)
             }
         }
     }

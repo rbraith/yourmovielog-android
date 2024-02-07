@@ -38,7 +38,7 @@ class ReviewRepositoryImplTests {
     )
 
     @Test
-    fun addOrUpdateReviews_test() = testScope.runTest {
+    fun upsertReviews_test() = testScope.runTest {
         // GIVEN a set of reviews
         // -------------------------------------------
 
@@ -47,19 +47,19 @@ class ReviewRepositoryImplTests {
         val newReview = aReview().build()
         val updatedReview = aReview().withId(expectedUpdatedReviewId).build()
 
-        // WHEN they are sent to ReviewRepositoryImpl.addOrUpdateReviews()
+        // WHEN they are sent to ReviewRepositoryImpl.upsertReviews()
         // -------------------------------------------
 
-        reviewRepository.addOrUpdateReviews(
+        reviewRepository.upsertReviews(
             newReview,
             updatedReview
         )
 
-        // THEN ReviewDao.insertOrUpdateReviews() is called with the right entities
+        // THEN ReviewDao.upsertReviews() is called with the right entities
         // -------------------------------------------
 
         argumentCaptor<ReviewEntity>().run {
-            verify(reviewDao.mock).insertOrUpdateReviews(capture())
+            verify(reviewDao.mock).upsertReviews(capture())
 
             val varArgs = allValues.first().asVarArg()
 

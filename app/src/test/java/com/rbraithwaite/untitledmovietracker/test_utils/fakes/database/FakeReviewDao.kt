@@ -15,10 +15,10 @@ class FakeReviewDao(
         return database.find()
     }
 
-    override suspend fun insertOrUpdateReviews(vararg entities: ReviewEntity): List<Long> {
-        mock.insertOrUpdateReviews(*entities)
+    override suspend fun upsertReviews(vararg entities: ReviewEntity): List<Long> {
+        mock.upsertReviews(*entities)
 
-        return database.insertOrUpdateMultiple(
+        return database.upsertMultiple(
             entities.toList(),
             ReviewEntityIdSelector()
         )

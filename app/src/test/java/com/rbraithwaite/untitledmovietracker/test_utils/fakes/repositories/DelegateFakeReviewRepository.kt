@@ -49,10 +49,10 @@ class DelegateFakeReviewRepository(
         return real.getAllReviews(extras)
     }
 
-    override suspend fun addOrUpdateReviews(vararg reviews: Review) {
+    override suspend fun upsertReviews(vararg reviews: Review) {
         if (mockEnabled) {
-            mock.addOrUpdateReviews(*reviews)
+            mock.upsertReviews(*reviews)
         }
-        real.addOrUpdateReviews(*reviews)
+        real.upsertReviews(*reviews)
     }
 }

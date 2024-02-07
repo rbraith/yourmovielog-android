@@ -6,5 +6,5 @@ import kotlin.reflect.KClass
 interface ReviewRepository {
     suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>> = emptySet()): List<Review>
 
-    suspend fun addOrUpdateReviews(vararg reviews: Review)
+    suspend fun upsertReviews(vararg reviews: Review)
 }

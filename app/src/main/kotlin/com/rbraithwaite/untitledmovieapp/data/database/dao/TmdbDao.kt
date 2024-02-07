@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
-import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 
@@ -22,11 +20,11 @@ abstract class TmdbDao {
 
     // TEST NEEDED [24-01-27 12:42p.m.] -- .
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertOrUpdateTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long>
+    abstract suspend fun upsertTmdbLiteMovies(vararg movies: TmdbLiteMovieEntity): List<Long>
 
     // TEST NEEDED [24-01-22 12:40a.m.] -- .
     @Transaction
-    open suspend fun addOrUpdateGenreIdsForMovie(
+    open suspend fun upsertGenreIdsForMovie(
         movieId: Long,
         genreIds: List<Int>
     ) {

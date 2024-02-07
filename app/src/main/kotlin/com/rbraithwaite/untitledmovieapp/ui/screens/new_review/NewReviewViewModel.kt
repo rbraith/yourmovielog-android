@@ -113,8 +113,8 @@ class NewReviewViewModel @Inject constructor(
                 // TODO [24-02-2 12:17a.m.] broken.
 //                is TmdbMovieUiState -> {
 //                    // TEST NEEDED [24-01-22 12:02a.m.] i need to fix NewReviewViewModelTests
-//                    //  convert to delegate fakes to test this addOrUpdate call.
-//                    customMediaRepository.addOrUpdateTmdbLite(mediaUiState.tmdbMovie.data)
+//                    //  convert to delegate fakes to test this upsert call.
+//                    customMediaRepository.upsertTmdbLite(mediaUiState.tmdbMovie.data)
 //                    customMediaRepository.addTmdbMovieReview(
 //                        tmdbMovieId = mediaUiState.tmdbMovie.data.id,
 //                        review = review

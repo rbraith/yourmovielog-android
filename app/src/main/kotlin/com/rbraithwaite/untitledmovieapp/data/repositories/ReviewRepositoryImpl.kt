@@ -24,10 +24,10 @@ class ReviewRepositoryImpl @Inject constructor(
     @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher
 ): ReviewRepository {
-    override suspend fun addOrUpdateReviews(vararg reviews: Review) {
+    override suspend fun upsertReviews(vararg reviews: Review) {
         launchExternal {
             val entities = reviews.map { it.toEntity() }.toTypedArray()
-            reviewDao.insertOrUpdateReviews(*entities)
+            reviewDao.upsertReviews(*entities)
         }
     }
 

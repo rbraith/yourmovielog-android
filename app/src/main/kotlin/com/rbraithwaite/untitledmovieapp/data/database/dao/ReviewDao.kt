@@ -13,5 +13,5 @@ abstract class ReviewDao {
     abstract suspend fun getAllReviews(): List<ReviewEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertOrUpdateReviews(vararg entities: ReviewEntity): List<Long>
+    abstract suspend fun upsertReviews(vararg entities: ReviewEntity): List<Long>
 }

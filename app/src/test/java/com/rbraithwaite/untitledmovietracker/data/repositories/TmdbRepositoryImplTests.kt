@@ -37,7 +37,7 @@ class TmdbRepositoryImplTests {
     )
 
     @Test
-    fun addOrUpdateTmdbLite_addsMovies() = testScope.runTest {
+    fun upsertTmdbLite_addsMovies() = testScope.runTest {
         // GIVEN several TmdbLite.Movies
         // -------------------------------------------
 
@@ -54,7 +54,7 @@ class TmdbRepositoryImplTests {
         // WHEN you add those movies to the repo
         // -------------------------------------------
 
-        tmdbRepository.addOrUpdateTmdbLite(
+        tmdbRepository.upsertTmdbLite(
             movie1,
             movie2
         )
@@ -62,9 +62,9 @@ class TmdbRepositoryImplTests {
         // THEN the repo calls the dao with the expected methods
         // -------------------------------------------
 
-        // verify insertOrUpdateTmdbLiteMovies()
+        // verify upsertTmdbLiteMovies()
         argumentCaptor<TmdbLiteMovieEntity>().apply {
-            verify(tmdbDao.mock).insertOrUpdateTmdbLiteMovies(capture())
+            verify(tmdbDao.mock).upsertTmdbLiteMovies(capture())
 
             val varArg = allValues.first().asVarArg()
 
@@ -74,11 +74,11 @@ class TmdbRepositoryImplTests {
             assertThat(varArg[1].id, willBe(movie2.id))
         }
 
-        // verify addOrUpdateGenreIdsForMovie()
+        // verify upsertGenreIdsForMovie()
         val movieIdCaptor = argumentCaptor<Long>()
         val genreIdsCaptor = argumentCaptor<List<Int>>()
 
-        verify(tmdbDao.mock, times(2)).addOrUpdateGenreIdsForMovie(
+        verify(tmdbDao.mock, times(2)).upsertGenreIdsForMovie(
             movieIdCaptor.capture(),
             genreIdsCaptor.capture()
         )
