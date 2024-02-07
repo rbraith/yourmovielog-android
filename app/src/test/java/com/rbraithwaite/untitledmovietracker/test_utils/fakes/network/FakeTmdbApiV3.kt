@@ -1,8 +1,9 @@
-package com.rbraithwaite.untitledmovietracker.test_utils.fakes
+package com.rbraithwaite.untitledmovietracker.test_utils.fakes.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
 
 class FakeTmdbApiV3(
     private val backend: FakeDatabase

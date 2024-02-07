@@ -1,8 +1,6 @@
-package com.rbraithwaite.untitledmovietracker.test_utils.fakes
+package com.rbraithwaite.untitledmovietracker.test_utils.fakes.database
 
-import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres

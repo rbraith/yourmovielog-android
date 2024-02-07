@@ -1,4 +1,4 @@
-package com.rbraithwaite.untitledmovietracker.test_utils.fakes
+package com.rbraithwaite.untitledmovietracker.test_utils.fakes.database
 
 import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity

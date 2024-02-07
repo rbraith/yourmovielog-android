@@ -1,9 +1,11 @@
-package com.rbraithwaite.untitledmovietracker.test_utils.fakes
+package com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeTmdbDao
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeCustomMediaDao
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeReviewDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
