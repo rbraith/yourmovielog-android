@@ -39,4 +39,21 @@ class TmdbApiV3Tests {
         assertThat(certificationsCanada.size, willBe(7))
         assertThat(certificationsCanada[4].certification, willBe("R"))
     }
+
+    @Test
+    fun getTvCertifications_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_CertificationsTvList.json")
+
+        val result = tmdbApiV3.getTvCertifications()
+
+        assert(result.isSuccess)
+
+        val certifications = result.getOrThrow().certifications
+        assertThat(certifications.size, willBe(40))
+
+        val certificationsCanada = certifications["CA"]!!
+
+        assertThat(certificationsCanada.size, willBe(7))
+        assertThat(certificationsCanada[6].certification, willBe("18+"))
+    }
 }

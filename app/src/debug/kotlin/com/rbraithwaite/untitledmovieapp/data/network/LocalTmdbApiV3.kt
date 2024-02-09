@@ -26,4 +26,8 @@ class LocalTmdbApiV3(
     override suspend fun getMovieCertifications(): Result<CertificationsResponse> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getTvCertifications(): Result<CertificationsResponse> {
+        TODO("Not yet implemented")
+    }
 }

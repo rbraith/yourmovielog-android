@@ -34,4 +34,11 @@ interface TmdbApiV3 {
      */
     @GET("certification/movie/list")
     suspend fun getMovieCertifications(): Result<CertificationsResponse>
+
+    /**
+     * Returns the static list of tv certifications for different countries. Like TV-PG, TV-14,
+     * YV-MA, etc.
+     */
+    @GET("certification/tv/list")
+    suspend fun getTvCertifications(): Result<CertificationsResponse>
 }
