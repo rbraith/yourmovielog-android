@@ -56,4 +56,18 @@ class TmdbApiV3Tests {
         assertThat(certificationsCanada.size, willBe(7))
         assertThat(certificationsCanada[6].certification, willBe("18+"))
     }
+
+    @Test
+    fun getConfiguration_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_Configuration.json")
+
+        val result = tmdbApiV3.getConfiguration()
+
+        assert(result.isSuccess)
+
+        val configuration = result.getOrThrow()
+        assertThat(configuration.images.baseUrl, willBe("http://image.tmdb.org/t/p/"))
+        assertThat(configuration.images.posterSizes.size, willBe(7))
+        assertThat(configuration.changeKeys.size, willBe(53))
+    }
 }

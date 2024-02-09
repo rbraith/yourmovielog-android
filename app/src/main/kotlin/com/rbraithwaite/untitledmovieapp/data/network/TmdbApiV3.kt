@@ -1,6 +1,7 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
@@ -41,4 +42,10 @@ interface TmdbApiV3 {
      */
     @GET("certification/tv/list")
     suspend fun getTvCertifications(): Result<CertificationsResponse>
+
+    /**
+     * Returns static data to help integrate with this API.
+     */
+    @GET("configuration")
+    suspend fun getConfiguration(): Result<Configuration>
 }
