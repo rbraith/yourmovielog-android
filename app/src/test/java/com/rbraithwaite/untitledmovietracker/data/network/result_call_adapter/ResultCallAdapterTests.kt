@@ -32,6 +32,7 @@ class ResultCallAdapterTests {
         // GIVEN a retrofit api that returns a Result
         // -------------------------------------------
 
+        // REFACTOR [24-02-8 11:17p.m.] -- use enqueueResponseFromFile().
         val response = MockResponse()
         response.setBodyFromResourceFile("ResultCallAdapterTests_SearchMultiResponse.json")
 

@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.google.gson.Gson
 import com.rbraithwaite.untitledmovieapp.DebugUtils
+import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import timber.log.Timber
 
@@ -20,5 +21,9 @@ class LocalTmdbApiV3(
         val responseString = DebugUtils.loadResourceFileAsString("search-multi-response.json")
         val searchMultiResults = gson.fromJson(responseString, SearchMultiResults::class.java)
         return Result.success(searchMultiResults)
+    }
+
+    override suspend fun getMovieCertifications(): Result<CertificationsResponse> {
+        TODO("Not yet implemented")
     }
 }

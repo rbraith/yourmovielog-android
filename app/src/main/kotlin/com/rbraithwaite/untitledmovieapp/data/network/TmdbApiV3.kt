@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
+import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
@@ -26,4 +27,11 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("page") pageNumber: Int = 1
     ): Result<SearchMultiResults>
+
+
+    /**
+     * Returns the static list of movie certifications for different countries. Like G, 14A, R, etc.
+     */
+    @GET("certification/movie/list")
+    suspend fun getMovieCertifications(): Result<CertificationsResponse>
 }

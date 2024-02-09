@@ -1,6 +1,7 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
+import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
@@ -45,5 +46,9 @@ class FakeTmdbApiV3(
         )
 
         return Result.success(searchMultiResult)
+    }
+
+    override suspend fun getMovieCertifications(): Result<CertificationsResponse> {
+        TODO("Not yet implemented")
     }
 }

@@ -31,3 +31,12 @@ fun MockResponse.setBodyFromResourceFile(filepath: String): MockResponse {
 
     return this
 }
+
+/**
+ * @param filepath This path should be relative to the resources/ directory
+ */
+fun MockWebServer.enqueueResponseFromFile(filepath: String) {
+    val response = MockResponse()
+    response.setBodyFromResourceFile(filepath)
+    enqueue(response)
+}
