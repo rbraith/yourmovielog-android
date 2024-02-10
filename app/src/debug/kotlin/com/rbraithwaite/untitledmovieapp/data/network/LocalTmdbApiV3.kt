@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 import com.google.gson.Gson
 import com.rbraithwaite.untitledmovieapp.DebugUtils
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -48,6 +49,10 @@ class LocalTmdbApiV3(
     }
 
     override suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCompanyDetails(companyId: Long): Result<CompanyDetails> {
         TODO("Not yet implemented")
     }
 }

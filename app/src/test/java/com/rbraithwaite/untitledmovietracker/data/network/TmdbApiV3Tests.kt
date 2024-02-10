@@ -111,4 +111,16 @@ class TmdbApiV3Tests {
         assertThat(countryTimezones.first().countryIso, willBe("AD"))
         assertThat(countryTimezones.first().zoneNames.size, willBe(1))
     }
+
+    @Test
+    fun getCompanyDetails_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_CompanyDetails.json")
+
+        val result = tmdbApiV3.getCompanyDetails(123)
+
+        assert(result.isSuccess)
+
+        val companyDetails = result.getOrThrow()
+        assertThat(companyDetails.name, willBe("Lionsgate"))
+    }
 }

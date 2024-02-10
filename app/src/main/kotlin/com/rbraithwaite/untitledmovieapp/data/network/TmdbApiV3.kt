@@ -1,6 +1,7 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -8,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbApiV3 {
@@ -69,4 +71,10 @@ interface TmdbApiV3 {
      */
     @GET("configuration/timezones")
     suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>>
+
+    /**
+     * Returns the details of the company with the given id.
+     */
+    @GET("company/{company_id}")
+    suspend fun getCompanyDetails(@Path("company_id") companyId: Long): Result<CompanyDetails>
 }
