@@ -70,4 +70,17 @@ class TmdbApiV3Tests {
         assertThat(configuration.images.posterSizes.size, willBe(7))
         assertThat(configuration.changeKeys.size, willBe(53))
     }
+
+    @Test
+    fun getCountryConfiguration_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationCountries.json")
+
+        val result = tmdbApiV3.getCountryConfiguration()
+
+        assert(result.isSuccess)
+
+        val countries = result.getOrThrow()
+        assertThat(countries.size, willBe(251))
+        assertThat(countries.first().englishName, willBe("Andorra"))
+    }
 }

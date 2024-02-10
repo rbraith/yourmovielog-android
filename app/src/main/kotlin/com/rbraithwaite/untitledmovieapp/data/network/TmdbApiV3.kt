@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
+import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
@@ -48,4 +49,10 @@ interface TmdbApiV3 {
      */
     @GET("configuration")
     suspend fun getConfiguration(): Result<Configuration>
+
+    /**
+     * Returns a static list of the countries used by TMDB
+     */
+    @GET("configuration/countries")
+    suspend fun getCountryConfiguration(): Result<List<CountryConfig>>
 }
