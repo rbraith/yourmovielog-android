@@ -97,4 +97,18 @@ class TmdbApiV3Tests {
         assertThat(jobs.first().department, willBe("Writing"))
         assertThat(jobs.first().jobs.size, willBe(45))
     }
+
+    @Test
+    fun getTimezonesConfiguration_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationTimezones.json")
+
+        val result = tmdbApiV3.getTimezonesConfiguration()
+
+        assert(result.isSuccess)
+
+        val countryTimezones = result.getOrThrow()
+        assertThat(countryTimezones.size, willBe(249))
+        assertThat(countryTimezones.first().countryIso, willBe("AD"))
+        assertThat(countryTimezones.first().zoneNames.size, willBe(1))
+    }
 }

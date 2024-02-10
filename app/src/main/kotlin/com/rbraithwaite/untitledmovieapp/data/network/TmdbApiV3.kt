@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
@@ -62,4 +63,10 @@ interface TmdbApiV3 {
      */
     @GET("configuration/jobs")
     suspend fun getJobsConfiguration(): Result<List<JobsConfig>>
+
+    /**
+     * Returns a static list of the timezones used by TMDB
+     */
+    @GET("configuration/timezones")
+    suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>>
 }

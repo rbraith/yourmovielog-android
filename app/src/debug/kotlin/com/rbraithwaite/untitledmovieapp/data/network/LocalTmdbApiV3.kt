@@ -5,6 +5,7 @@ import com.rbraithwaite.untitledmovieapp.DebugUtils
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import timber.log.Timber
@@ -43,6 +44,10 @@ class LocalTmdbApiV3(
     }
 
     override suspend fun getJobsConfiguration(): Result<List<JobsConfig>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>> {
         TODO("Not yet implemented")
     }
 }
