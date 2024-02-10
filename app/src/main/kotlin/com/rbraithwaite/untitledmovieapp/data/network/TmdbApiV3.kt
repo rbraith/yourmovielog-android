@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
@@ -55,4 +56,10 @@ interface TmdbApiV3 {
      */
     @GET("configuration/countries")
     suspend fun getCountryConfiguration(): Result<List<CountryConfig>>
+
+    /**
+     * Returns a static list of the movie-industry departments and jobs used by TMDB
+     */
+    @GET("configuration/jobs")
+    suspend fun getJobsConfiguration(): Result<List<JobsConfig>>
 }

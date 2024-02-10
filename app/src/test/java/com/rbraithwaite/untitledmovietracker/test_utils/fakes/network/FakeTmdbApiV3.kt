@@ -4,6 +4,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
@@ -63,6 +64,10 @@ class FakeTmdbApiV3(
     }
 
     override suspend fun getCountryConfiguration(): Result<List<CountryConfig>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getJobsConfiguration(): Result<List<JobsConfig>> {
         TODO("Not yet implemented")
     }
 }

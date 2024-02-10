@@ -83,4 +83,18 @@ class TmdbApiV3Tests {
         assertThat(countries.size, willBe(251))
         assertThat(countries.first().englishName, willBe("Andorra"))
     }
+
+    @Test
+    fun getJobsConfiguration_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationJobs.json")
+
+        val result = tmdbApiV3.getJobsConfiguration()
+
+        assert(result.isSuccess)
+
+        val jobs = result.getOrThrow()
+        assertThat(jobs.size, willBe(12))
+        assertThat(jobs.first().department, willBe("Writing"))
+        assertThat(jobs.first().jobs.size, willBe(45))
+    }
 }

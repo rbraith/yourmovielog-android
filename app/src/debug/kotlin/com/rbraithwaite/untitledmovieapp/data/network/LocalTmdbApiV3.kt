@@ -5,6 +5,7 @@ import com.rbraithwaite.untitledmovieapp.DebugUtils
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import timber.log.Timber
 
@@ -38,6 +39,10 @@ class LocalTmdbApiV3(
     }
 
     override suspend fun getCountryConfiguration(): Result<List<CountryConfig>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getJobsConfiguration(): Result<List<JobsConfig>> {
         TODO("Not yet implemented")
     }
 }
