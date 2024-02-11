@@ -35,7 +35,6 @@ class DiscoverMovieOptions {
     var voteAverageLte: Float? = null
     var voteCountGte: Float? = null
     var voteCountLte: Float? = null
-    var watchRegion: String? = null
     var withOriginalCountry: String? = null
     var withOriginLanguage: String? = null
     var withRuntimeGte: Int? = null
@@ -120,28 +119,16 @@ class DiscoverMovieOptions {
         }
     }
 
+    var watchRegion: String? = null
+        private set
     var withWatchMonetizationTypes: String? = null
         private set
-    fun withWatchMonetizationTypes(
-        logic: Logic = Logic.AND,
-        vararg watchMonetizationTypes: WatchMonetizationType
-    ) {
-        withWatchMonetizationTypes = if (watchMonetizationTypes.isEmpty()) {
-            null
-        } else {
-            formatLogic(logic, watchMonetizationTypes.toSet().map { it.apiString }.toList())
-        }
-    }
-
     var withWatchProviders: String? = null
         private set
-    fun withWatchProviders(logic: Logic = Logic.AND, vararg watchProviders: String) {
-        withWatchProviders = if (watchProviders.isEmpty()) {
-            null
-        } else {
-            formatLogic(logic, watchProviders.toList())
-        }
+    fun withWatchOptions(watchRegion: String, optionsBlock: WatchOptions.()->Unit) {
+        WatchOptions(watchRegion).optionsBlock()
     }
+
 
     enum class Logic {
         AND,
@@ -206,6 +193,31 @@ class DiscoverMovieOptions {
             }
     }
 
+    inner class WatchOptions(watchRegion: String) {
+        init {
+            this@DiscoverMovieOptions.watchRegion = watchRegion
+        }
+
+        fun withWatchMonetizationTypes(
+            logic: Logic = Logic.AND,
+            vararg watchMonetizationTypes: WatchMonetizationType
+        ) {
+            withWatchMonetizationTypes = if (watchMonetizationTypes.isEmpty()) {
+                null
+            } else {
+                formatLogic(logic, watchMonetizationTypes.toSet().map { it.apiString }.toList())
+            }
+        }
+
+        fun withWatchProviders(logic: Logic = Logic.AND, vararg watchProviders: String) {
+            withWatchProviders = if (watchProviders.isEmpty()) {
+                null
+            } else {
+                formatLogic(logic, watchProviders.toList())
+            }
+        }
+    }
+
     private fun formatLogic(logic: Logic, strings: List<String>): String {
         val sep = when (logic) {
             Logic.AND -> ","
@@ -248,8 +260,8 @@ suspend fun TmdbApiV3.discoverMovies(
             withCrew = withCrew,
             withGenres = withGenres,
             withKeywords = withKeywords,
-            withOriginalCountry = withOriginalCountry,
-            withOriginLanguage = withOriginLanguage,
+            withOriginCountry = withOriginalCountry,
+            withOriginalLanguage = withOriginLanguage,
             withPeople = withPeople,
             withReleaseType = withReleaseType,
             withRuntimeGte = withRuntimeGte,

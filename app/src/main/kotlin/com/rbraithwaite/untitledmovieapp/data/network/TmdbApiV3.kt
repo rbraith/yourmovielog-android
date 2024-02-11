@@ -88,7 +88,54 @@ interface TmdbApiV3 {
     suspend fun getCompanyLogos(@Path("company_id") companyId: Long): Result<CompanyLogos>
 
     /**
+     * Advanced movie search.
+     *
+     * @param certification used with certification_country. Should be a code like R, PG-13, etc.
+     * @param certificationGte similar format to certification. Find movies with greater than or
+     * equal certs.
+     * @param certificationLte similar format to certification. Find movies with less than or equal
+     * certs.
+     * @param certificationCountry The country to use as a reference for the certification codes
+     * in other params like 'certification'.
+     * @param includeAdult should adult film results be included?
+     * @param includeVideo Idk what this does
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverMovieResponse.totalPages]
+     * @param primaryReleaseYear The primary release year, e.g. 1972
+     * @param primaryReleaseDateGte Release >= this date, using tmdb date format: yyyy-mm-dd
+     * @param primaryReleaseDateLte Release <= this date, using tmdb date format
      * @param region ISO-3166-1 country code (https://en.wikipedia.org/wiki/ISO_3166-1)
+     * @param releaseDateGte region-specific release date. If there is none, primary date is used
+     * @param releaseDateLte region-specific release date. If there is none, primary date is used
+     * @param sortBy how to sort the response list, see [the TMDB docs](https://developer.themoviedb.org/reference/discover-movie)
+     * for possible values.
+     * @param voteAverageGte vote average >= this value
+     * @param voteAverageLte vote average <= this value
+     * @param voteCountGte vote count >= this value
+     * @param voteCountLte vote count <= this value
+     * @param watchRegion The region related to other streaming option params: monetization types
+     * and watch providers
+     * @param withCast AND/OR list of cast member names, see [the TMDB docs](https://developer.themoviedb.org/reference/discover-movie)
+     * for more about AND/OR logic.
+     * @param withCompanies AND/OR list of company names
+     * @param withCrew AND/OR list of crew member names
+     * @param withGenres AND/OR list of genre names
+     * @param withKeywords AND/OR list of keywords
+     * @param withOriginCountry The movie's original country
+     * @param withOriginalLanguage ISO 639-1 format
+     * @param withPeople AND/OR list of people. I'm guessing this is combined cast & crew?
+     * @param withReleaseType format: AND/OR list of ints 1-6. See [Release Types Guide](https://developer.themoviedb.org/docs/region-support#release-types)
+     * for more.
+     * @param withRuntimeGte Runtime >=, in minutes
+     * @param withRuntimeLte Runtime <=, in minutes
+     * @param withWatchMonetizationTypes AND/OR list of streaming buying options (free, rent, etc.)
+     * see [the TMDB docs](https://developer.themoviedb.org/reference/discover-movie) for list of possible values.
+     * @param withWatchProviders AND/OR list of streaming services - netflix etc.
+     * @param withoutCompanies Exclude movies from these companies, probably an AND/OR list
+     * @param withoutGenres Exclude movies with these genres, probably an AND/OR list
+     * @param withoutKeywords Exclude movies with these keywords, probably an AND/OR list
+     * @param withoutWatchProviders Exclude movies on these streaming platforms, probably an AND/OR list
+     * @param year The year the movie was made.
      */
     @GET("discover/movie")
     suspend fun discoverMovies(
@@ -118,8 +165,8 @@ interface TmdbApiV3 {
         @Query("with_crew") withCrew: String? = null,
         @Query("with_genres") withGenres: String? = null,
         @Query("with_keywords") withKeywords: String? = null,
-        @Query("with_origin_country") withOriginalCountry: String? = null,
-        @Query("with_original_language") withOriginLanguage: String? = null,
+        @Query("with_origin_country") withOriginCountry: String? = null,
+        @Query("with_original_language") withOriginalLanguage: String? = null,
         @Query("with_people") withPeople: String? = null,
         @Query("with_release_type") withReleaseType: String? = null,
         @Query("with_runtime.gte") withRuntimeGte: Int? = null,
