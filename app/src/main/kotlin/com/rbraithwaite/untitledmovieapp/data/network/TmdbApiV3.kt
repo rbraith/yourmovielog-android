@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -77,4 +78,10 @@ interface TmdbApiV3 {
      */
     @GET("company/{company_id}")
     suspend fun getCompanyDetails(@Path("company_id") companyId: Long): Result<CompanyDetails>
+
+    /**
+     * Returns logo information for the company with the given id.
+     */
+    @GET("company/{company_id}/images")
+    suspend fun getCompanyLogos(@Path("company_id") companyId: Long): Result<CompanyLogos>
 }

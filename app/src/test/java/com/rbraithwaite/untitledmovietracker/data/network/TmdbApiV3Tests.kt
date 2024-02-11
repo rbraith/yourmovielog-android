@@ -18,6 +18,10 @@ class TmdbApiV3Tests {
 
     private lateinit var tmdbApiV3: TmdbApiV3
 
+    companion object {
+        private const val RESOURCES_DIR = "TmdbApiV3Tests/"
+    }
+
     @Before
     fun setup() {
         // api needs to be created late, to let the mock server start first
@@ -122,5 +126,19 @@ class TmdbApiV3Tests {
 
         val companyDetails = result.getOrThrow()
         assertThat(companyDetails.name, willBe("Lionsgate"))
+    }
+
+    @Test
+    fun getCompanyLogos_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "CompanyImages.json")
+
+        val result = tmdbApiV3.getCompanyLogos(123)
+
+        assert(result.isSuccess)
+
+        val companyLogos = result.getOrThrow()
+        assertThat(companyLogos.companyId, willBe(1632))
+        assertThat(companyLogos.logos.size, willBe(1))
+        assertThat(companyLogos.logos.first().id, willBe("5abefb980e0a264a540204cf"))
     }
 }

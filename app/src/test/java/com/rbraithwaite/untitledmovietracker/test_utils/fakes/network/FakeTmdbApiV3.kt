@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovietracker.test_utils.fakes.network
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -78,6 +79,10 @@ class FakeTmdbApiV3(
     }
 
     override suspend fun getCompanyDetails(companyId: Long): Result<CompanyDetails> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCompanyLogos(companyId: Long): Result<CompanyLogos> {
         TODO("Not yet implemented")
     }
 }
