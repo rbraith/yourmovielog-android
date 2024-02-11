@@ -1,11 +1,13 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
+import com.rbraithwaite.untitledmovieapp.data.network.models.Certification
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
+import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
@@ -84,4 +86,50 @@ interface TmdbApiV3 {
      */
     @GET("company/{company_id}/images")
     suspend fun getCompanyLogos(@Path("company_id") companyId: Long): Result<CompanyLogos>
+
+    /**
+     * @param region ISO-3166-1 country code (https://en.wikipedia.org/wiki/ISO_3166-1)
+     */
+    @GET("discover/movie")
+    suspend fun discoverMovies(
+        @Query("certification") certification: String? = null,
+        @Query("certification.gte") certificationGte: String? = null,
+        @Query("certification.lte") certificationLte: String? = null,
+        @Query("certification_country") certificationCountry: String? = null,
+        @Query("include_adult") includeAdult: Boolean = false,
+        @Query("include_video") includeVideo: Boolean = false,
+        // REFACTOR [24-02-10 10:04p.m.] -- hardcoded language.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("primary_release_year") primaryReleaseYear: Int? = null,
+        @Query("primary_release_date.gte") primaryReleaseDateGte: String? = null,
+        @Query("primary_release_date.lte") primaryReleaseDateLte: String? = null,
+        @Query("region") region: String? = null,
+        @Query("release_date.gte") releaseDateGte: String? = null,
+        @Query("release_date.lte") releaseDateLte: String? = null,
+        @Query("sort_by") sortBy: String = "popularity.desc",
+        @Query("vote_average.gte") voteAverageGte: Float? = null,
+        @Query("vote_average.lte") voteAverageLte: Float? = null,
+        @Query("vote_count.gte") voteCountGte: Float? = null,
+        @Query("vote_count.lte") voteCountLte: Float? = null,
+        @Query("watch_region") watchRegion: String? = null,
+        @Query("with_cast") withCast: String? = null,
+        @Query("with_companies") withCompanies: String? = null,
+        @Query("with_crew") withCrew: String? = null,
+        @Query("with_genres") withGenres: String? = null,
+        @Query("with_keywords") withKeywords: String? = null,
+        @Query("with_origin_country") withOriginalCountry: String? = null,
+        @Query("with_original_language") withOriginLanguage: String? = null,
+        @Query("with_people") withPeople: String? = null,
+        @Query("with_release_type") withReleaseType: String? = null,
+        @Query("with_runtime.gte") withRuntimeGte: Int? = null,
+        @Query("with_runtime.lte") withRuntimeLte: Int? = null,
+        @Query("with_watch_monetization_types") withWatchMonetizationTypes: String? = null,
+        @Query("with_watch_providers") withWatchProviders: String? = null,
+        @Query("without_companies") withoutCompanies: String? = null,
+        @Query("without_genres") withoutGenres: String? = null,
+        @Query("without_keywords") withoutKeywords: String? = null,
+        @Query("without_watch_providers") withoutWatchProviders: String? = null,
+        @Query("year") year: Int? = null
+    ): Result<DiscoverMovieResponse>
 }

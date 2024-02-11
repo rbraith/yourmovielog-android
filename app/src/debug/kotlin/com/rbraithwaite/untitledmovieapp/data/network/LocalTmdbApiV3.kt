@@ -8,6 +8,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
+import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import timber.log.Timber
@@ -58,6 +59,49 @@ class LocalTmdbApiV3(
     }
 
     override suspend fun getCompanyLogos(companyId: Long): Result<CompanyLogos> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun discoverMovies(
+        certification: String?,
+        certificationGte: String?,
+        certificationLte: String?,
+        certificationCountry: String?,
+        includeAdult: Boolean,
+        includeVideo: Boolean,
+        language: String,
+        page: Int,
+        primaryReleaseYear: Int?,
+        primaryReleaseDateGte: String?,
+        primaryReleaseDateLte: String?,
+        region: String?,
+        releaseDateGte: String?,
+        releaseDateLte: String?,
+        sortBy: String,
+        voteAverageGte: Float?,
+        voteAverageLte: Float?,
+        voteCountGte: Float?,
+        voteCountLte: Float?,
+        watchRegion: String?,
+        withCast: String?,
+        withCompanies: String?,
+        withCrew: String?,
+        withGenres: String?,
+        withKeywords: String?,
+        withOriginalCountry: String?,
+        withOriginLanguage: String?,
+        withPeople: String?,
+        withReleaseType: String?,
+        withRuntimeGte: Int?,
+        withRuntimeLte: Int?,
+        withWatchMonetizationTypes: String?,
+        withWatchProviders: String?,
+        withoutCompanies: String?,
+        withoutGenres: String?,
+        withoutKeywords: String?,
+        withoutWatchProviders: String?,
+        year: Int?
+    ): Result<DiscoverMovieResponse> {
         TODO("Not yet implemented")
     }
 }

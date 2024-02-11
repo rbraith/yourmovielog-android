@@ -141,4 +141,18 @@ class TmdbApiV3Tests {
         assertThat(companyLogos.logos.size, willBe(1))
         assertThat(companyLogos.logos.first().id, willBe("5abefb980e0a264a540204cf"))
     }
+
+    @Test
+    fun discoverMovies_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "DiscoverMovie.json")
+
+        val result = tmdbApiV3.discoverMovies()
+
+        assert(result.isSuccess)
+
+        val response = result.getOrThrow()
+        assertThat(response.totalResults, willBe(816588))
+        assertThat(response.results.size, willBe(20))
+        assertThat(response.results.first().title, willBe("Five Nights at Freddy's"))
+    }
 }

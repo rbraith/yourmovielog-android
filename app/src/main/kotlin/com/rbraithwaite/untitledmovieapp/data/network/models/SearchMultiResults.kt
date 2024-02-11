@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
 
+// REFACTOR [24-02-11 2:54p.m.] -- rename this SearchMultiResponse.
 data class SearchMultiResults(
     @SerializedName("page")
     val page: Int,
@@ -18,6 +19,7 @@ data class SearchMultiResults(
     val totalResults: Int
 )
 
+// REFACTOR [24-02-11 2:54p.m.] -- delete SearchMultiResult, replace with the types in SearchResult.kt.
 sealed interface SearchMultiResult {
     data class Movie(
         @SerializedName("adult")
