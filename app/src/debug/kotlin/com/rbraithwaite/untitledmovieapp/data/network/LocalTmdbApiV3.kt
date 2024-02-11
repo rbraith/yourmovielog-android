@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import timber.log.Timber
@@ -102,6 +103,44 @@ class LocalTmdbApiV3(
         withoutWatchProviders: String?,
         year: Int?
     ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun discoverTvShows(
+        airDateGte: String?,
+        airDateLte: String?,
+        firstAirDateYear: Int?,
+        firstAirDateGte: String?,
+        firstAirDateLte: String?,
+        includeAdult: Boolean,
+        includeNullFirstAirDates: Boolean,
+        language: String,
+        page: Int,
+        screenedTheatrically: Boolean?,
+        sortBy: String,
+        timezone: String?,
+        voteAverageGte: Float?,
+        voteAverageLte: Float?,
+        voteCountGte: Float?,
+        voteCountLte: Float?,
+        watchRegion: String?,
+        withCompanies: String?,
+        withGenres: String?,
+        withKeywords: String?,
+        withNetworks: Int?,
+        withOriginCountry: String?,
+        withOriginalLanguage: String?,
+        withRuntimeGte: Int?,
+        withRuntimeLte: Int?,
+        withStatus: String?,
+        withWatchMonetizationTypes: String?,
+        withWatchProviders: String?,
+        withoutCompanies: String?,
+        withoutGenres: String?,
+        withoutKeywords: String?,
+        withoutWatchProviders: String?,
+        withType: String?
+    ): Result<DiscoverTvResponse> {
         TODO("Not yet implemented")
     }
 }

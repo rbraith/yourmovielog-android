@@ -155,4 +155,18 @@ class TmdbApiV3Tests {
         assertThat(response.results.size, willBe(20))
         assertThat(response.results.first().title, willBe("Five Nights at Freddy's"))
     }
+
+    @Test
+    fun discoverTvShows_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "DiscoverTv.json")
+
+        val result = tmdbApiV3.discoverTvShows()
+
+        assert(result.isSuccess)
+
+        val response = result.getOrThrow()
+        assertThat(response.totalResults, willBe(164657))
+        assertThat(response.results.size, willBe(20))
+        assertThat(response.results.first().name, willBe("The Tonight Show Starring Jimmy Fallon"))
+    }
 }
