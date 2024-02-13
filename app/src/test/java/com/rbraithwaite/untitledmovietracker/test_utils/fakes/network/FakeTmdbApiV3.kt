@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
@@ -166,6 +167,10 @@ class FakeTmdbApiV3(
         withoutWatchProviders: String?,
         withType: String?
     ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMovieGenres(): Result<Genres> {
         TODO("Not yet implemented")
     }
 }

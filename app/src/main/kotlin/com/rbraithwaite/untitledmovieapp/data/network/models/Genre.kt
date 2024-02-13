@@ -1,7 +1,7 @@
 package com.rbraithwaite.untitledmovieapp.data.network.models
 
 data class Genre(
-    val id: Int,
+    val id: Long,
     val name: String
 )
 

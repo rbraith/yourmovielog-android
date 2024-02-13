@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
@@ -260,4 +261,10 @@ interface TmdbApiV3 {
         @Query("without_watch_providers") withoutWatchProviders: String? = null,
         @Query("with_type") withType: String? = null
     ): Result<DiscoverTvResponse>
+
+    /**
+     * Returns list of all movie genres.
+     */
+    @GET("genre/movie/list")
+    suspend fun getMovieGenres(): Result<Genres>
 }

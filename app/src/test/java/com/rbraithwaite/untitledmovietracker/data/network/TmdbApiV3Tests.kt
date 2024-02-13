@@ -169,4 +169,17 @@ class TmdbApiV3Tests {
         assertThat(response.results.size, willBe(20))
         assertThat(response.results.first().name, willBe("The Tonight Show Starring Jimmy Fallon"))
     }
+
+    @Test
+    fun getMovieGenres_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "GenreMovieList.json")
+
+        val result = tmdbApiV3.getMovieGenres()
+
+        assert(result.isSuccess)
+
+        val genres = result.getOrThrow()
+        assertThat(genres.genres.size, willBe(19))
+        assertThat(genres.genres.first().name, willBe("Action"))
+    }
 }
