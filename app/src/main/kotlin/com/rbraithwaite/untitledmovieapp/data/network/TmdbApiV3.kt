@@ -267,4 +267,96 @@ interface TmdbApiV3 {
      */
     @GET("genre/movie/list")
     suspend fun getMovieGenres(): Result<Genres>
+
+    /**
+     * Returns list of all tv show genres.
+     */
+    @GET("genre/tv/list")
+    suspend fun getTvGenres(): Result<Genres>
+
+    /**
+     * Returns all movies ordered by popularity.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverMovieResponse.totalPages]
+     * @param region Return popular movies for a specific region (ISO-3166-1 country code)
+     */
+    @GET("movie/popular")
+    suspend fun getPopularMovies(
+        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String? = null
+    ): Result<DiscoverMovieResponse>
+
+    /**
+     * Returns all movies ordered by their user rating.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverMovieResponse.totalPages]
+     * @param region Return top-rated movies for a specific region (ISO-3166-1 country code)
+     */
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String? = null
+    ): Result<DiscoverMovieResponse>
+
+    /**
+     * Returns the list of tv shows airing today
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverTvResponse.totalPages]
+     * @param timezone Enter a specific timezone to help define what "today" means
+     */
+    @GET("tv/airing_today")
+    suspend fun getTvShowsAiringToday(
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("timezone") timezone: String? = null
+    ): Result<DiscoverTvResponse>
+
+    /**
+     * Returns the list of tv shows which will air in the next 7 days.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverTvResponse.totalPages]
+     * @param timezone A specific timezone to help define the next 7 days.
+     */
+    @GET("tv/on_the_air")
+    suspend fun getTvShowsOnTheAir(
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("timezone") timezone: String? = null
+    ): Result<DiscoverTvResponse>
+
+    /**
+     * Returns a list of all tv shows ordered by popularity.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverTvResponse.totalPages]
+     */
+    @GET("tv/popular")
+    suspend fun getPopularTvShows(
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ): Result<DiscoverTvResponse>
+
+    /**
+     * Returns a list of all tv shows ordered by user rating.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverTvResponse.totalPages]
+     */
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShow(
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ): Result<DiscoverTvResponse>
 }

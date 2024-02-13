@@ -173,4 +173,54 @@ class FakeTmdbApiV3(
     override suspend fun getMovieGenres(): Result<Genres> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getTvGenres(): Result<Genres> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPopularMovies(
+        language: String,
+        page: Int,
+        region: String?
+    ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTopRatedMovies(
+        language: String,
+        page: Int,
+        region: String?
+    ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTvShowsAiringToday(
+        language: String,
+        page: Int,
+        timezone: String?
+    ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTvShowsOnTheAir(
+        language: String,
+        page: Int,
+        timezone: String?
+    ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPopularTvShows(
+        language: String,
+        page: Int
+    ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTopRatedTvShow(
+        language: String,
+        page: Int
+    ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
 }
