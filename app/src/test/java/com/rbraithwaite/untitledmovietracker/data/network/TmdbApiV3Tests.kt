@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.data.network
 
+import com.rbraithwaite.untitledmovieapp.data.network.NetworkError
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.ApiTestUtils
 import com.rbraithwaite.untitledmovietracker.test_utils.enqueueResponseFromFile
@@ -181,5 +182,62 @@ class TmdbApiV3Tests {
         val genres = result.getOrThrow()
         assertThat(genres.genres.size, willBe(19))
         assertThat(genres.genres.first().name, willBe("Action"))
+    }
+
+    @Test
+    fun getMovieDetails_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "MovieDetails_FullAppend.json")
+
+        val result = tmdbApiV3.getMovieDetails(123)
+
+        if (result.isFailure) {
+            throw (result.exceptionOrNull()!! as NetworkError.Unknown).throwable!!
+        }
+        assert(result.isSuccess)
+
+
+        val movieDetails = result.getOrThrow()
+
+        assertThat(movieDetails.id, willBe(466420))
+        assertThat(movieDetails.title, willBe("Killers of the Flower Moon"))
+
+        assertThat(movieDetails.genres.size, willBe(3))
+        assertThat(movieDetails.genres.first().name, willBe("Crime"))
+
+        assertThat(movieDetails.productionCompanies.size, willBe(4))
+        assertThat(movieDetails.productionCompanies.first().name, willBe("Apple Studios"))
+
+        assertThat(movieDetails.spokenLanguages.size, willBe(3))
+        assertThat(movieDetails.spokenLanguages.first().name, willBe("English"))
+
+        // append_to_response checks
+        // -------------------------------------------
+        val credits = movieDetails.credits!!
+        assertThat(credits.cast.size, willBe(210))
+        assertThat(credits.crew.size, willBe(194))
+        assertThat(credits.cast.first().name, willBe("Leonardo DiCaprio"))
+        assertThat(credits.crew.first().name, willBe("Eric Roth"))
+
+        val externalIds = movieDetails.externalIds!!
+        assertThat(externalIds.facebookId, willBe("KillersoftheFlowerMoonFilm"))
+        assertThat(externalIds.twitterId, willBe(null))
+
+        val keywords = movieDetails.keywords!!
+        assertThat(keywords.keywords.size, willBe(35))
+        assertThat(keywords.keywords.first().id, willBe(1157))
+
+        val recommendations = movieDetails.recommendations!!
+        assertThat(recommendations.results.size, willBe(21))
+
+        val similar = movieDetails.similar!!
+        assertThat(similar.results.size, willBe(20))
+
+        val videos = movieDetails.videos!!
+        assertThat(videos.results.size, willBe(50))
+        assertThat(videos.results.first().key, willBe("wQveKoQ2gRg"))
+
+        val watchProviders = movieDetails.watchProviders!!
+        assertThat(watchProviders.results.size, willBe(75))
+        assertThat(watchProviders.results["CA"]!!.buy!!.size, willBe(6))
     }
 }

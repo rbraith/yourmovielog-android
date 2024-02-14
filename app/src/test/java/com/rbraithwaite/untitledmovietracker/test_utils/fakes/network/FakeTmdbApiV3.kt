@@ -11,6 +11,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
@@ -221,6 +222,14 @@ class FakeTmdbApiV3(
         language: String,
         page: Int
     ): Result<DiscoverTvResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMovieDetails(
+        movieId: Long,
+        language: String,
+        appendToResponse: String?
+    ): Result<MovieDetailsResponse> {
         TODO("Not yet implemented")
     }
 }

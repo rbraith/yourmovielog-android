@@ -11,6 +11,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
 import retrofit2.Response
 import retrofit2.http.GET
@@ -359,4 +360,19 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): Result<DiscoverTvResponse>
+
+    /**
+     * Get full details for a movie.
+     *
+     * @param movieId The movie to get details for
+     * @param language The language for the results (ISO 639-1 format)
+     * @param appendToResponse comma-separated additional queries for data related to this movie, see [the docs](https://developer.themoviedb.org/reference/movie-details)
+     */
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Long,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String? = null
+    ): Result<MovieDetailsResponse>
 }
