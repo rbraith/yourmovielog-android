@@ -240,4 +240,18 @@ class TmdbApiV3Tests {
         assertThat(watchProviders.results.size, willBe(75))
         assertThat(watchProviders.results["CA"]!!.buy!!.size, willBe(6))
     }
+
+    @Test
+    fun getPopularPeople_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "PopularPeople.json")
+
+        val result = tmdbApiV3.getPopularPeople()
+
+        assert(result.isSuccess)
+
+        val people = result.getOrThrow()
+        assertThat(people.results.size, willBe(20))
+        assertThat(people.results.first().name, willBe("Jeremy Piven"))
+        assertThat(people.results.first().knownFor.size, willBe(3))
+    }
 }

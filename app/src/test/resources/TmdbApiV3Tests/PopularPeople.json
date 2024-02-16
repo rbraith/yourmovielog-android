@@ -1,0 +1,1489 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 12799,
+      "known_for_department": "Acting",
+      "name": "Jeremy Piven",
+      "original_name": "Jeremy Piven",
+      "popularity": 386.632,
+      "profile_path": "/pqdR8zqAWF87chGYlbdYr0YfC7g.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/sd4xN5xi8tKRPrJOWwNiZEile7f.jpg",
+          "id": 920,
+          "title": "Cars",
+          "original_language": "en",
+          "original_title": "Cars",
+          "overview": "Lightning McQueen, a hotshot rookie race car driven to succeed, discovers that life is about the journey, not the finish line, when he finds himself unexpectedly detoured in the sleepy Route 66 town of Radiator Springs. On route across the country to the big Piston Cup Championship in California to compete against two seasoned pros, McQueen gets to know the town's offbeat characters.",
+          "poster_path": "/abW5AzHDaIK1n9C36VdAeOwORRA.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            16,
+            12,
+            35,
+            10751
+          ],
+          "popularity": 68.894,
+          "release_date": "2006-06-08",
+          "video": false,
+          "vote_average": 7,
+          "vote_count": 13245
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/gU7EMTMV3d2ykb9630PAwLSvtSz.jpg",
+          "id": 9778,
+          "title": "Serendipity",
+          "original_language": "en",
+          "original_title": "Serendipity",
+          "overview": "Although strangers Sara and Jonathan are both already in relationships, they realize they have genuine chemistry after a chance encounter – but part company soon after. Years later, they each yearn to reunite, despite being destined for the altar. But to give true love a chance, they have to find one another again.",
+          "poster_path": "/srCE5lEIjVEG5eqWg9JcjZCK1aQ.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            10749,
+            18
+          ],
+          "popularity": 22.272,
+          "release_date": "2001-10-05",
+          "video": false,
+          "vote_average": 6.911,
+          "vote_count": 1804
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/6bNQuKFJIamipvYclG4MEbDSLM5.jpg",
+          "id": 93837,
+          "title": "So Undercover",
+          "original_language": "en",
+          "original_title": "So Undercover",
+          "overview": "When the FBI hires her to go undercover at a college sorority, Molly Morris (Miley Cyrus) must transform herself from a tough, streetwise private investigator to a refined, sophisticated university girl to help protect the daughter of a one-time Mobster. With several suspects on her list, Molly unexpectedly discovers that not everyone is who they appear to be, including herself.",
+          "poster_path": "/abR6e0FaWwwcEJEM4PY5VvjwBr1.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            35
+          ],
+          "popularity": 16.136,
+          "release_date": "2012-12-06",
+          "video": false,
+          "vote_average": 6.2,
+          "vote_count": 1090
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 115440,
+      "known_for_department": "Acting",
+      "name": "Sydney Sweeney",
+      "original_name": "Sydney Sweeney",
+      "popularity": 326.852,
+      "profile_path": "/wrPmsC9YATcnyAxvXEdGshccbqU.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/9KnIzPCv9XpWA0MqmwiKBZvV1Sj.jpg",
+          "id": 85552,
+          "name": "Euphoria",
+          "original_language": "en",
+          "original_name": "Euphoria",
+          "overview": "A group of high school students navigate love and friendships in a world of drugs, sex, trauma, and social media.",
+          "poster_path": "/3Q0hd3heuWwDWpwcDkhQOA6TYWI.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            18
+          ],
+          "popularity": 372.291,
+          "first_air_date": "2019-06-16",
+          "vote_average": 8.342,
+          "vote_count": 9258,
+          "origin_country": [
+            "US"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/3rwszCm4XyBtIWSjbUbgNwJOidu.jpg",
+          "id": 645710,
+          "title": "The Voyeurs",
+          "original_language": "en",
+          "original_title": "The Voyeurs",
+          "overview": "When Pippa and Thomas move into their dream apartment, they notice that their windows look directly into the apartment opposite – inviting them to witness the volatile relationship of the attractive couple across the street. But what starts as a simple curiosity turns into full-blown obsession with increasingly dangerous consequences.",
+          "poster_path": "/8Y4XOIWhpOvSOEn8XrxbkH9yAXO.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            53
+          ],
+          "popularity": 62.397,
+          "release_date": "2021-08-25",
+          "video": false,
+          "vote_average": 6.659,
+          "vote_count": 744
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/oRiUKwDpcqDdoLwPoA4FIRh3hqY.jpg",
+          "id": 466272,
+          "title": "Once Upon a Time… in Hollywood",
+          "original_language": "en",
+          "original_title": "Once Upon a Time… in Hollywood",
+          "overview": "Los Angeles, 1969. TV star Rick Dalton, a struggling actor specializing in westerns, and stuntman Cliff Booth, his best friend, try to survive in a constantly changing movie industry. Dalton is the neighbor of the young and promising actress and model Sharon Tate, who has just married the prestigious Polish director Roman Polanski…",
+          "poster_path": "/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            18,
+            53
+          ],
+          "popularity": 63.378,
+          "release_date": "2019-07-24",
+          "video": false,
+          "vote_average": 7.44,
+          "vote_count": 12653
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 976,
+      "known_for_department": "Acting",
+      "name": "Jason Statham",
+      "original_name": "Jason Statham",
+      "popularity": 177.11,
+      "profile_path": "/lldeQ91GwIVff43JBrpdbAAeYWj.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/ysKahAEPP8h6MInuLjr0xuZOTjh.jpg",
+          "id": 107,
+          "title": "Snatch",
+          "original_language": "en",
+          "original_title": "Snatch",
+          "overview": "Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond.",
+          "poster_path": "/56mOJth6DJ6JhgoE2jtpilVqJO.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            80,
+            35
+          ],
+          "popularity": 50.307,
+          "release_date": "2000-09-01",
+          "video": false,
+          "vote_average": 7.807,
+          "vote_count": 8560
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/2uSCHUsmzb6KkQPFSxBQ7bgfJLE.jpg",
+          "id": 345940,
+          "title": "The Meg",
+          "original_language": "en",
+          "original_title": "The Meg",
+          "overview": "A deep sea submersible pilot revisits his past fears in the Mariana Trench, and accidentally unleashes the seventy foot ancestor of the Great White Shark believed to be extinct.",
+          "poster_path": "/eyWICPcxOuTcDDDbTMOZawoOn8d.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            878,
+            27
+          ],
+          "popularity": 67.505,
+          "release_date": "2018-08-09",
+          "video": false,
+          "vote_average": 6.257,
+          "vote_count": 7267
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/kWt1OcPgwO1ssu57wgTKmq38JYw.jpg",
+          "id": 4108,
+          "title": "The Transporter",
+          "original_language": "en",
+          "original_title": "The Transporter",
+          "overview": "Former Special Forces officer, Frank Martin will deliver anything to anyone for the right price, and his no-questions-asked policy puts him in high demand. But when he realizes his latest cargo is alive, it sets in motion a dangerous chain of events. The bound and gagged Lai is being smuggled to France by a shady American businessman, and Frank works to save her as his own illegal activities are uncovered by a French detective.",
+          "poster_path": "/v3QIFUWgtVN4wejVuDZowuyJ20W.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            80,
+            53
+          ],
+          "popularity": 34.563,
+          "release_date": "2002-10-02",
+          "video": false,
+          "vote_average": 6.7,
+          "vote_count": 5044
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 192,
+      "known_for_department": "Acting",
+      "name": "Morgan Freeman",
+      "original_name": "Morgan Freeman",
+      "popularity": 86.357,
+      "profile_path": "/jPsLqiYGSofU4s6BjrxnefMfabb.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/dYjZ27hDw2QFaEIfzbNGwW0IkV9.jpg",
+          "id": 807,
+          "title": "Se7en",
+          "original_language": "en",
+          "original_title": "Se7en",
+          "overview": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Sommerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
+          "poster_path": "/6yoghtyTpznpBik8EngEmJskVUO.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            80,
+            9648,
+            53
+          ],
+          "popularity": 62.141,
+          "release_date": "1995-09-22",
+          "video": false,
+          "vote_average": 8.371,
+          "vote_count": 19990
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg",
+          "id": 278,
+          "title": "The Shawshank Redemption",
+          "original_language": "en",
+          "original_title": "The Shawshank Redemption",
+          "overview": "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+          "poster_path": "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            80
+          ],
+          "popularity": 111.935,
+          "release_date": "1994-09-23",
+          "video": false,
+          "vote_average": 8.712,
+          "vote_count": 25537
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/ozVwXlfxqNsariipatGwa5px3Pm.jpg",
+          "id": 240832,
+          "title": "Lucy",
+          "original_language": "en",
+          "original_title": "Lucy",
+          "overview": "A woman, accidentally caught in a dark deal, turns the tables on her captors and transforms into a merciless warrior evolved beyond human logic.",
+          "poster_path": "/dhjyfcwEoW6jJ4Q7DpZTp6E58GA.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            878
+          ],
+          "popularity": 52.989,
+          "release_date": "2014-07-25",
+          "video": false,
+          "vote_average": 6.445,
+          "vote_count": 15446
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 3896,
+      "known_for_department": "Acting",
+      "name": "Liam Neeson",
+      "original_name": "Liam Neeson",
+      "popularity": 95.899,
+      "profile_path": "/bboldwqSC6tdw2iL6631c98l2Mn.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/3f92DMBTFqr3wgXpfxzrb0qv8nG.jpg",
+          "id": 424,
+          "title": "Schindler's List",
+          "original_language": "en",
+          "original_title": "Schindler's List",
+          "overview": "The true story of how businessman Oskar Schindler saved over a thousand Jewish lives from the Nazis while they worked as slaves in his factory during World War II.",
+          "poster_path": "/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            36,
+            10752
+          ],
+          "popularity": 78.1,
+          "release_date": "1993-12-15",
+          "video": false,
+          "vote_average": 8.571,
+          "vote_count": 15104
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/sQUiouw94zhoG6LDEj9h8cPb61N.jpg",
+          "id": 1893,
+          "title": "Star Wars: Episode I - The Phantom Menace",
+          "original_language": "en",
+          "original_title": "Star Wars: Episode I - The Phantom Menace",
+          "overview": "Anakin Skywalker, a young slave strong with the Force, is discovered on Tatooine. Meanwhile, the evil Sith have returned, enacting their plot for revenge against the Jedi.",
+          "poster_path": "/6wkfovpn7Eq8dYNKaG5PY3q2oq6.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            12,
+            28,
+            878
+          ],
+          "popularity": 45.74,
+          "release_date": "1999-05-19",
+          "video": false,
+          "vote_average": 6.54,
+          "vote_count": 13896
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/9iQWsXwjOMGDvTDdvCnpiyR0UG3.jpg",
+          "id": 8681,
+          "title": "Taken",
+          "original_language": "en",
+          "original_title": "Taken",
+          "overview": "While vacationing with a friend in Paris, an American girl is kidnapped by a gang of human traffickers intent on selling her into forced prostitution. Working against the clock, her ex-spy father must pull out all the stops to save her. But with his best years possibly behind him, the job may be more than he can handle.",
+          "poster_path": "/y5Va1WXDX6nZElVirPrGxf6w99B.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            53
+          ],
+          "popularity": 108.25,
+          "release_date": "2008-02-18",
+          "video": false,
+          "vote_average": 7.391,
+          "vote_count": 10688
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 1253360,
+      "known_for_department": "Acting",
+      "name": "Pedro Pascal",
+      "original_name": "Pedro Pascal",
+      "popularity": 114.478,
+      "profile_path": "/hoP3vT6OBMNCUFTqlTDcd2X3y77.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/9zcbqSxdsRMZWHYtyCd1nXPr2xq.jpg",
+          "id": 82856,
+          "name": "The Mandalorian",
+          "original_language": "en",
+          "original_name": "The Mandalorian",
+          "overview": "After the fall of the Galactic Empire, lawlessness has spread throughout the galaxy. A lone gunfighter makes his way through the outer reaches, earning his keep as a bounty hunter.",
+          "poster_path": "/eU1i6eHXlzMOlEq0ku1Rzq7Y4wA.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            10765,
+            10759,
+            18
+          ],
+          "popularity": 477.533,
+          "first_air_date": "2019-11-12",
+          "vote_average": 8.447,
+          "vote_count": 9611,
+          "origin_country": [
+            "US"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/uDgy6hyPd82kOHh6I95FLtLnj6p.jpg",
+          "id": 100088,
+          "name": "The Last of Us",
+          "original_language": "en",
+          "original_name": "The Last of Us",
+          "overview": "Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the United States and depend on each other for survival.",
+          "poster_path": "/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            18
+          ],
+          "popularity": 179.81,
+          "first_air_date": "2023-01-15",
+          "vote_average": 8.627,
+          "vote_count": 4488,
+          "origin_country": [
+            "US"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/z7noaCJ4KtmhwHw7QcNtnMMo4Qy.jpg",
+          "id": 345887,
+          "title": "The Equalizer 2",
+          "original_language": "en",
+          "original_title": "The Equalizer 2",
+          "overview": "Robert McCall, who serves an unflinching justice for the exploited and oppressed, embarks on a relentless, globe-trotting quest for vengeance when a long-time girl friend is murdered.",
+          "poster_path": "/cQvc9N6JiMVKqol3wcYrGshsIdZ.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            53,
+            80
+          ],
+          "popularity": 73.108,
+          "release_date": "2018-07-19",
+          "video": false,
+          "vote_average": 6.74,
+          "vote_count": 4959
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 83271,
+      "known_for_department": "Acting",
+      "name": "Glen Powell",
+      "original_name": "Glen Powell",
+      "popularity": 106.538,
+      "profile_path": "/lRbbndkwOXyvep9Y7kHiwbh9Ji5.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/AaV1YIdWKnjAIAOe8UUKBFm327v.jpg",
+          "id": 361743,
+          "title": "Top Gun: Maverick",
+          "original_language": "en",
+          "original_title": "Top Gun: Maverick",
+          "overview": "After more than thirty years of service as one of the Navy’s top aviators, and dodging the advancement in rank that would ground him, Pete “Maverick” Mitchell finds himself training a detachment of TOP GUN graduates for a specialized mission the likes of which no living pilot has ever seen.",
+          "poster_path": "/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            18
+          ],
+          "popularity": 150.617,
+          "release_date": "2022-05-24",
+          "video": false,
+          "vote_average": 8.232,
+          "vote_count": 8228
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/wYHaQzfzv5vOGaV6uPhatFWG338.jpg",
+          "id": 384677,
+          "title": "Set It Up",
+          "original_language": "en",
+          "original_title": "Set It Up",
+          "overview": "Two overworked and underpaid assistants come up with a plan to get their bosses off their backs by setting them up with each other.",
+          "poster_path": "/XF5jV0UxKnYNPAimem0hbwPfCR.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            10749,
+            35
+          ],
+          "popularity": 31.02,
+          "release_date": "2018-06-15",
+          "video": false,
+          "vote_average": 6.954,
+          "vote_count": 2521
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/rfkIeCaIHhN3K5wjJJqKmfUjYp8.jpg",
+          "id": 381284,
+          "title": "Hidden Figures",
+          "original_language": "en",
+          "original_title": "Hidden Figures",
+          "overview": "The untold story of Katherine G. Johnson, Dorothy Vaughan and Mary Jackson – brilliant African-American women working at NASA and serving as the brains behind one of the greatest operations in history – the launch of astronaut John Glenn into orbit. The visionary trio crossed all gender and race lines to inspire generations to dream big.",
+          "poster_path": "/9lfz2W2uGjyow3am00rsPJ8iOyq.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            36
+          ],
+          "popularity": 51.217,
+          "release_date": "2016-12-10",
+          "video": false,
+          "vote_average": 8.058,
+          "vote_count": 9175
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 118545,
+      "known_for_department": "Acting",
+      "name": "Dakota Johnson",
+      "original_name": "Dakota Johnson",
+      "popularity": 155.054,
+      "profile_path": "/jI8GITDOV0xatWvkDNHjXYwNkxw.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/mgY8An5qVCgLh97KOWeJVJarskL.jpg",
+          "id": 216015,
+          "title": "Fifty Shades of Grey",
+          "original_language": "en",
+          "original_title": "Fifty Shades of Grey",
+          "overview": "When college senior Anastasia Steele steps in for her sick roommate to interview prominent businessman Christian Grey for their campus paper, little does she realize the path her life will take. Christian, as enigmatic as he is rich and powerful, finds himself strangely drawn to Ana, and she to him. Though sexually inexperienced, Ana plunges headlong into an affair -- and learns that Christian's true sexual proclivities push the boundaries of pain and pleasure.",
+          "poster_path": "/63kGofUkt1Mx0SIL4XI4Z5AoSgt.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            10749,
+            53
+          ],
+          "popularity": 117.701,
+          "release_date": "2015-02-11",
+          "video": false,
+          "vote_average": 5.881,
+          "vote_count": 11315
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/9ywA15OAiwjSTvg3cBs9B7kOCBF.jpg",
+          "id": 337167,
+          "title": "Fifty Shades Freed",
+          "original_language": "en",
+          "original_title": "Fifty Shades Freed",
+          "overview": "Believing they have left behind shadowy figures from their past, newlyweds Christian and Ana fully embrace an inextricable connection and shared life of luxury. But just as she steps into her role as Mrs. Grey and he relaxes into an unfamiliar stability, new threats could jeopardize their happy ending before it even begins.",
+          "poster_path": "/9ZedQHPQVveaIYmDSTazhT3y273.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            10749
+          ],
+          "popularity": 116.302,
+          "release_date": "2018-01-17",
+          "video": false,
+          "vote_average": 6.708,
+          "vote_count": 7691
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/9dWH18IZf0KdGx0kJaONzWcmD69.jpg",
+          "id": 341174,
+          "title": "Fifty Shades Darker",
+          "original_language": "en",
+          "original_title": "Fifty Shades Darker",
+          "overview": "When a wounded Christian Grey tries to entice a cautious Ana Steele back into his life, she demands a new arrangement before she will give him another chance. As the two begin to build trust and find stability, shadowy figures from Christian’s past start to circle the couple, determined to destroy their hopes for a future together.",
+          "poster_path": "/7CBO9GhsUeMSsWQb47WTPZnKjdj.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            10749
+          ],
+          "popularity": 63.656,
+          "release_date": "2017-02-08",
+          "video": false,
+          "vote_average": 6.489,
+          "vote_count": 7377
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 2034418,
+      "known_for_department": "Acting",
+      "name": "Jacob Elordi",
+      "original_name": "Jacob Elordi",
+      "popularity": 104.875,
+      "profile_path": "/khfLyxY9gsKiLFoz2zj0h3uhDFJ.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/wO5QSWZPBT71gMLvrRex0bVc0V9.jpg",
+          "id": 583083,
+          "title": "The Kissing Booth 2",
+          "original_language": "en",
+          "original_title": "The Kissing Booth 2",
+          "overview": "With college decisions looming, Elle juggles her long-distance romance with Noah, changing relationship with bestie Lee and feelings for a new classmate.",
+          "poster_path": "/mb7wQv0adK3kjOUr9n93mANHhPJ.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            10749
+          ],
+          "popularity": 37.578,
+          "release_date": "2020-07-24",
+          "video": false,
+          "vote_average": 7.681,
+          "vote_count": 4858
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/aqrDUkuzksLhOD8pbyBXLO0dz5t.jpg",
+          "id": 454983,
+          "title": "The Kissing Booth",
+          "original_language": "en",
+          "original_title": "The Kissing Booth",
+          "overview": "When teenager Elle's first kiss leads to a forbidden romance with the hottest boy in high school, she risks her relationship with her best friend.",
+          "poster_path": "/7Dktk2ST6aL8h9Oe5rpk903VLhx.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            10749,
+            35
+          ],
+          "popularity": 46.196,
+          "release_date": "2018-05-11",
+          "video": false,
+          "vote_average": 7.216,
+          "vote_count": 7014
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/9KnIzPCv9XpWA0MqmwiKBZvV1Sj.jpg",
+          "id": 85552,
+          "name": "Euphoria",
+          "original_language": "en",
+          "original_name": "Euphoria",
+          "overview": "A group of high school students navigate love and friendships in a world of drugs, sex, trauma, and social media.",
+          "poster_path": "/3Q0hd3heuWwDWpwcDkhQOA6TYWI.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            18
+          ],
+          "popularity": 372.291,
+          "first_air_date": "2019-06-16",
+          "vote_average": 8.342,
+          "vote_count": 9258,
+          "origin_country": [
+            "US"
+          ]
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 17521,
+      "known_for_department": "Acting",
+      "name": "Kelly Reilly",
+      "original_name": "Kelly Reilly",
+      "popularity": 103.745,
+      "profile_path": "/gof8bWW9E7MH30GpvA97PwGiIuu.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/bQMRePvke0SruzXuDmx9v8vqNWW.jpg",
+          "id": 87502,
+          "title": "Flight",
+          "original_language": "en",
+          "original_title": "Flight",
+          "overview": "Commercial airline pilot Whip Whitaker has a problem with drugs and alcohol, though so far he's managed to complete his flights safely. His luck runs out when a disastrous mechanical malfunction sends his plane hurtling toward the ground. Whip pulls off a miraculous crash-landing that results in only six lives lost. Shaken to the core, Whip vows to get sober -- but when the crash investigation exposes his addiction, he finds himself in an even worse situation.",
+          "poster_path": "/1AjXgBM2lkpG3FLQO0f6AK3Bi1e.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18
+          ],
+          "popularity": 38.096,
+          "release_date": "2012-11-02",
+          "video": false,
+          "vote_average": 6.8,
+          "vote_count": 5694
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/veXdzn7LL0bFIDGmE7tTkvRg0qV.jpg",
+          "id": 10528,
+          "title": "Sherlock Holmes",
+          "original_language": "en",
+          "original_title": "Sherlock Holmes",
+          "overview": "Eccentric consulting detective Sherlock Holmes and Doctor John Watson battle to bring down a new nemesis and unravel a deadly plot that could destroy England.",
+          "poster_path": "/momkKuWburNTqKBF6ez7rvhYVhE.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            12,
+            80,
+            9648
+          ],
+          "popularity": 47.698,
+          "release_date": "2009-12-23",
+          "video": false,
+          "vote_average": 7.207,
+          "vote_count": 13434
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/s9v1QZMVhwShQ7415jPhtfqzyjG.jpg",
+          "id": 13510,
+          "title": "Eden Lake",
+          "original_language": "en",
+          "original_title": "Eden Lake",
+          "overview": "When a young couple goes to a remote wooded lake for a romantic getaway, their quiet weekend is shattered by an aggressive group of local kids. Rowdiness quickly turns to rage as the teens terrorize the couple in unimaginable ways, and a weekend outing becomes a bloody battle for survival.",
+          "poster_path": "/wwLX6RPLZlchZWzEBZ2mTQ9Nooh.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            27,
+            53
+          ],
+          "popularity": 26.66,
+          "release_date": "2008-09-12",
+          "video": false,
+          "vote_average": 6.813,
+          "vote_count": 1636
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 1190668,
+      "known_for_department": "Acting",
+      "name": "Timothée Chalamet",
+      "original_name": "Timothée Chalamet",
+      "popularity": 93.914,
+      "profile_path": "/BE2sdjpgsa2rNTFa66f7upkaOP.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/zvOJawrnmgK0sL293mOXOdLvTXQ.jpg",
+          "id": 398818,
+          "title": "Call Me by Your Name",
+          "original_language": "en",
+          "original_title": "Call Me by Your Name",
+          "overview": "In 1980s Italy, a relationship begins between seventeen-year-old teenage Elio and the older adult man hired as his father's research assistant.",
+          "poster_path": "/mZ4gBdfkhP9tvLH1DO4m4HYtiyi.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            10749,
+            18
+          ],
+          "popularity": 55.241,
+          "release_date": "2017-09-01",
+          "video": false,
+          "vote_average": 8.156,
+          "vote_count": 11593
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/jYEW5xZkZk2WTrdbMGAPFuBqbDc.jpg",
+          "id": 438631,
+          "title": "Dune",
+          "original_language": "en",
+          "original_title": "Dune",
+          "overview": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.",
+          "poster_path": "/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            878,
+            12
+          ],
+          "popularity": 249.777,
+          "release_date": "2021-09-15",
+          "video": false,
+          "vote_average": 7.786,
+          "vote_count": 10057
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/urwWVsciRiNSmhtMJcck0noWAXr.jpg",
+          "id": 504949,
+          "title": "The King",
+          "original_language": "en",
+          "original_title": "The King",
+          "overview": "England, 15th century. Hal, a capricious prince who lives among the populace far from court, is forced by circumstances to reluctantly accept the throne and become Henry V.",
+          "poster_path": "/8u0QBGUbZcBW59VEAdmeFl9g98N.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            36,
+            10752
+          ],
+          "popularity": 28.795,
+          "release_date": "2019-10-11",
+          "video": false,
+          "vote_average": 7.158,
+          "vote_count": 3020
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 3279864,
+      "known_for_department": "Acting",
+      "name": "Samyuktha Viola Viswanathan",
+      "original_name": "Samyuktha Viola Viswanathan",
+      "popularity": 101.467,
+      "profile_path": "/poEXJ3oa8w41GDPahOX39gJR92U.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/gPIe87Gw4bZQREPwtzW8anS6z1D.jpg",
+          "id": 219147,
+          "name": "Engga Hostel",
+          "original_language": "ta",
+          "original_name": "Engga Hostel",
+          "overview": "The relatable and curious life inside a Tamil Nadu engineering hostel by capturing the trials and tribulations of 6 engineering students and their struggles with identity, friendship, love, life and academics",
+          "poster_path": "/fncYMlZqDJkfUGJoci2lVbLbk18.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            35,
+            18
+          ],
+          "popularity": 4.39,
+          "first_air_date": "2023-01-26",
+          "vote_average": 4.5,
+          "vote_count": 2,
+          "origin_country": [
+            "IN"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/2ndoTmP1kXXAb8n9YqOd3rqT4wl.jpg",
+          "id": 201088,
+          "name": "Sweet Kaaram Coffee",
+          "original_language": "ta",
+          "original_name": "ஸ்வீட் காரம் காபி",
+          "overview": "Braving the unknown, three women of different generations living in the same house set off on an epic road trip as an attempt to put themselves before the people they are bound by for the first time.",
+          "poster_path": "/kgbwdbc9mgq5DRbxaAk0Gf8gF7Y.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            35,
+            10751
+          ],
+          "popularity": 8.185,
+          "first_air_date": "2023-07-06",
+          "vote_average": 6.7,
+          "vote_count": 4,
+          "origin_country": [
+            "IN"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/14nLhFCNYbZM3Em4sZTOyDK4kRA.jpg",
+          "id": 884000,
+          "title": "Oh Manapenne!",
+          "original_language": "ta",
+          "original_title": "Oh மணப்பெண்ணே!",
+          "overview": "A wannabe businesswoman and a happy-go-lucky guy meet each other during an arranged marriage blind date but eventually team up to start a food truck on their own.",
+          "poster_path": "/ktnozJlcNH9ffkvuKvn0gvnLxsn.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            10749,
+            35
+          ],
+          "popularity": 4.192,
+          "release_date": "2021-10-22",
+          "video": false,
+          "vote_average": 6.6,
+          "vote_count": 4
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 5293,
+      "known_for_department": "Acting",
+      "name": "Willem Dafoe",
+      "original_name": "Willem Dafoe",
+      "popularity": 68.959,
+      "profile_path": "/ui8e4sgZAwMPi3hzEO53jyBJF9B.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/jHxCeXnSchAuwHnmVatTgqMYdX8.jpg",
+          "id": 557,
+          "title": "Spider-Man",
+          "original_language": "en",
+          "original_title": "Spider-Man",
+          "overview": "After being bitten by a genetically altered spider at Oscorp, nerdy but endearing high school student Peter Parker is endowed with amazing powers to become the superhero known as Spider-Man.",
+          "poster_path": "/gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            878
+          ],
+          "popularity": 90.367,
+          "release_date": "2002-05-01",
+          "video": false,
+          "vote_average": 7.29,
+          "vote_count": 18112
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/bneUTWFAcVCdsb0O5UwZbJd8xqZ.jpg",
+          "id": 1359,
+          "title": "American Psycho",
+          "original_language": "en",
+          "original_title": "American Psycho",
+          "overview": "A wealthy New York investment banking executive hides his alternate psychopathic ego from his co-workers and friends as he escalates deeper into his illogical, gratuitous fantasies.",
+          "poster_path": "/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            53,
+            18,
+            80
+          ],
+          "popularity": 54.005,
+          "release_date": "2000-04-13",
+          "video": false,
+          "vote_average": 7.405,
+          "vote_count": 10218
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/eCynaAOgYYiw5yN5lBwz3IxqvaW.jpg",
+          "id": 12,
+          "title": "Finding Nemo",
+          "original_language": "en",
+          "original_title": "Finding Nemo",
+          "overview": "Nemo, an adventurous young clownfish, is unexpectedly taken from his Great Barrier Reef home to a dentist's office aquarium. It's up to his worrisome father Marlin and a friendly but forgetful fish Dory to bring Nemo home -- meeting vegetarian sharks, surfer dude turtles, hypnotic jellyfish, hungry seagulls, and more along the way.",
+          "poster_path": "/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            16,
+            10751
+          ],
+          "popularity": 90.368,
+          "release_date": "2003-05-30",
+          "video": false,
+          "vote_average": 7.824,
+          "vote_count": 18449
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 1813,
+      "known_for_department": "Acting",
+      "name": "Anne Hathaway",
+      "original_name": "Anne Hathaway",
+      "popularity": 103.348,
+      "profile_path": "/yxonUjheNliiwkXKsy6BTONtyCx.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/l33oR0mnvf20avWyIMxW02EtQxn.jpg",
+          "id": 157336,
+          "title": "Interstellar",
+          "original_language": "en",
+          "original_title": "Interstellar",
+          "overview": "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
+          "poster_path": "/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            12,
+            18,
+            878
+          ],
+          "popularity": 134.853,
+          "release_date": "2014-11-05",
+          "video": false,
+          "vote_average": 8.428,
+          "vote_count": 33611
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/CpLAfXgSNeNRRbRzPrTuzKmIHO.jpg",
+          "id": 350,
+          "title": "The Devil Wears Prada",
+          "original_language": "en",
+          "original_title": "The Devil Wears Prada",
+          "overview": "Andy moves to New York to work in the fashion industry. Her boss is extremely demanding, cruel and won't let her succeed if she doesn't fit into the high class elegant look of their magazine.",
+          "poster_path": "/8912AsVuS7Sj915apArUFbv6F9L.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            35
+          ],
+          "popularity": 76.71,
+          "release_date": "2006-06-29",
+          "video": false,
+          "vote_average": 7.39,
+          "vote_count": 11401
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/c3OHQncTAnKFhdOTX7D3LTW6son.jpg",
+          "id": 49026,
+          "title": "The Dark Knight Rises",
+          "original_language": "en",
+          "original_title": "The Dark Knight Rises",
+          "overview": "Following the death of District Attorney Harvey Dent, Batman assumes responsibility for Dent's crimes to protect the late attorney's reputation and is subsequently hunted by the Gotham City Police Department. Eight years later, Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham's finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.",
+          "poster_path": "/hr0L2aueqlP2BYUblTTjmtn0hw4.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            80,
+            18,
+            53
+          ],
+          "popularity": 63.878,
+          "release_date": "2012-07-17",
+          "video": false,
+          "vote_average": 7.778,
+          "vote_count": 21820
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 17628,
+      "known_for_department": "Acting",
+      "name": "Mary Elizabeth Winstead",
+      "original_name": "Mary Elizabeth Winstead",
+      "popularity": 89.656,
+      "profile_path": "/lgLSrB5MAhnJeS7qfc18YxzTNnJ.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/5uLqjVQlKNR4MbOeuheaRihPxAx.jpg",
+          "id": 333371,
+          "title": "10 Cloverfield Lane",
+          "original_language": "en",
+          "original_title": "10 Cloverfield Lane",
+          "overview": "After getting in a car accident, a woman is held in a shelter with two men, who claim the outside world is affected by a widespread chemical attack.",
+          "poster_path": "/84Dhwz93vCin6T1PX6ctSvWEuNE.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            53,
+            878,
+            18,
+            27
+          ],
+          "popularity": 45.018,
+          "release_date": "2016-03-10",
+          "video": false,
+          "vote_average": 6.986,
+          "vote_count": 7525
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/7W9xm2YTq54rfLFimIniMrywShv.jpg",
+          "id": 22538,
+          "title": "Scott Pilgrim vs. the World",
+          "original_language": "en",
+          "original_title": "Scott Pilgrim vs. the World",
+          "overview": "As bass guitarist for a garage-rock band, Scott Pilgrim has never had trouble getting a girlfriend; usually, the problem is getting rid of them. But when Ramona Flowers skates into his heart, he finds she has the most troublesome baggage of all: an army of ex-boyfriends who will stop at nothing to eliminate him from her list of suitors.",
+          "poster_path": "/g5IoYeudx9XBEfwNL0fHvSckLBz.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            35,
+            10749
+          ],
+          "popularity": 46.41,
+          "release_date": "2010-08-12",
+          "video": false,
+          "vote_average": 7.486,
+          "vote_count": 7458
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/Tz6NSvQBARQzMwPyq8Idb0oPAF.jpg",
+          "id": 9286,
+          "title": "Final Destination 3",
+          "original_language": "en",
+          "original_title": "Final Destination 3",
+          "overview": "A student's premonition of a deadly rollercoaster ride saves her life and a lucky few, but not from death itself – which seeks out those who escaped their fate.",
+          "poster_path": "/p7ARuNKUGPGvkBiDtIDvAzYzonX.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            27,
+            9648
+          ],
+          "popularity": 41.953,
+          "release_date": "2006-02-09",
+          "video": false,
+          "vote_average": 6.1,
+          "vote_count": 3637
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 974169,
+      "known_for_department": "Acting",
+      "name": "Jenna Ortega",
+      "original_name": "Jenna Ortega",
+      "popularity": 93.546,
+      "profile_path": "/q1NRzyZQlYkxLY07GO9NVPkQnu8.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
+          "id": 119051,
+          "name": "Wednesday",
+          "original_language": "en",
+          "original_name": "Wednesday",
+          "overview": "Wednesday Addams is sent to Nevermore Academy, a bizarre boarding school where she attempts to master her psychic powers, stop a monstrous killing spree of the town citizens, and solve the supernatural mystery that affected her family 25 years ago — all while navigating her new relationships.",
+          "poster_path": "/9PFonBhy4cQy7Jz20NpMygczOkv.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            10765,
+            9648,
+            35
+          ],
+          "popularity": 214.61,
+          "first_air_date": "2022-11-23",
+          "vote_average": 8.509,
+          "vote_count": 7963,
+          "origin_country": [
+            "US"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/ifUfE79O1raUwbaQRIB7XnFz5ZC.jpg",
+          "id": 646385,
+          "title": "Scream",
+          "original_language": "en",
+          "original_title": "Scream",
+          "overview": "Twenty-five years after a streak of brutal murders shocked the quiet town of Woodsboro, a new killer has donned the Ghostface mask and begins targeting a group of teenagers to resurrect secrets from the town’s deadly past.",
+          "poster_path": "/nD4M4Bx457ryLuKYpxFwQ2IBJ5w.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            27,
+            9648,
+            53
+          ],
+          "popularity": 71.73,
+          "release_date": "2022-01-12",
+          "video": false,
+          "vote_average": 6.7,
+          "vote_count": 2984
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/70Rm9ItxKuEKN8iu6rNjfwAYUCJ.jpg",
+          "id": 760104,
+          "title": "X",
+          "original_language": "en",
+          "original_title": "X",
+          "overview": "In 1979, a group of young filmmakers set out to make an adult film in rural Texas, but when their reclusive, elderly hosts catch them in the act, the cast find themselves fighting for their lives.",
+          "poster_path": "/woTQx9Q4b8aO13jR9dsj8C9JESy.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            27,
+            53,
+            9648
+          ],
+          "popularity": 87.186,
+          "release_date": "2022-03-17",
+          "video": false,
+          "vote_average": 6.749,
+          "vote_count": 2612
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 1,
+      "id": 224513,
+      "known_for_department": "Acting",
+      "name": "Ana de Armas",
+      "original_name": "Ana de Armas",
+      "popularity": 90.941,
+      "profile_path": "/3vxvsmYLTf4jnr163SUlBIw51ee.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/ilRyazdMJwN05exqhwK4tMKBYZs.jpg",
+          "id": 335984,
+          "title": "Blade Runner 2049",
+          "original_language": "en",
+          "original_title": "Blade Runner 2049",
+          "overview": "Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.",
+          "poster_path": "/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            878,
+            18
+          ],
+          "popularity": 144.92,
+          "release_date": "2017-10-04",
+          "video": false,
+          "vote_average": 7.553,
+          "vote_count": 12805
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/4HWAQu28e2yaWrtupFPGFkdNU7V.jpg",
+          "id": 546554,
+          "title": "Knives Out",
+          "original_language": "en",
+          "original_title": "Knives Out",
+          "overview": "When renowned crime novelist Harlan Thrombey is found dead at his estate just after his 85th birthday, the inquisitive and debonair Detective Benoit Blanc is mysteriously enlisted to investigate. From Harlan's dysfunctional family to his devoted staff, Blanc sifts through a web of red herrings and self-serving lies to uncover the truth behind Harlan's untimely death.",
+          "poster_path": "/pThyQovXQrw2m0s9x82twj48Jq4.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            80,
+            9648
+          ],
+          "popularity": 56.198,
+          "release_date": "2019-11-27",
+          "video": false,
+          "vote_average": 7.847,
+          "vote_count": 11573
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/3Mnbw4gOYz5BNZB9PhZ2cyBSQum.jpg",
+          "id": 308266,
+          "title": "War Dogs",
+          "original_language": "en",
+          "original_title": "War Dogs",
+          "overview": "Based on the true story of two young men, David Packouz and Efraim Diveroli, who won a $300 million contract from the Pentagon to arm America's allies in Afghanistan.",
+          "poster_path": "/uH9qGH5XS1iZXCSb3tgu40dxQoh.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            80,
+            18
+          ],
+          "popularity": 36.344,
+          "release_date": "2016-08-18",
+          "video": false,
+          "vote_average": 6.908,
+          "vote_count": 4643
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 3450482,
+      "known_for_department": "Acting",
+      "name": "Jarred Harper",
+      "original_name": "Jarred Harper",
+      "popularity": 72.564,
+      "profile_path": "/iRImFVWY56bOlkeKXtUFo1sgUNh.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/shBygwPJbib8HCPzMtuATwRlDDR.jpg",
+          "id": 1189214,
+          "title": "The Double Life of My Billionaire Husband",
+          "original_language": "en",
+          "original_title": "The Double Life of My Billionaire Husband",
+          "overview": "Sebastian Klein, known to most as the illegitimate son of the prestigious Klein family, has been plagued by rumors suggesting he's nothing more than a loser who recently emerged from a stint in prison. Society, guided by these harsh tales, deemed him an undesirable match for any sensible young woman. That was until Natalie Quinn defied expectations by marrying him. Little did she realize the astonishing truth concealed beneath the surface: she had, unknowingly, wed a covert billionaire.",
+          "poster_path": "/kefATFQeJEbo5XCXzBJNuONLinU.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            10749,
+            18
+          ],
+          "popularity": 13.037,
+          "release_date": "2023-10-06",
+          "video": false,
+          "vote_average": 9,
+          "vote_count": 3
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/3PAzRuT6lmkgDgMn1c1aQP79ySi.jpg",
+          "id": 945383,
+          "title": "The Institute",
+          "original_language": "en",
+          "original_title": "The Institute",
+          "overview": "A young couple desperate to have a child begins treatment at a renowned doctor’s secluded facility. Danny and Marie are hopeful when their last ditch application for the exclusive “Lands Institute” is accepted. They are pampered as they settle into their therapeutic regimen which includes the Doctors unique “homeopathic remedies”. They lose track of time as psychological side effects begin to warp their perceptions of what is happening at the institute.",
+          "poster_path": "/4bESeIboxSUpHB0gtQJH7HlxriS.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            53,
+            27
+          ],
+          "popularity": 3.643,
+          "release_date": "2022-03-22",
+          "video": false,
+          "vote_average": 5.2,
+          "vote_count": 6
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/qDZejhl4NY76brKAtlqmcVytbti.jpg",
+          "id": 67117,
+          "name": "American Housewife",
+          "original_language": "en",
+          "original_name": "American Housewife",
+          "overview": "A family comedy narrated by Katie, a strong-willed mother, raising her flawed family in a wealthy town filled with perfect wives and their perfect offspring.",
+          "poster_path": "/uDXPOk3fx1kPM1tQdrTdE2f76p2.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            35
+          ],
+          "popularity": 78.27,
+          "first_air_date": "2016-10-11",
+          "vote_average": 7.783,
+          "vote_count": 150,
+          "origin_country": [
+            "US"
+          ]
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 0,
+      "id": 3234630,
+      "known_for_department": "Acting",
+      "name": "Sangeeth Shobhan",
+      "original_name": "Sangeeth Shobhan",
+      "popularity": 86.135,
+      "profile_path": "/7Vox31bH7XmgPNJzMKGa4uGyjW8.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/jBnnkkXRZ0pV3Tw31Z2ALO638wA.jpg",
+          "id": 1187075,
+          "title": "MAD",
+          "original_language": "te",
+          "original_title": "MAD",
+          "overview": "Set in an engineering college and revolves around the antics of the students there, primarily the boys, who get a kick out of torturing the hostel warden.",
+          "poster_path": "/nDpOmgBfQZwOpFBcgokQGqd74r1.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            35,
+            10749,
+            18
+          ],
+          "popularity": 3.632,
+          "release_date": "2023-10-06",
+          "video": false,
+          "vote_average": 7,
+          "vote_count": 4
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/1jof3bGVg67HLmvRHfTzqb2IODO.jpg",
+          "id": 138179,
+          "name": "Oka Chinna Family Story",
+          "original_language": "te",
+          "original_name": "ఒక చిన్న Family Story",
+          "overview": "Mahesh and his mother embark on an adventurous journey filled with hilarious situations as they try to make quick money to repay a huge loan.",
+          "poster_path": "/u1Tq2Qqb1oUJ6WSzVJqWk03LzEl.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+            35,
+            10751
+          ],
+          "popularity": 12.811,
+          "first_air_date": "2021-11-19",
+          "vote_average": 7.5,
+          "vote_count": 2,
+          "origin_country": [
+            "IN"
+          ]
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/d7jfcyPb5ZncLyhPFNjpuIeeZ1y.jpg",
+          "id": 1119091,
+          "title": "Prema Vimanam",
+          "original_language": "te",
+          "original_title": "ప్రేమ విమానం",
+          "overview": "Two kids with a dream to board a flight cross paths with a young couple who must urgently catch the flight to start a new life.",
+          "poster_path": "/9eljOANAd6HafUDdmp3xnmkpnt8.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18,
+            35
+          ],
+          "popularity": 3.156,
+          "release_date": "2023-10-13",
+          "video": false,
+          "vote_average": 7,
+          "vote_count": 1
+        }
+      ]
+    },
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 1215739,
+      "known_for_department": "Acting",
+      "name": "Andrew Woodall",
+      "original_name": "Andrew Woodall",
+      "popularity": 90.527,
+      "profile_path": "/8WvS7o3oNp0KdXnmhuHmIa9VC6D.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/hDvk6O2vehwsZBdNsMSGmAVdiUn.jpg",
+          "id": 348350,
+          "title": "Solo: A Star Wars Story",
+          "original_language": "en",
+          "original_title": "Solo: A Star Wars Story",
+          "overview": "Through a series of daring escapades deep within a dark and dangerous criminal underworld, Han Solo meets his mighty future copilot Chewbacca and encounters the notorious gambler Lando Calrissian.",
+          "poster_path": "/4oD6VEccFkorEBTEDXtpLAaz0Rl.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            878,
+            12,
+            28
+          ],
+          "popularity": 45.686,
+          "release_date": "2018-05-15",
+          "video": false,
+          "vote_average": 6.561,
+          "vote_count": 8100
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/7Ix2cbT7fBhnduTP7sxzk9s2ZEA.jpg",
+          "id": 58233,
+          "title": "Johnny English Reborn",
+          "original_language": "en",
+          "original_title": "Johnny English Reborn",
+          "overview": "The most prominent heads of state in the world begin gathering for a conference that could have a major impact on global politics. When MI-7 receives word that the Chinese premier has become the target of some high-powered killers, it falls on Johnny English to save the day. Armed with the latest high-tech weaponry and gadgets that would make even James Bond jealous, the once-disgraced agent uncovers evidence of a massive conspiracy involving some of the world's most powerful organisations, and vows to redeem his tarnished reputation by stopping the killers before they can strike.",
+          "poster_path": "/1T6qnlTVkrGr0mpgZbpSwVU5FWW.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            80,
+            28,
+            35
+          ],
+          "popularity": 40.947,
+          "release_date": "2011-09-15",
+          "video": false,
+          "vote_average": 6.224,
+          "vote_count": 3120
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/bwMxFhvGXUBWjWK64lnWJ9VUhCY.jpg",
+          "id": 205601,
+          "title": "Belle",
+          "original_language": "en",
+          "original_title": "Belle",
+          "overview": "Dido Elizabeth Bell, the illegitimate, mixed-race daughter of a Royal Navy admiral, plays an important role in the campaign to abolish slavery in England.",
+          "poster_path": "/qCK00C3L0bM5jphoYU0gFpG3Hly.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            18
+          ],
+          "popularity": 19.965,
+          "release_date": "2013-05-01",
+          "video": false,
+          "vote_average": 7.163,
+          "vote_count": 652
+        }
+      ]
+    }
+  ],
+  "total_pages": 162954,
+  "total_results": 3259074
+}
