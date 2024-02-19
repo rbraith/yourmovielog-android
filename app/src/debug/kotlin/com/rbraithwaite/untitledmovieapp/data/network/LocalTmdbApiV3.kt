@@ -13,6 +13,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import timber.log.Timber
@@ -213,6 +214,14 @@ class LocalTmdbApiV3(
         language: String,
         page: Int
     ): Result<PopularPeopleResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPersonDetails(
+        personId: Long,
+        language: String,
+        appendToResponse: String?
+    ): Result<PersonDetailsResponse> {
         TODO("Not yet implemented")
     }
 }

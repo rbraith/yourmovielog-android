@@ -16,5 +16,20 @@ data class ExternalIds(
     val instagramId: String?,
 
     @SerializedName("twitter_id")
-    val twitterId: String?
+    val twitterId: String?,
+
+    @SerializedName("freebase_mid")
+    val freebaseMid: String?,
+
+    @SerializedName("freebase_id")
+    val freebaseId: String?,
+
+    @SerializedName("tvrage_id")
+    val tvrageId: Int?,
+
+    @SerializedName("tiktok_id")
+    val tiktokId: String?,
+
+    @SerializedName("youtube_id")
+    val youtubeId: String?,
 )

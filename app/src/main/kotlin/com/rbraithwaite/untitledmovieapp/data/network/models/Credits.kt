@@ -48,7 +48,13 @@ data class CastMember(
      * Like call sheet order I guess
      */
     @SerializedName("order")
-    val order: Int
+    val order: Int,
+
+    /**
+     * Relevant to person details (combined credits)
+     */
+    @SerializedName("media_type")
+    val mediaType: String?,
 )
 
 
@@ -84,5 +90,11 @@ data class CrewMember(
     val department: String,
 
     @SerializedName("job")
-    val job: String
+    val job: String,
+
+    /**
+     * Relevant to person details (combined credits)
+     */
+    @SerializedName("media_type")
+    val mediaType: String?,
 )

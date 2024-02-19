@@ -14,6 +14,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Person
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
@@ -241,6 +242,14 @@ class FakeTmdbApiV3(
         language: String,
         page: Int
     ): Result<PopularPeopleResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPersonDetails(
+        personId: Long,
+        language: String,
+        appendToResponse: String?
+    ): Result<PersonDetailsResponse> {
         TODO("Not yet implemented")
     }
 }

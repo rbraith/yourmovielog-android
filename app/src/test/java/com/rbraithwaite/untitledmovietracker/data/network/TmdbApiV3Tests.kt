@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovietracker.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.NetworkError
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
+import com.rbraithwaite.untitledmovieapp.data.network.append_to_response.getPersonDetails
 import com.rbraithwaite.untitledmovietracker.test_utils.ApiTestUtils
 import com.rbraithwaite.untitledmovietracker.test_utils.enqueueResponseFromFile
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MockWebServerRule
@@ -253,5 +254,31 @@ class TmdbApiV3Tests {
         assertThat(people.results.size, willBe(20))
         assertThat(people.results.first().name, willBe("Jeremy Piven"))
         assertThat(people.results.first().knownFor.size, willBe(3))
+    }
+
+    @Test
+    fun getPersonDetails_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "PersonDetails_FullAppend.json")
+
+        val result = tmdbApiV3.getPersonDetails(123)
+
+        if (result.isFailure) {
+            throw (result.exceptionOrNull()!! as NetworkError.Unknown).throwable!!
+        }
+        assert(result.isSuccess)
+
+        val personDetails = result.getOrThrow()
+
+        assertThat(personDetails.id, willBe(12799))
+
+        val externalIds = personDetails.externalIds!!
+        assertThat(externalIds.twitterId, willBe("jeremypiven"))
+
+        val images = personDetails.images!!
+        assertThat(images.profiles.size, willBe(4))
+
+        val credits = personDetails.combinedCredits!!
+        assertThat(credits.cast.size, willBe(115))
+        assertThat(credits.crew.size, willBe(2))
     }
 }

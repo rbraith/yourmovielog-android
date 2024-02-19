@@ -11,6 +11,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import retrofit2.http.GET
@@ -387,4 +388,19 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): Result<PopularPeopleResponse>
+
+    /**
+     * Get full details for a person in the movie industry.
+     *
+     * @param personId The person to get details for
+     * @param language The language for the results (ISO 639-1 format)
+     * @param appendToResponse comma-separated additional queries for data related to this person, see [the docs](https://developer.themoviedb.org/reference/person-details)
+     */
+    @GET("person/{person_id}")
+    suspend fun getPersonDetails(
+        @Path("person_id") personId: Long,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String? = null
+    ): Result<PersonDetailsResponse>
 }
