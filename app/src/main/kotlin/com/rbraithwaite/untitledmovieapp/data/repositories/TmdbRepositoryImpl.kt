@@ -4,7 +4,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.core.repositories.TmdbRepository
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toTmdbLiteMovie
 import com.rbraithwaite.untitledmovieapp.di.SingletonModule
@@ -50,7 +50,7 @@ class TmdbRepositoryImpl @Inject constructor(
 
             // TODO [24-02-1 12:09a.m.] -- only handling movies atm.
             resultList
-                .mapNotNull { it as? SearchMultiResult.Movie }
+                .mapNotNull { it as? Movie }
                 .map { it.toTmdbLiteMovie() }
         } else {
             emptyList()

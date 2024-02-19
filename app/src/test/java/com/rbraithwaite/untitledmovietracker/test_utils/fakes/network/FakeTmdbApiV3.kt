@@ -11,10 +11,13 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverMovieRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.DiscoverTvResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
+import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
 
 class FakeTmdbApiV3(
@@ -25,31 +28,31 @@ class FakeTmdbApiV3(
         includeAdult: Boolean,
         language: String,
         pageNumber: Int
-    ): Result<SearchMultiResults> {
+    ): Result<SearchMultiResponse> {
         // TODO [23-11-20 10:51p.m.] -- this only implements using the 'query' arg at the moment.
 
-        val movies = backend.find<SearchMultiResult.Movie> {
+        val movies = backend.find<Movie> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             title.contains(query)
         }
 
-        val tvShows = backend.find<SearchMultiResult.TvShow> {
+        val tvShows = backend.find<TvShow> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             name.contains(query)
         }
 
-        val people = backend.find<SearchMultiResult.Person> {
+        val people = backend.find<Person> {
             // TODO [23-11-20 10:50p.m.] -- I don't know if this matching logic matches Tmdb.
             name.contains(query)
         }
 
-        val results: List<SearchMultiResult> = buildList {
+        val results: List<SearchMultiType> = buildList {
             addAll(movies)
             addAll(tvShows)
             addAll(people)
         }
 
-        val searchMultiResult = SearchMultiResults(
+        val searchMultiResult = SearchMultiResponse(
             page = 1,
             results = results,
             totalPages = 1,

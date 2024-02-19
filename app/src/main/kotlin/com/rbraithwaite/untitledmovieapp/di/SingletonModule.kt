@@ -14,8 +14,8 @@ import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
 import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResultDeserializer
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiTypeDeserializer
 import com.rbraithwaite.untitledmovieapp.data.network.result_call_adapter.ResultCallAdapterFactory
 import com.rbraithwaite.untitledmovieapp.data.repositories.TmdbRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.BuildConfig
@@ -159,7 +159,7 @@ object SingletonModule {
 
     fun createGson(): Gson {
         val builder = GsonBuilder()
-        builder.registerTypeAdapter(SearchMultiResult::class.java, SearchMultiResultDeserializer())
+        builder.registerTypeAdapter(SearchMultiType::class.java, SearchMultiTypeDeserializer())
         return builder.create()
     }
 

@@ -129,7 +129,7 @@ data class MovieDetailsResponse(
     val keywords: TmdbKeywords?,
 
     @SerializedName("recommendations")
-    val recommendations: SearchMultiResults?,
+    val recommendations: SearchMultiResponse?,
 
     @SerializedName("similar")
     val similar: DiscoverMovieResponse?,

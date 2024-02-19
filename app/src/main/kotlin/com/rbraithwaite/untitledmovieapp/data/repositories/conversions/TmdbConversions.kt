@@ -3,7 +3,7 @@ package com.rbraithwaite.untitledmovieapp.data.repositories.conversions
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -50,7 +50,7 @@ fun TmdbLite.Movie.toEntity(): TmdbLiteMovieEntity {
     )
 }
 
-fun SearchMultiResult.Movie.toTmdbLiteMovie(): TmdbLite.Movie {
+fun Movie.toTmdbLiteMovie(): TmdbLite.Movie {
     return TmdbLite.Movie(
         id = id,
         isAdult = adult,

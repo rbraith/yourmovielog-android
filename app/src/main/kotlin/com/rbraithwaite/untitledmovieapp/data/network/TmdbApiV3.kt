@@ -1,6 +1,5 @@
 package com.rbraithwaite.untitledmovieapp.data.network
 
-import com.rbraithwaite.untitledmovieapp.data.network.models.Certification
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
@@ -13,8 +12,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
-import retrofit2.Response
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,7 +28,7 @@ interface TmdbApiV3 {
      * @param query The string search query, e.g. "the godfather"
      * @param includeAdult whether to include adult film results
      * @param language the language of the returned results
-     * @param pageNumber The page number of results to get (refer to {@link SearchMultiResults.totalPages})
+     * @param pageNumber The page number of results to get (refer to [SearchMultiResponse.totalPages]])
      */
     @GET("search/multi")
     suspend fun searchMulti(
@@ -39,7 +37,7 @@ interface TmdbApiV3 {
         // REFACTOR [23-11-21 11:16p.m.] -- hardcoded language string.
         @Query("language") language: String = "en-US",
         @Query("page") pageNumber: Int = 1
-    ): Result<SearchMultiResults>
+    ): Result<SearchMultiResponse>
 
 
     /**

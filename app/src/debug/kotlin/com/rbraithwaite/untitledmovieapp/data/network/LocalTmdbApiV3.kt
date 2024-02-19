@@ -14,7 +14,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.Genres
 import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResults
+import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import timber.log.Timber
 
 class LocalTmdbApiV3(
@@ -25,13 +25,13 @@ class LocalTmdbApiV3(
         includeAdult: Boolean,
         language: String,
         pageNumber: Int
-    ): Result<SearchMultiResults> {
+    ): Result<SearchMultiResponse> {
         Timber.d("searchMulti: $query")
 
         // Just returning a static response no matter the request, for now
         val responseString = DebugUtils.loadResourceFileAsString("search-multi-response.json")
-        val searchMultiResults = gson.fromJson(responseString, SearchMultiResults::class.java)
-        return Result.success(searchMultiResults)
+        val searchMultiResponse = gson.fromJson(responseString, SearchMultiResponse::class.java)
+        return Result.success(searchMultiResponse)
     }
 
     override suspend fun getMovieCertifications(): Result<CertificationsResponse> {

@@ -1,22 +1,20 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models
 
 import com.rbraithwaite.test_data_utils.Builder
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult.Person
+import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 
-fun aSearchMultiResultPerson(
-    buildBlock: SearchMultiResultPersonBuilder.() -> Unit = {}
-): SearchMultiResultPersonBuilder {
-    return SearchMultiResultPersonBuilder().apply(buildBlock)
+fun aPerson(
+    buildBlock: PersonBuilder.() -> Unit = {}
+): PersonBuilder {
+    return PersonBuilder().apply(buildBlock)
 }
 
-class SearchMultiResultPersonBuilder: Builder<Person> {
-    private var data = SearchMultiResult.Person(
+class PersonBuilder: Builder<Person> {
+    private var data = Person(
         adult = false,
         id = 0,
         name = "Willem Dafoe",
         originalName = "Willem Dafoe",
-        mediaType = "person",
         popularity = 3.14f,
         gender = 0,
         knownForDepartment = "acting",
@@ -24,7 +22,7 @@ class SearchMultiResultPersonBuilder: Builder<Person> {
         knownFor = emptyList()
     )
 
-    override fun build(): SearchMultiResult.Person {
+    override fun build(): Person {
         return data.copy()
     }
 

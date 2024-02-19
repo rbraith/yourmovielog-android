@@ -1,16 +1,16 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models
 
 import com.rbraithwaite.test_data_utils.Builder
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 
-fun aSearchMultiResultTvShow(
-    buildBlock: SearchMultiResultTvBuilder.() -> Unit = {}
-): SearchMultiResultTvBuilder {
-    return SearchMultiResultTvBuilder().apply(buildBlock)
+fun aTvShow(
+    buildBlock: TvShowBuilder.() -> Unit = {}
+): TvShowBuilder {
+    return TvShowBuilder().apply(buildBlock)
 }
 
-class SearchMultiResultTvBuilder: Builder<SearchMultiResult.TvShow> {
-    private var data = SearchMultiResult.TvShow(
+class TvShowBuilder: Builder<TvShow> {
+    private var data = TvShow(
         adult = false,
         backdropPath = null,
         id = 0,
@@ -19,7 +19,6 @@ class SearchMultiResultTvBuilder: Builder<SearchMultiResult.TvShow> {
         originalName = "original tv show name",
         overview = "this is the overview",
         posterPath = null,
-        mediaType = "tv",
         genreIds = listOf(1),
         popularity = 7.5f,
         firstAirDate = "2023-11-17",
@@ -28,7 +27,7 @@ class SearchMultiResultTvBuilder: Builder<SearchMultiResult.TvShow> {
         originCountry = listOf("Canada")
     )
 
-    override fun build(): SearchMultiResult.TvShow {
+    override fun build(): TvShow {
         return data.copy()
     }
 

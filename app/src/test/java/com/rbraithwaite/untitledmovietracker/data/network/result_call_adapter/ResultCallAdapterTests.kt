@@ -2,7 +2,7 @@ package com.rbraithwaite.untitledmovietracker.data.network.result_call_adapter
 
 import com.rbraithwaite.untitledmovieapp.data.network.NetworkError
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.ApiTestUtils
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MockWebServerRule
 import com.rbraithwaite.untitledmovietracker.test_utils.setBodyFromResourceFile
@@ -54,7 +54,7 @@ class ResultCallAdapterTests {
         assertThat(searchMultiResults.totalResults, willBe(653))
         assertThat(searchMultiResults.results.size, willBe(20))
 
-        val firstResult = searchMultiResults.results[0] as SearchMultiResult.TvShow
+        val firstResult = searchMultiResults.results[0] as TvShow
 
         assertThat(firstResult.id, willBe(209183))
         assertThat(firstResult.name, willBe("Better"))

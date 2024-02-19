@@ -6,7 +6,7 @@ import com.rbraithwaite.untitledmovieapp.data.repositories.TmdbRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.core_data.aTmdbLiteMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aSearchMultiResultMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aMovie
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import com.rbraithwaite.untitledmovietracker.test_utils.willBeEqualTo
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -97,12 +97,12 @@ class TmdbRepositoryImplTests {
 
         val expectedMovieId = 987L
 
-        val movieExpected = aSearchMultiResultMovie()
+        val movieExpected = aMovie()
             .withTitle("hello world")
             .withId(expectedMovieId)
             .build()
 
-        val movieShouldNotFind = aSearchMultiResultMovie()
+        val movieShouldNotFind = aMovie()
             .withTitle("shouldn't be found")
             .withId(123L)
             .build()

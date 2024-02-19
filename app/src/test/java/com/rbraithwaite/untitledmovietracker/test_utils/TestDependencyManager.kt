@@ -4,7 +4,9 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntit
 import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResult
+import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
+import com.rbraithwaite.untitledmovieapp.data.network.models.Person
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.CustomMovieEntityIdSelector
@@ -41,9 +43,9 @@ class TestDependencyManager(
 
     private val backend: FakeDatabase by lazy {
         FakeDatabase(listOf(
-            SearchMultiResult.Movie::class,
-            SearchMultiResult.TvShow::class,
-            SearchMultiResult.Person::class
+            Movie::class,
+            TvShow::class,
+            Person::class
         ))
     }
 
@@ -96,9 +98,9 @@ class TestDependencyManager(
         //  api method is used. It'd be better to properly populate the backend as a database,
         //  using full tmdb media detail objs.
         suspend fun withSearchMultiResults(
-            movies: List<SearchMultiResult.Movie> = emptyList(),
-            tvShows: List<SearchMultiResult.TvShow> = emptyList(),
-            people: List<SearchMultiResult.Person> = emptyList()
+            movies: List<Movie> = emptyList(),
+            tvShows: List<TvShow> = emptyList(),
+            people: List<Person> = emptyList()
         )
     }
 
@@ -118,9 +120,9 @@ class TestDependencyManager(
 
     private inner class TestBackendStateInitializerImpl: TestBackendStateInitializer {
         override suspend fun withSearchMultiResults(
-            movies: List<SearchMultiResult.Movie>,
-            tvShows: List<SearchMultiResult.TvShow>,
-            people: List<SearchMultiResult.Person>
+            movies: List<Movie>,
+            tvShows: List<TvShow>,
+            people: List<Person>
         ) {
             val depManager = this@TestDependencyManager
 
@@ -153,12 +155,12 @@ class TestDependencyManager(
     //endregion
 }
 
-private class SearchMultiResultMovieIdSelector: LongIdSelector<SearchMultiResult.Movie>() {
-    override fun getId(entity: SearchMultiResult.Movie): Long {
+private class SearchMultiResultMovieIdSelector: LongIdSelector<Movie>() {
+    override fun getId(entity: Movie): Long {
         return entity.id
     }
 
-    override fun updateId(entity: SearchMultiResult.Movie, newId: Long): SearchMultiResult.Movie {
+    override fun updateId(entity: Movie, newId: Long): Movie {
         return entity.copy(id = newId)
     }
 }
