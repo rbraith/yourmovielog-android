@@ -260,4 +260,12 @@ class FakeTmdbApiV3(
     ): Result<DiscoverMovieResponse> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getUpcomingMovies(
+        language: String,
+        page: Int,
+        region: String?
+    ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
 }
