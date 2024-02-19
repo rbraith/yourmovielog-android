@@ -306,6 +306,21 @@ interface TmdbApiV3 {
     ): Result<DiscoverMovieResponse>
 
     /**
+     * Get the movies currently playing in theatres.
+     *
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [DiscoverMovieResponse.totalPages]
+     * @param region Return popular movies for a specific region (ISO-3166-1 country code)
+     */
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovies(
+        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("region") region: String? = null
+    ): Result<DiscoverMovieResponse>
+
+    /**
      * Returns the list of tv shows airing today
      *
      * @param language The language for the results (ISO 639-1 format)

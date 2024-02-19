@@ -252,4 +252,12 @@ class FakeTmdbApiV3(
     ): Result<PersonDetailsResponse> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getNowPlayingMovies(
+        language: String,
+        page: Int,
+        region: String?
+    ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
 }

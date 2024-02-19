@@ -13,5 +13,16 @@ data class DiscoverMovieResponse(
     val totalPages: Int,
 
     @SerializedName("total_results")
-    val totalResults: Int
+    val totalResults: Int,
+
+    @SerializedName("dates")
+    val dates: DateRange?
+)
+
+data class DateRange(
+    @SerializedName("maximum")
+    val maximum: String,
+
+    @SerializedName("minimum")
+    val minimum: String
 )
