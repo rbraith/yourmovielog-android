@@ -294,4 +294,17 @@ class TmdbApiV3Tests {
         assertThat(companies.results.size, willBe(18))
         assertThat(companies.results.first().name, willBe("Lionsgate"))
     }
+
+    @Test
+    fun searchMovie_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "SearchMovie.json")
+
+        val result = tmdbApiV3.searchMovies("dummy query")
+
+        assert(result.isSuccess)
+
+        val movies = result.getOrThrow()
+        assertThat(movies.results.size, willBe(7))
+        assertThat(movies.results.first().title, willBe("Five Nights at Freddy's"))
+    }
 }
