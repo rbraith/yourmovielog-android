@@ -16,6 +16,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import timber.log.Timber
@@ -23,6 +24,14 @@ import timber.log.Timber
 class LocalTmdbApiV3(
     private val gson: Gson
 ): TmdbApiV3 {
+    override suspend fun searchPeople(
+        query: String,
+        includeAdult: Boolean,
+        language: String,
+        page: Int
+    ): Result<PersonSearchResponse> {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun searchMovies(
         query: String,

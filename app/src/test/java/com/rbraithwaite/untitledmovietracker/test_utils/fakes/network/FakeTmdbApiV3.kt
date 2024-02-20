@@ -17,6 +17,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsRespons
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
@@ -26,6 +27,14 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatab
 class FakeTmdbApiV3(
     private val backend: FakeDatabase
 ): TmdbApiV3 {
+    override suspend fun searchPeople(
+        query: String,
+        includeAdult: Boolean,
+        language: String,
+        page: Int
+    ): Result<PersonSearchResponse> {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun searchMovies(
         query: String,

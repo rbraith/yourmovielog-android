@@ -14,6 +14,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.JobsConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieDetailsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.MovieSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import retrofit2.http.GET
@@ -470,4 +471,21 @@ interface TmdbApiV3 {
         @Query("region") region: String? = null,
         @Query("year") year: String? = null
     ): Result<MovieSearchResponse>
+
+    /**
+     * Search for people by their name and also known as names.
+     *
+     * @param query movie name search key
+     * @param includeAdult whether to include adult film results
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [MovieSearchResponse.totalPages]
+     */
+    @GET("search/person")
+    suspend fun searchPeople(
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): Result<PersonSearchResponse>
 }
