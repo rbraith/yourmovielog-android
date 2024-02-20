@@ -1,0 +1,89 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/hPea3Qy5Gd6z4kJLUruBbwAH8Rm.jpg",
+      "genre_ids": [
+        80,
+        18
+      ],
+      "id": 60059,
+      "origin_country": [
+        "US"
+      ],
+      "original_language": "en",
+      "original_name": "Better Call Saul",
+      "overview": "Six years before Saul Goodman meets Walter White. We meet him when the man who will become Saul Goodman is known as Jimmy McGill, a small-time lawyer searching for his destiny, and, more immediately, hustling to make ends meet. Working alongside, and, often, against Jimmy, is “fixer” Mike Ehrmantraut. The series tracks Jimmy’s transformation into Saul Goodman, the man who puts “criminal” in “criminal lawyer\".",
+      "popularity": 376.229,
+      "poster_path": "/fC2HDm5t0kHl7mTm7jxMR31b7by.jpg",
+      "first_air_date": "2015-02-08",
+      "name": "Better Call Saul",
+      "vote_average": 8.661,
+      "vote_count": 4684
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/zVK6BRVJnOilPASqTzf842l1wOp.jpg",
+      "genre_ids": [
+        35
+      ],
+      "id": 90746,
+      "origin_country": [
+        "US"
+      ],
+      "original_language": "en",
+      "original_name": "Better Call Saul Employee Training",
+      "overview": "Better Call Saul's Emmy-Award winning Employee Training digital series.",
+      "popularity": 45.916,
+      "poster_path": "/r4XJEZlMpzPOeFtdF58T8gRvOJC.jpg",
+      "first_air_date": "2017-04-10",
+      "name": "Better Call Saul Employee Training",
+      "vote_average": 7.6,
+      "vote_count": 17
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/dGcj6GysCpLRbDEz7mfEOa5xLAM.jpg",
+      "genre_ids": [
+        16,
+        35
+      ],
+      "id": 158704,
+      "origin_country": [
+        "US"
+      ],
+      "original_language": "en",
+      "original_name": "Better Call Saul Presents: Slippin' Jimmy",
+      "overview": "The misadventures of a young Jimmy McGill and his childhood friends in Chicago, Illinois. Told in the style of classic 70s-era cartoons, each episode is an ode to a specific movie genre — from spaghetti westerns and Buster Keaton to The Exorcist.",
+      "popularity": 34.589,
+      "poster_path": "/wSeVvdVWUMnANCyhn963T99HPhF.jpg",
+      "first_air_date": "2022-05-23",
+      "name": "Better Call Saul Presents: Slippin' Jimmy",
+      "vote_average": 3.727,
+      "vote_count": 22
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xz7vQylKY4RajJMJPWqRwisZrMO.jpg",
+      "genre_ids": [
+        10764
+      ],
+      "id": 211014,
+      "origin_country": [
+        "CN"
+      ],
+      "original_language": "zh",
+      "original_name": "打工不如打电话",
+      "overview": "",
+      "popularity": 8.998,
+      "poster_path": "/wDW7Coa6YB23ItBiUTbm6z2XpJe.jpg",
+      "first_air_date": "2022-09-16",
+      "name": "打工不如打电话",
+      "vote_average": 0,
+      "vote_count": 0
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 4
+}

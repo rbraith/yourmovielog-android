@@ -19,11 +19,23 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
 import timber.log.Timber
 
 class LocalTmdbApiV3(
     private val gson: Gson
 ): TmdbApiV3 {
+    override suspend fun searchTvShows(
+        query: String,
+        firstAirDateYear: Int?,
+        includeAdult: Boolean,
+        language: String,
+        page: Int,
+        year: Int?
+    ): Result<TvShowSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun searchPeople(
         query: String,
         includeAdult: Boolean,

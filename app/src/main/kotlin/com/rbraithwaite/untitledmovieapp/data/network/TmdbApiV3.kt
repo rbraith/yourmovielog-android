@@ -17,6 +17,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -488,4 +489,25 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,
     ): Result<PersonSearchResponse>
+
+    /**
+     * Search for TV shows by their original, translated and also known as names.
+     *
+     * @param query movie name search key
+     * @param firstAirDateYear Search only the first air date. Valid values are: 1000..9999
+     * @param includeAdult whether to include adult film results
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [TvShowSearchResponse.totalPages]
+     * @param year Search the first air date and all episode air dates. Valid values are: 1000..9999
+     */
+    @GET("search/tv")
+    suspend fun searchTvShows(
+        @Query("query") query: String,
+        @Query("first_air_date_year") firstAirDateYear: Int? = null,
+        @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("year") year: Int? = null
+    ): Result<TvShowSearchResponse>
 }

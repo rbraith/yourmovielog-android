@@ -22,11 +22,23 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
 
 class FakeTmdbApiV3(
     private val backend: FakeDatabase
 ): TmdbApiV3 {
+    override suspend fun searchTvShows(
+        query: String,
+        firstAirDateYear: Int?,
+        includeAdult: Boolean,
+        language: String,
+        page: Int,
+        year: Int?
+    ): Result<TvShowSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun searchPeople(
         query: String,
         includeAdult: Boolean,
