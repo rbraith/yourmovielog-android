@@ -4,6 +4,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanySearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -266,6 +267,10 @@ class FakeTmdbApiV3(
         page: Int,
         region: String?
     ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun searchCompanies(query: String, page: Int): Result<CompanySearchResponse> {
         TODO("Not yet implemented")
     }
 }

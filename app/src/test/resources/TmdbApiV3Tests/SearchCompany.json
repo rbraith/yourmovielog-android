@@ -1,0 +1,115 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id": 1632,
+      "logo_path": "/cisLn1YAUuptXVBa0xjq7ST9cH0.png",
+      "name": "Lionsgate",
+      "origin_country": "US"
+    },
+    {
+      "id": 219326,
+      "logo_path": null,
+      "name": "Lionsgate",
+      "origin_country": ""
+    },
+    {
+      "id": 85885,
+      "logo_path": "/oLbUgPkkTmlwGDUO4pYp2OtPkfG.png",
+      "name": "Lionsgate Premiere",
+      "origin_country": "US"
+    },
+    {
+      "id": 176949,
+      "logo_path": null,
+      "name": "Lionsgate Play",
+      "origin_country": ""
+    },
+    {
+      "id": 28523,
+      "logo_path": "/zzULw9w7d50BHR8fE30PZT3zJ1D.png",
+      "name": "Lionsgate Television",
+      "origin_country": "US"
+    },
+    {
+      "id": 40566,
+      "logo_path": "/rqnuOXzS0NxoevzVzAx7LIZx6Nr.png",
+      "name": "Lionsgate Home Entertainment",
+      "origin_country": ""
+    },
+    {
+      "id": 175700,
+      "logo_path": null,
+      "name": "Lionsgate UK",
+      "origin_country": ""
+    },
+    {
+      "id": 216644,
+      "logo_path": null,
+      "name": "Lionsgate Studios",
+      "origin_country": "US"
+    },
+    {
+      "id": 216653,
+      "logo_path": null,
+      "name": "Lionsgate India",
+      "origin_country": ""
+    },
+    {
+      "id": 112794,
+      "logo_path": "/j0fh3JuGAAQww9U0uF04HaAyuez.png",
+      "name": "Codeblack Films",
+      "origin_country": "US"
+    },
+    {
+      "id": 212999,
+      "logo_path": null,
+      "name": "MLG Productions 3",
+      "origin_country": "US"
+    },
+    {
+      "id": 102419,
+      "logo_path": null,
+      "name": "MLG Productions 4",
+      "origin_country": "US"
+    },
+    {
+      "id": 213002,
+      "logo_path": null,
+      "name": "MLG Productions 5",
+      "origin_country": "US"
+    },
+    {
+      "id": 101449,
+      "logo_path": null,
+      "name": "MLG Productions 6",
+      "origin_country": "US"
+    },
+    {
+      "id": 213003,
+      "logo_path": null,
+      "name": "MLG Productions 8",
+      "origin_country": "US"
+    },
+    {
+      "id": 213004,
+      "logo_path": null,
+      "name": "MLG Productions 7",
+      "origin_country": "US"
+    },
+    {
+      "id": 213001,
+      "logo_path": null,
+      "name": "MLG Productions 1",
+      "origin_country": "US"
+    },
+    {
+      "id": 101439,
+      "logo_path": null,
+      "name": "MLG Productions 2",
+      "origin_country": "US"
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 18
+}

@@ -3,6 +3,7 @@ package com.rbraithwaite.untitledmovieapp.data.network
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanySearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -433,4 +434,16 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<PersonDetailsResponse>
+
+    /**
+     * Search for companies by their original and alternative names.
+     *
+     * @param query Company name search key
+     * @param page The page of results to return, see [CompanySearchResponse.totalPages]
+     */
+    @GET("search/company")
+    suspend fun searchCompanies(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): Result<CompanySearchResponse>
 }

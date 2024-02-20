@@ -5,6 +5,7 @@ import com.rbraithwaite.untitledmovieapp.DebugUtils
 import com.rbraithwaite.untitledmovieapp.data.network.models.CertificationsResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.CompanyLogos
+import com.rbraithwaite.untitledmovieapp.data.network.models.CompanySearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.Configuration
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryConfig
 import com.rbraithwaite.untitledmovieapp.data.network.models.CountryTimezones
@@ -238,6 +239,10 @@ class LocalTmdbApiV3(
         page: Int,
         region: String?
     ): Result<DiscoverMovieResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun searchCompanies(query: String, page: Int): Result<CompanySearchResponse> {
         TODO("Not yet implemented")
     }
 }
