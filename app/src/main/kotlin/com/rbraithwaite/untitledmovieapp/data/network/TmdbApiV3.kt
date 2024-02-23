@@ -510,4 +510,56 @@ interface TmdbApiV3 {
         @Query("page") page: Int = 1,
         @Query("year") year: Int? = null
     ): Result<TvShowSearchResponse>
+
+    /**
+     * Get the trending movies, TV shows and people.
+     *
+     * @param timeWindow can be "day" or "week"
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("trending/all/{time_window}")
+    suspend fun getTrendingAll(
+        @Path("time_window") timeWindow: String,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+    ): Result<SearchMultiResponse>
+
+    /**
+     * Get trending movies.
+     *
+     * @param timeWindow can be "day" or "week"
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("trending/movie/{time_window}")
+    suspend fun getTrendingMovies(
+        @Path("time_window") timeWindow: String,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+    ): Result<MovieSearchResponse>
+
+    /**
+     * Get trending tv shows.
+     *
+     * @param timeWindow can be "day" or "week"
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("trending/tv/{time_window}")
+    suspend fun getTrendingTvShows(
+        @Path("time_window") timeWindow: String,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+    ): Result<TvShowSearchResponse>
+
+    /**
+     * Get trending people.
+     *
+     * @param timeWindow can be "day" or "week"
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("trending/person/{time_window}")
+    suspend fun getTrendingPeople(
+        @Path("time_window") timeWindow: String,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+    ): Result<PersonSearchResponse>
 }

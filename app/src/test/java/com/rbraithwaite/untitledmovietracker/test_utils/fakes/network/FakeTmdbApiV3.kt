@@ -28,6 +28,34 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatab
 class FakeTmdbApiV3(
     private val backend: FakeDatabase
 ): TmdbApiV3 {
+    override suspend fun getTrendingAll(
+        timeWindow: String,
+        language: String
+    ): Result<SearchMultiResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrendingMovies(
+        timeWindow: String,
+        language: String
+    ): Result<MovieSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrendingTvShows(
+        timeWindow: String,
+        language: String
+    ): Result<TvShowSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrendingPeople(
+        timeWindow: String,
+        language: String
+    ): Result<PersonSearchResponse> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun searchTvShows(
         query: String,
         firstAirDateYear: Int?,
