@@ -19,12 +19,21 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
 import timber.log.Timber
 
 class LocalTmdbApiV3(
     private val gson: Gson
 ): TmdbApiV3 {
+    override suspend fun getTvShowDetails(
+        seriesId: Long,
+        language: String,
+        appendToResponse: String?
+    ): Result<TvShowDetails> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getTrendingAll(
         timeWindow: String,
         language: String

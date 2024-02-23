@@ -32,4 +32,7 @@ data class ExternalIds(
 
     @SerializedName("youtube_id")
     val youtubeId: String?,
+
+    @SerializedName("tvdb_id")
+    val tvdbId: Int?,
 )

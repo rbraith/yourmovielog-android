@@ -2,6 +2,7 @@ package com.rbraithwaite.untitledmovieapp.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
+// REFACTOR [24-02-22 10:01p.m.] -- this should be MovieCredits.
 data class Credits(
     @SerializedName("cast")
     val cast: List<CastMember>,

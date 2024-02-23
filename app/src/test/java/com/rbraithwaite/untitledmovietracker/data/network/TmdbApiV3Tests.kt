@@ -333,4 +333,23 @@ class TmdbApiV3Tests {
         assertThat(tvShows.results.size, willBe(4))
         assertThat(tvShows.results.first().name, willBe("Better Call Saul"))
     }
+
+    @Test
+    fun getTvShowDetails_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "TvShowDetails_FullAppend.json")
+
+        val result = tmdbApiV3.getTvShowDetails(123)
+
+        if (result.isFailure) {
+            throw (result.exceptionOrNull()!! as NetworkError.Unknown).throwable!!
+        }
+        assert(result.isSuccess)
+
+        val tvShowDetails = result.getOrThrow()
+
+        assertThat(tvShowDetails.id, willBe(60059))
+
+        // TODO [24-02-22 10:31p.m.] -- fill out this test more, I got lazy (see getMovieDetails_successTest())
+        //  I mean the test is mainly about ensuring the json parses without throwing, so not a big deal.
+    }
 }
