@@ -38,11 +38,7 @@ class MainActivity: ComponentActivity() {
                 startDestination = "main"
             ) {
                 composable(route = "main") {
-                    MainScreen(
-                        beginAddReviewFlow = {
-                            navController.navigate(route = "add_review_flow")
-                        }
-                    )
+                    MainScreen()
                 }
 
                 // 'add review' flow
