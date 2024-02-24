@@ -21,6 +21,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchRespons
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvSeasonDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
@@ -29,6 +30,15 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatab
 class FakeTmdbApiV3(
     private val backend: FakeDatabase
 ): TmdbApiV3 {
+    override suspend fun getTvSeasonDetails(
+        seriesId: Long,
+        seasonNumber: Int,
+        language: String,
+        appendToResponse: String?
+    ): Result<TvSeasonDetails> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getTvShowDetails(
         seriesId: Long,
         language: String,

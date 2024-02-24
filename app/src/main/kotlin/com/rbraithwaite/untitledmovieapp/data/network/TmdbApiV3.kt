@@ -17,6 +17,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvSeasonDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
 import retrofit2.http.GET
@@ -579,4 +580,22 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<TvShowDetails>
+
+    /**
+     * Get the details for a season of a tv show.
+     *
+     * @param seriesId The tv series
+     * @param seasonNumber The season of the tv show
+     * @param language The language for the results (ISO 639-1 format)
+     * @param appendToResponse comma-separated additional queries for data related to this movie,
+     * see [the docs](https://developer.themoviedb.org/reference/tv-series-details)
+     */
+    @GET("tv/{series_id}/season/{season_number}")
+    suspend fun getTvSeasonDetails(
+        @Path("series_id") seriesId: Long,
+        @Path("season_number") seasonNumber: Int,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String? = null
+    ): Result<TvSeasonDetails>
 }
