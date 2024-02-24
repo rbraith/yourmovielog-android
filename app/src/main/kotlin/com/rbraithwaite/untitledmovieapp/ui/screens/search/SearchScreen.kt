@@ -15,220 +15,376 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import timber.log.Timber
 
+sealed interface SearchInputUiState
+
+sealed interface QuickSearch: SearchInputUiState {
+    data object Multi: QuickSearch
+    data object Movie: QuickSearch
+    data object TvShow: QuickSearch
+    data object Person: QuickSearch
+}
+
+sealed interface AdvancedSearch: SearchInputUiState {
+    data object Movie: AdvancedSearch
+    data object TvShow: AdvancedSearch
+}
+
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel,
+//    viewModel: SearchViewModel,
     // TODO [24-02-2 12:15a.m.] broken.
 //    onNavToNewReviewScreen: (SearchResult) -> Unit
 ) {
-    val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
-    val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
+    val searchInputState by remember { mutableStateOf<SearchInputUiState>(QuickSearch.Multi) }
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .randomBackgroundColor()
+            .padding(8.dp)
     ) {
         item {
-            SearchInputWidget(
-                searchInput = searchInput,
-                onSwitchInputMode = {
-                    // TO IMPLEMENT
-                    Timber.d("SearchInputWidget onSwitchInputMode")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
+            SearchInputWidget(searchInputState)
         }
-
-        item {
-            Divider(color = Color.Red)
-        }
-
-        // Results header
-        item {
-            Text("Results")
-        }
-
-        SearchResults(
-            searchResults = searchResults,
-//            onSelectResult = {
-//                // TODO [24-02-2 12:16a.m.] broken.
-////                onNavToNewReviewScreen(it)
-//            }
-        )
     }
+
+
+
+//    val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
+//    val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
+//
+//    LazyColumn(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .randomBackgroundColor()
+//    ) {
+//        item {
+//            SearchInputWidget(
+//                searchInput = searchInput,
+//                onSwitchInputMode = {
+//                    // TO IMPLEMENT
+//                    Timber.d("SearchInputWidget onSwitchInputMode")
+//                },
+//                modifier = Modifier.fillMaxWidth()
+//            )
+//        }
+//
+//        item {
+//            Divider(color = Color.Red)
+//        }
+//
+//        // Results header
+//        item {
+//            Text("Results")
+//        }
+//
+//        SearchResults(
+//            searchResults = searchResults,
+////            onSelectResult = {
+////                // TODO [24-02-2 12:16a.m.] broken.
+//////                onNavToNewReviewScreen(it)
+////            }
+//        )
+//    }
 }
 
-enum class SearchInputMode {
-    QUICK, ADVANCED
-}
 
 @Composable
-fun SearchInputWidget(
-    searchInput: SearchInput,
-    onSwitchInputMode: (SearchInputMode) -> Unit,
-    modifier: Modifier)
-= when(searchInput) {
-    is SearchInput.Quick -> {
-        QuickSearchWidget(
-            searchInputText = searchInput.input,
-            onSearchInputChange = { searchInput.updateInput(it) },
-            onGoToAdvancedSearch = { onSwitchInputMode(SearchInputMode.ADVANCED) },
-            modifier = modifier
-        )
-    }
-}
-
-@Composable
-fun QuickSearchWidget(
-    searchInputText: String,
-    onSearchInputChange: (String) -> Unit,
-    onGoToAdvancedSearch: () -> Unit,
-    modifier: Modifier = Modifier
+private fun SearchInputWidget(
+    searchInputUiState: SearchInputUiState
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = "Quick Search",
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
-        )
-        TextField(
-            value = searchInputText,
-            onValueChange = {
-                onSearchInputChange(it)
-            },
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 8.dp)
-                .fillMaxWidth()
-        )
-        Button(
-            onClick = onGoToAdvancedSearch,
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(bottom = 8.dp, end = 8.dp)
-        ) {
-            Text(text = "Advanced Search")
-            Spacer(modifier = Modifier.width(4.dp))
-            Icon(
-                Icons.Filled.ArrowForward,
-                contentDescription = null
-            )
-        }
-    }
-}
-
-@Composable
-private fun ResultItemNoInput() {
-    Text("Waiting for search input")
-}
-
-@Composable
-private fun ResultItemLoading() {
-    Text("Loading...")
-}
-
-@Composable
-fun ResultItemNewCustomMedia(
-    title: String,
-    // TODO [24-02-2 12:16a.m.] broken.
-//    onSelect: (SearchResult.CustomMedia) -> Unit
-) {
-    Button(
-        onClick = {
-            // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
-            // TODO [24-02-2 12:16a.m.] broken.
-//            onSelect(SearchResult.CustomMedia(CustomMovie(
-//                id=0L,
-//                title=title
-//            )))
-        },
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp)
+            .height(200.dp)
     ) {
-        Text("Add review for \"$title\"")
+        SearchInputModeSelector(onSearchInputModeSelected = {
+            Timber.d("Selected search input mode: $it")
+        })
+
+        DebugPlaceholder(
+            label = "search input widget",
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 
-fun LazyListScope.SearchResults(
-    searchResults: SearchResults,
-    // TODO [24-02-2 12:16a.m.] broken.
-//    onSelectResult: (SearchResult) -> Unit
-) = when (searchResults) {
-    is SearchResults.NoInput -> {
-        item {
-            ResultItemNoInput()
-        }
-    }
-    is SearchResults.Loading -> {
-        item {
-            ResultItemNewCustomMedia(
-                title = searchResults.newCustomMediaTitle,
-                // TODO [24-02-2 12:16a.m.] broken.
-//                onSelect = { onSelectResult(it) }
+// REFACTOR [24-02-24 2:37p.m.] -- fix all this, pretty redundant with SearchInputUiState and the
+//  Tab enums.
+private enum class SearchInputModeSelection {
+    QUICK_MULTI,
+    QUICK_MOVIE,
+    QUICK_TV_SHOW,
+    QUICK_PERSON,
+    ADVANCED_MOVIE,
+    ADVANCED_TV_SHOW
+}
+
+private enum class FirstRowTab(val text: String) {
+    QUICK("Quick"),
+    ADVANCED("Advanced")
+}
+
+private enum class QuickSearchModeTab(
+    val text: String,
+    val selectionType: SearchInputModeSelection
+) {
+    MULTI("All", SearchInputModeSelection.QUICK_MULTI),
+    MOVIE("Movies", SearchInputModeSelection.QUICK_MOVIE),
+    TV_SHOW("Tv", SearchInputModeSelection.QUICK_TV_SHOW),
+    PERSON("People", SearchInputModeSelection.QUICK_PERSON)
+}
+
+private enum class AdvancedSearchModeTab(
+    val text: String,
+    val selectionType: SearchInputModeSelection
+) {
+    MOVIE("Movies", SearchInputModeSelection.ADVANCED_MOVIE),
+    TV_SHOW("Tv", SearchInputModeSelection.ADVANCED_TV_SHOW)
+}
+
+@Composable
+private fun SearchInputModeSelector(
+    onSearchInputModeSelected: (SearchInputModeSelection) -> Unit
+) {
+    var firstRowState by remember { mutableStateOf(FirstRowTab.QUICK) }
+    var quickSearchTab by remember { mutableStateOf(QuickSearchModeTab.MULTI) }
+    var advancedSearchTab by remember { mutableStateOf(AdvancedSearchModeTab.MOVIE) }
+
+    TabRow(
+        selectedTabIndex = FirstRowTab.entries.indexOf(firstRowState)
+    ) {
+        FirstRowTab.entries.forEach {
+            Tab(
+                text = { Text(it.text) },
+                selected = true,
+                onClick = {
+                    firstRowState = it
+
+                    val selection = when (it) {
+                        FirstRowTab.QUICK -> quickSearchTab.selectionType
+                        FirstRowTab.ADVANCED -> advancedSearchTab.selectionType
+                    }
+                    onSearchInputModeSelected(selection)
+                }
             )
         }
-        item {
-            ResultItemLoading()
-        }
     }
-    is SearchResults.Success -> {
-        item {
-            // REFACTOR [23-10-21 3:44p.m.] -- duplicated in SearchResults.Loading type.
-            ResultItemNewCustomMedia(
-                title = searchResults.newCustomMediaTitle,
-                // TODO [24-02-2 12:16a.m.] broken.
-//                onSelect = { onSelectResult(it) }
-            )
+
+    if (firstRowState == FirstRowTab.QUICK) {
+        TabRow(
+            selectedTabIndex = QuickSearchModeTab.entries.indexOf(quickSearchTab)
+        ) {
+            QuickSearchModeTab.entries.forEach {
+                Tab(
+                    text = { Text(it.text) },
+                    selected = true,
+                    onClick = {
+                        quickSearchTab = it
+                        onSearchInputModeSelected(it.selectionType)
+                    }
+                )
+            }
         }
-        // TODO [24-02-2 12:16a.m.] broken.
-//        items(
-//            items = searchResults.searchResults,
-//            key = {
-//                when (it) {
-//                    is SearchResult.CustomMedia -> "custom/${it.data.id}"
-//                    is SearchResult.TmdbMovie -> "movie/${it.data.id}"
-//                    is SearchResult.TmdbTvShow -> "tv_show/${it.data.id}"
-//                    is SearchResult.TmdbPerson -> "person/${it.data.id}"
-//                }
-//            }
-//        ) { searchResult ->
-//            Surface(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(30.dp)
-//                    .randomBackgroundColor()
-//                    .clickable {
-//                        onSelectResult(searchResult)
-//                    }
-//            ) {
-//                when (searchResult) {
-//                    is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
-//                    is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
-//                    is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
-//                    // TODO [23-12-17 12:20a.m.] -- get rid of TmdbPerson results, these don't
-//                    //  work for adding new reviews.
-//                    is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
-//                }
-//            }
-//        }
+    } else if (firstRowState == FirstRowTab.ADVANCED) {
+        TabRow(
+            selectedTabIndex = AdvancedSearchModeTab.entries.indexOf(advancedSearchTab)
+        ) {
+            AdvancedSearchModeTab.entries.forEach {
+                Tab(
+                    text = { Text(it.text) },
+                    selected = true,
+                    onClick = {
+                        advancedSearchTab = it
+                        onSearchInputModeSelected(it.selectionType)
+                    }
+                )
+            }
+        }
     }
 }
+
+
+
+
+
+
+//enum class SearchInputMode {
+//    QUICK, ADVANCED
+//}
+//
+//@Composable
+//fun SearchInputWidget(
+//    searchInput: SearchInput,
+//    onSwitchInputMode: (SearchInputMode) -> Unit,
+//    modifier: Modifier)
+//= when(searchInput) {
+//    is SearchInput.Quick -> {
+//        QuickSearchWidget(
+//            searchInputText = searchInput.input,
+//            onSearchInputChange = { searchInput.updateInput(it) },
+//            onGoToAdvancedSearch = { onSwitchInputMode(SearchInputMode.ADVANCED) },
+//            modifier = modifier
+//        )
+//    }
+//}
+//
+//@Composable
+//fun QuickSearchWidget(
+//    searchInputText: String,
+//    onSearchInputChange: (String) -> Unit,
+//    onGoToAdvancedSearch: () -> Unit,
+//    modifier: Modifier = Modifier
+//) {
+//    Column(
+//        modifier = modifier
+//    ) {
+//        Text(
+//            text = "Quick Search",
+//            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+//        )
+//        TextField(
+//            value = searchInputText,
+//            onValueChange = {
+//                onSearchInputChange(it)
+//            },
+//            modifier = Modifier
+//                .padding(vertical = 4.dp, horizontal = 8.dp)
+//                .fillMaxWidth()
+//        )
+//        Button(
+//            onClick = onGoToAdvancedSearch,
+//            modifier = Modifier
+//                .align(Alignment.End)
+//                .padding(bottom = 8.dp, end = 8.dp)
+//        ) {
+//            Text(text = "Advanced Search")
+//            Spacer(modifier = Modifier.width(4.dp))
+//            Icon(
+//                Icons.Filled.ArrowForward,
+//                contentDescription = null
+//            )
+//        }
+//    }
+//}
+//
+//@Composable
+//private fun ResultItemNoInput() {
+//    Text("Waiting for search input")
+//}
+//
+//@Composable
+//private fun ResultItemLoading() {
+//    Text("Loading...")
+//}
+//
+//@Composable
+//fun ResultItemNewCustomMedia(
+//    title: String,
+//    // TODO [24-02-2 12:16a.m.] broken.
+////    onSelect: (SearchResult.CustomMedia) -> Unit
+//) {
+//    Button(
+//        onClick = {
+//            // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
+//            // TODO [24-02-2 12:16a.m.] broken.
+////            onSelect(SearchResult.CustomMedia(CustomMovie(
+////                id=0L,
+////                title=title
+////            )))
+//        },
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .height(64.dp)
+//    ) {
+//        Text("Add review for \"$title\"")
+//    }
+//}
+//
+//fun LazyListScope.SearchResults(
+//    searchResults: SearchResults,
+//    // TODO [24-02-2 12:16a.m.] broken.
+////    onSelectResult: (SearchResult) -> Unit
+//) = when (searchResults) {
+//    is SearchResults.NoInput -> {
+//        item {
+//            ResultItemNoInput()
+//        }
+//    }
+//    is SearchResults.Loading -> {
+//        item {
+//            ResultItemNewCustomMedia(
+//                title = searchResults.newCustomMediaTitle,
+//                // TODO [24-02-2 12:16a.m.] broken.
+////                onSelect = { onSelectResult(it) }
+//            )
+//        }
+//        item {
+//            ResultItemLoading()
+//        }
+//    }
+//    is SearchResults.Success -> {
+//        item {
+//            // REFACTOR [23-10-21 3:44p.m.] -- duplicated in SearchResults.Loading type.
+//            ResultItemNewCustomMedia(
+//                title = searchResults.newCustomMediaTitle,
+//                // TODO [24-02-2 12:16a.m.] broken.
+////                onSelect = { onSelectResult(it) }
+//            )
+//        }
+//        // TODO [24-02-2 12:16a.m.] broken.
+////        items(
+////            items = searchResults.searchResults,
+////            key = {
+////                when (it) {
+////                    is SearchResult.CustomMedia -> "custom/${it.data.id}"
+////                    is SearchResult.TmdbMovie -> "movie/${it.data.id}"
+////                    is SearchResult.TmdbTvShow -> "tv_show/${it.data.id}"
+////                    is SearchResult.TmdbPerson -> "person/${it.data.id}"
+////                }
+////            }
+////        ) { searchResult ->
+////            Surface(
+////                modifier = Modifier
+////                    .fillMaxWidth()
+////                    .height(30.dp)
+////                    .randomBackgroundColor()
+////                    .clickable {
+////                        onSelectResult(searchResult)
+////                    }
+////            ) {
+////                when (searchResult) {
+////                    is SearchResult.CustomMedia -> ResultItemContentCustomMedia(searchResult)
+////                    is SearchResult.TmdbMovie -> ResultItemContentTmdbMovie(searchResult)
+////                    is SearchResult.TmdbTvShow -> ResultItemContentTmdbTvShow(searchResult)
+////                    // TODO [23-12-17 12:20a.m.] -- get rid of TmdbPerson results, these don't
+////                    //  work for adding new reviews.
+////                    is SearchResult.TmdbPerson -> ResultItemContentTmdbPerson(searchResult)
+////                }
+////            }
+////        }
+//    }
+//}
 
 // TODO [24-02-2 12:16a.m.] broken.
 //@Composable

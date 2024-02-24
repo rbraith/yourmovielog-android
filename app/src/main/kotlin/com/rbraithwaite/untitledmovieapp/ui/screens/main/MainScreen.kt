@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -171,10 +172,7 @@ private fun MainNavHost(
         modifier = modifier
     ) {
         composable(route = MainDrawerDest.ADD_REVIEW.route) {
-            DebugPlaceholder(
-                label = "Add Review Screen",
-                modifier = Modifier.fillMaxSize()
-            )
+            SearchScreen()
         }
 
         composable(route = MainDrawerDest.SEARCH.route) {
