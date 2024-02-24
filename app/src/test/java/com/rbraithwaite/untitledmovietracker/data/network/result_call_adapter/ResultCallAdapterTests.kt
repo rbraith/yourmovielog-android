@@ -34,7 +34,7 @@ class ResultCallAdapterTests {
 
         // REFACTOR [24-02-8 11:17p.m.] -- use enqueueResponseFromFile().
         val response = MockResponse()
-        response.setBodyFromResourceFile("ResultCallAdapterTests_SearchMultiResponse.json")
+        response.setBodyFromResourceFile("ResultCallAdapterTests/SearchMultiResponse.json")
 
         mockWebServerRule.server.enqueue(response)
 

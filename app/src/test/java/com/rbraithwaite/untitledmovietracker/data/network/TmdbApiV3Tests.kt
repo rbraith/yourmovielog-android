@@ -2,7 +2,6 @@ package com.rbraithwaite.untitledmovietracker.data.network
 
 import com.rbraithwaite.untitledmovieapp.data.network.NetworkError
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
-import com.rbraithwaite.untitledmovieapp.data.network.append_to_response.getPersonDetails
 import com.rbraithwaite.untitledmovietracker.test_utils.ApiTestUtils
 import com.rbraithwaite.untitledmovietracker.test_utils.enqueueResponseFromFile
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MockWebServerRule
@@ -32,7 +31,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getMovieCertifications_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_CertificationsMovieList.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/CertificationsMovieList.json")
 
         val result = tmdbApiV3.getMovieCertifications()
 
@@ -48,7 +47,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getTvCertifications_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_CertificationsTvList.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/CertificationsTvList.json")
 
         val result = tmdbApiV3.getTvCertifications()
 
@@ -65,7 +64,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getConfiguration_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_Configuration.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/Configuration.json")
 
         val result = tmdbApiV3.getConfiguration()
 
@@ -79,7 +78,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getCountryConfiguration_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationCountries.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/ConfigurationCountries.json")
 
         val result = tmdbApiV3.getCountryConfiguration()
 
@@ -92,7 +91,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getJobsConfiguration_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationJobs.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/ConfigurationJobs.json")
 
         val result = tmdbApiV3.getJobsConfiguration()
 
@@ -106,7 +105,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getTimezonesConfiguration_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_ConfigurationTimezones.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/ConfigurationTimezones.json")
 
         val result = tmdbApiV3.getTimezonesConfiguration()
 
@@ -120,7 +119,7 @@ class TmdbApiV3Tests {
 
     @Test
     fun getCompanyDetails_successTest() = runTest {
-        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests_CompanyDetails.json")
+        mockWebServerRule.server.enqueueResponseFromFile("TmdbApiV3Tests/CompanyDetails.json")
 
         val result = tmdbApiV3.getCompanyDetails(123)
 
