@@ -372,4 +372,21 @@ class TmdbApiV3Tests {
         assertThat(credits.cast.size, willBe(130))
         assertThat(credits.crew.size, willBe(51))
     }
+
+    @Test
+    fun getTvEpisodeDetails_successTest() = runTest {
+        mockWebServerRule.server.enqueueResponseFromFile(RESOURCES_DIR + "TvEpisodeDetails.json")
+
+        val result = tmdbApiV3.getTvEpisodeDetails(123, 4, 5)
+
+        if (result.isFailure) {
+            throw (result.exceptionOrNull()!! as NetworkError.Unknown).throwable!!
+        }
+        assert(result.isSuccess)
+
+        val tvEpisodeDetails = result.getOrThrow()
+        assertThat(tvEpisodeDetails.id, willBe(1171587))
+        assertThat(tvEpisodeDetails.guestStars.size, willBe(10))
+        assertThat(tvEpisodeDetails.crew.size, willBe(2))
+    }
 }

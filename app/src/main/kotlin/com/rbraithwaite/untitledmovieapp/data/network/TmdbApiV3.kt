@@ -17,6 +17,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.PersonDetailsRespon
 import com.rbraithwaite.untitledmovieapp.data.network.models.PersonSearchResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.PopularPeopleResponse
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiResponse
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvEpisodeDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvSeasonDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowDetails
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShowSearchResponse
@@ -598,4 +599,22 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<TvSeasonDetails>
+
+    // TODO [24-02-23 9:50p.m.] -- tv episodes also have append_to_response queries, but it wasn't
+    //  as important as for other detail types, so I skipped it for now.
+    /**
+     * Get the details for a season of a tv show.
+     *
+     * @param seriesId The tv series
+     * @param seasonNumber The season of the tv show
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}")
+    suspend fun getTvEpisodeDetails(
+        @Path("series_id") seriesId: Long,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US"
+    ): Result<TvEpisodeDetails>
 }
