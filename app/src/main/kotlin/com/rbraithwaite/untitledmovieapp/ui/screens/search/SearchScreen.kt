@@ -1,62 +1,30 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.search
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
-import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
-import timber.log.Timber
+import kotlin.reflect.KClass
 
-sealed interface SearchInputUiState
-
-sealed interface QuickSearch: SearchInputUiState {
-    data object Multi: QuickSearch
-    data object Movie: QuickSearch
-    data object TvShow: QuickSearch
-    data object Person: QuickSearch
-}
-
-sealed interface AdvancedSearch: SearchInputUiState {
-    data object Movie: AdvancedSearch
-    data object TvShow: AdvancedSearch
-}
 
 @Composable
 fun SearchScreen(
-//    viewModel: SearchViewModel,
+    viewModel: SearchViewModel,
     // TODO [24-02-2 12:15a.m.] broken.
 //    onNavToNewReviewScreen: (SearchResult) -> Unit
 ) {
-    val searchInputState by remember { mutableStateOf<SearchInputUiState>(QuickSearch.Multi) }
+    val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier
@@ -64,7 +32,7 @@ fun SearchScreen(
             .padding(8.dp)
     ) {
         item {
-            SearchInputWidget(searchInputState)
+            SearchInputWidget(searchInputUiState)
         }
     }
 
@@ -111,16 +79,19 @@ fun SearchScreen(
 
 @Composable
 private fun SearchInputWidget(
-    searchInputUiState: SearchInputUiState
+    state: SearchInputUiState
 ) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
     ) {
-        SearchInputModeSelector(onSearchInputModeSelected = {
-            Timber.d("Selected search input mode: $it")
-        })
+        SearchInputModeSelector(
+            searchInput = state.searchInput,
+            onSearchInputModeSelected = {
+                state.onChangeSearchInputType(it)
+            }
+        )
 
         DebugPlaceholder(
             label = "search input widget",
@@ -129,94 +100,114 @@ private fun SearchInputWidget(
     }
 }
 
-// REFACTOR [24-02-24 2:37p.m.] -- fix all this, pretty redundant with SearchInputUiState and the
-//  Tab enums.
-private enum class SearchInputModeSelection {
-    QUICK_MULTI,
-    QUICK_MOVIE,
-    QUICK_TV_SHOW,
-    QUICK_PERSON,
-    ADVANCED_MOVIE,
-    ADVANCED_TV_SHOW
-}
-
 private enum class FirstRowTab(val text: String) {
     QUICK("Quick"),
     ADVANCED("Advanced")
 }
 
-private enum class QuickSearchModeTab(
-    val text: String,
-    val selectionType: SearchInputModeSelection
-) {
-    MULTI("All", SearchInputModeSelection.QUICK_MULTI),
-    MOVIE("Movies", SearchInputModeSelection.QUICK_MOVIE),
-    TV_SHOW("Tv", SearchInputModeSelection.QUICK_TV_SHOW),
-    PERSON("People", SearchInputModeSelection.QUICK_PERSON)
+private enum class QuickSearchModeTab(val text: String) {
+    MULTI("All"),
+    MOVIE("Movies"),
+    TV_SHOW("Tv"),
+    PERSON("People")
 }
 
-private enum class AdvancedSearchModeTab(
-    val text: String,
-    val selectionType: SearchInputModeSelection
-) {
-    MOVIE("Movies", SearchInputModeSelection.ADVANCED_MOVIE),
-    TV_SHOW("Tv", SearchInputModeSelection.ADVANCED_TV_SHOW)
+private enum class AdvancedSearchModeTab(val text: String) {
+    MOVIE("Movies"),
+    TV_SHOW("Tv")
 }
+
+private fun SearchInput.deriveFirstRowTab(): FirstRowTab = when (this) {
+    is QuickSearch -> FirstRowTab.QUICK
+    is AdvancedSearch -> FirstRowTab.ADVANCED
+}
+
+private fun SearchInput.deriveFirstRowTabIndex(): Int {
+    return FirstRowTab.entries.indexOf(deriveFirstRowTab())
+}
+
+private fun FirstRowTab.deriveSelection(): SearchInputType = when (this) {
+    FirstRowTab.QUICK -> QuickSearch::class
+    FirstRowTab.ADVANCED -> AdvancedSearch::class
+}
+
+private fun QuickSearch.deriveTab(): QuickSearchModeTab = when (this) {
+    QuickSearch.Multi -> QuickSearchModeTab.MULTI
+    QuickSearch.Movie -> QuickSearchModeTab.MOVIE
+    QuickSearch.TvShow -> QuickSearchModeTab.TV_SHOW
+    QuickSearch.Person -> QuickSearchModeTab.PERSON
+}
+
+private fun QuickSearch.deriveTabIndex(): Int {
+    return QuickSearchModeTab.entries.indexOf(deriveTab())
+}
+
+private fun QuickSearchModeTab.deriveSelection(): SearchInputType = when (this) {
+    QuickSearchModeTab.MULTI -> QuickSearch.Multi::class
+    QuickSearchModeTab.MOVIE -> QuickSearch.Movie::class
+    QuickSearchModeTab.TV_SHOW -> QuickSearch.TvShow::class
+    QuickSearchModeTab.PERSON -> QuickSearch.Person::class
+}
+
+private fun AdvancedSearch.deriveTab(): AdvancedSearchModeTab = when (this) {
+    AdvancedSearch.Movie -> AdvancedSearchModeTab.MOVIE
+    AdvancedSearch.TvShow -> AdvancedSearchModeTab.TV_SHOW
+}
+
+private fun AdvancedSearch.deriveTabIndex(): Int {
+    return AdvancedSearchModeTab.entries.indexOf(deriveTab())
+}
+
+private fun AdvancedSearchModeTab.deriveSelection(): SearchInputType = when (this) {
+    AdvancedSearchModeTab.MOVIE -> AdvancedSearch.Movie::class
+    AdvancedSearchModeTab.TV_SHOW -> AdvancedSearch.TvShow::class
+}
+
+
 
 @Composable
 private fun SearchInputModeSelector(
-    onSearchInputModeSelected: (SearchInputModeSelection) -> Unit
+    searchInput: SearchInput,
+    onSearchInputModeSelected: (KClass<out SearchInput>) -> Unit
 ) {
-    var firstRowState by remember { mutableStateOf(FirstRowTab.QUICK) }
-    var quickSearchTab by remember { mutableStateOf(QuickSearchModeTab.MULTI) }
-    var advancedSearchTab by remember { mutableStateOf(AdvancedSearchModeTab.MOVIE) }
-
     TabRow(
-        selectedTabIndex = FirstRowTab.entries.indexOf(firstRowState)
+        selectedTabIndex = searchInput.deriveFirstRowTabIndex()
     ) {
-        FirstRowTab.entries.forEach {
+        FirstRowTab.entries.forEach { firstRowTab ->
             Tab(
-                text = { Text(it.text) },
+                text = { Text(firstRowTab.text) },
                 selected = true,
                 onClick = {
-                    firstRowState = it
-
-                    val selection = when (it) {
-                        FirstRowTab.QUICK -> quickSearchTab.selectionType
-                        FirstRowTab.ADVANCED -> advancedSearchTab.selectionType
-                    }
-                    onSearchInputModeSelected(selection)
+                    onSearchInputModeSelected(firstRowTab.deriveSelection())
                 }
             )
         }
     }
 
-    if (firstRowState == FirstRowTab.QUICK) {
+    if (searchInput is QuickSearch) {
         TabRow(
-            selectedTabIndex = QuickSearchModeTab.entries.indexOf(quickSearchTab)
+            selectedTabIndex = searchInput.deriveTabIndex()
         ) {
-            QuickSearchModeTab.entries.forEach {
+            QuickSearchModeTab.entries.forEach { tab ->
                 Tab(
-                    text = { Text(it.text) },
+                    text = { Text(tab.text) },
                     selected = true,
                     onClick = {
-                        quickSearchTab = it
-                        onSearchInputModeSelected(it.selectionType)
+                        onSearchInputModeSelected(tab.deriveSelection())
                     }
                 )
             }
         }
-    } else if (firstRowState == FirstRowTab.ADVANCED) {
+    } else if (searchInput is AdvancedSearch) {
         TabRow(
-            selectedTabIndex = AdvancedSearchModeTab.entries.indexOf(advancedSearchTab)
+            selectedTabIndex = searchInput.deriveTabIndex()
         ) {
-            AdvancedSearchModeTab.entries.forEach {
+            AdvancedSearchModeTab.entries.forEach { tab ->
                 Tab(
-                    text = { Text(it.text) },
+                    text = { Text(tab.text) },
                     selected = true,
                     onClick = {
-                        advancedSearchTab = it
-                        onSearchInputModeSelected(it.selectionType)
+                        onSearchInputModeSelected(tab.deriveSelection())
                     }
                 )
             }
