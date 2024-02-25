@@ -5,7 +5,10 @@ import kotlin.reflect.KClass
 sealed interface SearchInput
 
 sealed interface QuickSearch: SearchInput  {
-    data object Multi: QuickSearch
+    data class Multi(
+        val query: String,
+        val onChangeQuery: (String) -> Unit
+    ): QuickSearch
     data object Movie: QuickSearch
     data object TvShow: QuickSearch
     data object Person: QuickSearch

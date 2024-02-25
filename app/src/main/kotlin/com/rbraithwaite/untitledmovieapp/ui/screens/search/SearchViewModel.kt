@@ -31,17 +31,33 @@ class SearchViewModel @Inject constructor(
 
     private fun initSearchInputUiState(): SearchInputUiState {
         return SearchInputUiState(
-            QuickSearch.Multi,
+            createNewQuickSearchMultiInput(),
             ::onChangeSearchInputType
         )
+    }
+
+    private fun createNewQuickSearchMultiInput(): QuickSearch.Multi {
+        return QuickSearch.Multi(
+            query = "",
+            onChangeQuery = ::onChangeQuickSearchMultiQuery
+        )
+    }
+
+    private fun onChangeQuickSearchMultiQuery(newQuery: String) {
+        _searchInputUiState.update { uiState ->
+            val quickSearchMulti = uiState.searchInput as QuickSearch.Multi
+            uiState.copy(
+                searchInput = quickSearchMulti.copy(query = newQuery)
+            )
+        }
     }
 
     private fun onChangeSearchInputType(searchInputType: SearchInputType) {
         // TODO [24-02-25 3:53p.m.] -- for now, just returning new search input instances.
         val newSearchInput = when (searchInputType) {
-            QuickSearch::class -> QuickSearch.Multi
+            QuickSearch::class -> createNewQuickSearchMultiInput()
             AdvancedSearch::class -> AdvancedSearch.Movie
-            QuickSearch.Multi::class -> QuickSearch.Multi
+            QuickSearch.Multi::class -> createNewQuickSearchMultiInput()
             QuickSearch.Movie::class -> QuickSearch.Movie
             QuickSearch.TvShow::class -> QuickSearch.TvShow
             QuickSearch.Person::class -> QuickSearch.Person

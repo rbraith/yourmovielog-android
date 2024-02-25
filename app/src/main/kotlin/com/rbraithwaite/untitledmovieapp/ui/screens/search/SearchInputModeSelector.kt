@@ -38,10 +38,10 @@ private fun FirstRowTab.deriveSelection(): SearchInputType = when (this) {
 }
 
 private fun QuickSearch.deriveTab(): QuickSearchModeTab = when (this) {
-    QuickSearch.Multi -> QuickSearchModeTab.MULTI
-    QuickSearch.Movie -> QuickSearchModeTab.MOVIE
-    QuickSearch.TvShow -> QuickSearchModeTab.TV_SHOW
-    QuickSearch.Person -> QuickSearchModeTab.PERSON
+    is QuickSearch.Multi -> QuickSearchModeTab.MULTI
+    is QuickSearch.Movie -> QuickSearchModeTab.MOVIE
+    is QuickSearch.TvShow -> QuickSearchModeTab.TV_SHOW
+    is QuickSearch.Person -> QuickSearchModeTab.PERSON
 }
 
 private fun QuickSearch.deriveTabIndex(): Int {
@@ -56,8 +56,8 @@ private fun QuickSearchModeTab.deriveSelection(): SearchInputType = when (this) 
 }
 
 private fun AdvancedSearch.deriveTab(): AdvancedSearchModeTab = when (this) {
-    AdvancedSearch.Movie -> AdvancedSearchModeTab.MOVIE
-    AdvancedSearch.TvShow -> AdvancedSearchModeTab.TV_SHOW
+    is AdvancedSearch.Movie -> AdvancedSearchModeTab.MOVIE
+    is AdvancedSearch.TvShow -> AdvancedSearchModeTab.TV_SHOW
 }
 
 private fun AdvancedSearch.deriveTabIndex(): Int {
