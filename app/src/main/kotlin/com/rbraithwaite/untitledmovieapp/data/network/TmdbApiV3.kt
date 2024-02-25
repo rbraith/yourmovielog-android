@@ -30,6 +30,11 @@ interface TmdbApiV3 {
         const val BASE_URL = "https://api.themoviedb.org/3/"
     }
 
+    // *********************************************************
+    // Search APIs
+    // *********************************************************
+    //region Search APIs
+
     /**
      * Returns movie AND tv show results based on the query.
      *
@@ -47,55 +52,85 @@ interface TmdbApiV3 {
         @Query("page") pageNumber: Int = 1
     ): Result<SearchMultiResponse>
 
+    /**
+     * Search for companies by their original and alternative names.
+     *
+     * @param query Company name search key
+     * @param page The page of results to return, see [CompanySearchResponse.totalPages]
+     */
+    @GET("search/company")
+    suspend fun searchCompanies(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): Result<CompanySearchResponse>
 
     /**
-     * Returns the static list of movie certifications for different countries. Like G, 14A, R, etc.
+     * Search for movies by their original, translated and alternative titles.
+     *
+     * @param query movie name search key
+     * @param includeAdult whether to include adult film results
+     * @param language The language for the results (ISO 639-1 format)
+     * @param primaryReleaseYear The primary release year of the movie
+     * @param page The page of results to return, see [MovieSearchResponse.totalPages]
+     * @param region Probably for narrowing down which alternate titles to search for
+     * @param year The year... that isn't the primary release year (I don't know)
      */
-    @GET("certification/movie/list")
-    suspend fun getMovieCertifications(): Result<CertificationsResponse>
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("primary_release_year") primaryReleaseYear: String? = null,
+        @Query("page") page: Int = 1,
+        @Query("region") region: String? = null,
+        @Query("year") year: String? = null
+    ): Result<MovieSearchResponse>
 
     /**
-     * Returns the static list of tv certifications for different countries. Like TV-PG, TV-14,
-     * YV-MA, etc.
+     * Search for people by their name and also known as names.
+     *
+     * @param query movie name search key
+     * @param includeAdult whether to include adult film results
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [MovieSearchResponse.totalPages]
      */
-    @GET("certification/tv/list")
-    suspend fun getTvCertifications(): Result<CertificationsResponse>
+    @GET("search/person")
+    suspend fun searchPeople(
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): Result<PersonSearchResponse>
 
     /**
-     * Returns static data to help integrate with this API.
+     * Search for TV shows by their original, translated and also known as names.
+     *
+     * @param query movie name search key
+     * @param firstAirDateYear Search only the first air date. Valid values are: 1000..9999
+     * @param includeAdult whether to include adult film results
+     * @param language The language for the results (ISO 639-1 format)
+     * @param page The page of results to return, see [TvShowSearchResponse.totalPages]
+     * @param year Search the first air date and all episode air dates. Valid values are: 1000..9999
      */
-    @GET("configuration")
-    suspend fun getConfiguration(): Result<Configuration>
+    @GET("search/tv")
+    suspend fun searchTvShows(
+        @Query("query") query: String,
+        @Query("first_air_date_year") firstAirDateYear: Int? = null,
+        @Query("include_adult") includeAdult: Boolean = false,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("year") year: Int? = null
+    ): Result<TvShowSearchResponse>
 
-    /**
-     * Returns a static list of the countries used by TMDB
-     */
-    @GET("configuration/countries")
-    suspend fun getCountryConfiguration(): Result<List<CountryConfig>>
+    //endregion
 
-    /**
-     * Returns a static list of the movie-industry departments and jobs used by TMDB
-     */
-    @GET("configuration/jobs")
-    suspend fun getJobsConfiguration(): Result<List<JobsConfig>>
-
-    /**
-     * Returns a static list of the timezones used by TMDB
-     */
-    @GET("configuration/timezones")
-    suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>>
-
-    /**
-     * Returns the details of the company with the given id.
-     */
-    @GET("company/{company_id}")
-    suspend fun getCompanyDetails(@Path("company_id") companyId: Long): Result<CompanyDetails>
-
-    /**
-     * Returns logo information for the company with the given id.
-     */
-    @GET("company/{company_id}/images")
-    suspend fun getCompanyLogos(@Path("company_id") companyId: Long): Result<CompanyLogos>
+    // *********************************************************
+    // Discover APIs
+    // *********************************************************
+    //region Discover APIs
 
     /**
      * Advanced movie search.
@@ -270,6 +305,50 @@ interface TmdbApiV3 {
         @Query("with_type") withType: String? = null
     ): Result<DiscoverTvResponse>
 
+    //endregion
+
+    // *********************************************************
+    // Static Data APIs
+    // *********************************************************
+    //region Static Data APIs
+
+    /**
+     * Returns the static list of movie certifications for different countries. Like G, 14A, R, etc.
+     */
+    @GET("certification/movie/list")
+    suspend fun getMovieCertifications(): Result<CertificationsResponse>
+
+    /**
+     * Returns the static list of tv certifications for different countries. Like TV-PG, TV-14,
+     * YV-MA, etc.
+     */
+    @GET("certification/tv/list")
+    suspend fun getTvCertifications(): Result<CertificationsResponse>
+
+    /**
+     * Returns static data to help integrate with this API.
+     */
+    @GET("configuration")
+    suspend fun getConfiguration(): Result<Configuration>
+
+    /**
+     * Returns a static list of the countries used by TMDB
+     */
+    @GET("configuration/countries")
+    suspend fun getCountryConfiguration(): Result<List<CountryConfig>>
+
+    /**
+     * Returns a static list of the movie-industry departments and jobs used by TMDB
+     */
+    @GET("configuration/jobs")
+    suspend fun getJobsConfiguration(): Result<List<JobsConfig>>
+
+    /**
+     * Returns a static list of the timezones used by TMDB
+     */
+    @GET("configuration/timezones")
+    suspend fun getTimezonesConfiguration(): Result<List<CountryTimezones>>
+
     /**
      * Returns list of all movie genres.
      */
@@ -281,6 +360,13 @@ interface TmdbApiV3 {
      */
     @GET("genre/tv/list")
     suspend fun getTvGenres(): Result<Genres>
+
+    //endregion
+
+    // *********************************************************
+    // Movie APIs
+    // *********************************************************
+    //region Movie APIs
 
     /**
      * Returns all movies ordered by popularity.
@@ -343,6 +429,28 @@ interface TmdbApiV3 {
     ): Result<DiscoverMovieResponse>
 
     /**
+     * Get full details for a movie.
+     *
+     * @param movieId The movie to get details for
+     * @param language The language for the results (ISO 639-1 format)
+     * @param appendToResponse comma-separated additional queries for data related to this movie, see [the docs](https://developer.themoviedb.org/reference/movie-details)
+     */
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Long,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String? = null
+    ): Result<MovieDetailsResponse>
+
+    //endregion
+
+    // *********************************************************
+    // TV APIS
+    // *********************************************************
+    //region TV APIS
+
+    /**
      * Returns the list of tv shows airing today
      *
      * @param language The language for the results (ISO 639-1 format)
@@ -399,19 +507,63 @@ interface TmdbApiV3 {
     ): Result<DiscoverTvResponse>
 
     /**
-     * Get full details for a movie.
+     * Get the full details of a tv show.
      *
-     * @param movieId The movie to get details for
+     * @param seriesId The tv series to get the details for
      * @param language The language for the results (ISO 639-1 format)
-     * @param appendToResponse comma-separated additional queries for data related to this movie, see [the docs](https://developer.themoviedb.org/reference/movie-details)
+     * @param appendToResponse comma-separated additional queries for data related to this movie,
+     * see [the docs](https://developer.themoviedb.org/reference/tv-series-details)
      */
-    @GET("movie/{movie_id}")
-    suspend fun getMovieDetails(
-        @Path("movie_id") movieId: Long,
+    @GET("tv/{series_id}")
+    suspend fun getTvShowDetails(
+        @Path("series_id") seriesId: Long,
         // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
         @Query("language") language: String = "en-US",
         @Query("append_to_response") appendToResponse: String? = null
-    ): Result<MovieDetailsResponse>
+    ): Result<TvShowDetails>
+
+    /**
+     * Get the details for a season of a tv show.
+     *
+     * @param seriesId The tv series
+     * @param seasonNumber The season of the tv show
+     * @param language The language for the results (ISO 639-1 format)
+     * @param appendToResponse comma-separated additional queries for data related to this movie,
+     * see [the docs](https://developer.themoviedb.org/reference/tv-series-details)
+     */
+    @GET("tv/{series_id}/season/{season_number}")
+    suspend fun getTvSeasonDetails(
+        @Path("series_id") seriesId: Long,
+        @Path("season_number") seasonNumber: Int,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String? = null
+    ): Result<TvSeasonDetails>
+
+    // TODO [24-02-23 9:50p.m.] -- tv episodes also have append_to_response queries, but it wasn't
+    //  as important as for other detail types, so I skipped it for now.
+    /**
+     * Get the details for a season of a tv show.
+     *
+     * @param seriesId The tv series
+     * @param seasonNumber The season of the tv show
+     * @param language The language for the results (ISO 639-1 format)
+     */
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}")
+    suspend fun getTvEpisodeDetails(
+        @Path("series_id") seriesId: Long,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int,
+        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
+        @Query("language") language: String = "en-US"
+    ): Result<TvEpisodeDetails>
+
+    //endregion
+
+    // *********************************************************
+    // Person APIs
+    // *********************************************************
+    //region Person APIs
 
     /**
      * Get a list of all people, ordered by their popularity
@@ -441,78 +593,31 @@ interface TmdbApiV3 {
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<PersonDetailsResponse>
 
-    /**
-     * Search for companies by their original and alternative names.
-     *
-     * @param query Company name search key
-     * @param page The page of results to return, see [CompanySearchResponse.totalPages]
-     */
-    @GET("search/company")
-    suspend fun searchCompanies(
-        @Query("query") query: String,
-        @Query("page") page: Int = 1
-    ): Result<CompanySearchResponse>
+    //endregion
+
+    // *********************************************************
+    // Company APIs
+    // *********************************************************
+    //region Company APIs
 
     /**
-     * Search for movies by their original, translated and alternative titles.
-     *
-     * @param query movie name search key
-     * @param includeAdult whether to include adult film results
-     * @param language The language for the results (ISO 639-1 format)
-     * @param primaryReleaseYear The primary release year of the movie
-     * @param page The page of results to return, see [MovieSearchResponse.totalPages]
-     * @param region Probably for narrowing down which alternate titles to search for
-     * @param year The year... that isn't the primary release year (I don't know)
+     * Returns the details of the company with the given id.
      */
-    @GET("search/movie")
-    suspend fun searchMovies(
-        @Query("query") query: String,
-        @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
-        @Query("primary_release_year") primaryReleaseYear: String? = null,
-        @Query("page") page: Int = 1,
-        @Query("region") region: String? = null,
-        @Query("year") year: String? = null
-    ): Result<MovieSearchResponse>
+    @GET("company/{company_id}")
+    suspend fun getCompanyDetails(@Path("company_id") companyId: Long): Result<CompanyDetails>
 
     /**
-     * Search for people by their name and also known as names.
-     *
-     * @param query movie name search key
-     * @param includeAdult whether to include adult film results
-     * @param language The language for the results (ISO 639-1 format)
-     * @param page The page of results to return, see [MovieSearchResponse.totalPages]
+     * Returns logo information for the company with the given id.
      */
-    @GET("search/person")
-    suspend fun searchPeople(
-        @Query("query") query: String,
-        @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1,
-    ): Result<PersonSearchResponse>
+    @GET("company/{company_id}/images")
+    suspend fun getCompanyLogos(@Path("company_id") companyId: Long): Result<CompanyLogos>
 
-    /**
-     * Search for TV shows by their original, translated and also known as names.
-     *
-     * @param query movie name search key
-     * @param firstAirDateYear Search only the first air date. Valid values are: 1000..9999
-     * @param includeAdult whether to include adult film results
-     * @param language The language for the results (ISO 639-1 format)
-     * @param page The page of results to return, see [TvShowSearchResponse.totalPages]
-     * @param year Search the first air date and all episode air dates. Valid values are: 1000..9999
-     */
-    @GET("search/tv")
-    suspend fun searchTvShows(
-        @Query("query") query: String,
-        @Query("first_air_date_year") firstAirDateYear: Int? = null,
-        @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1,
-        @Query("year") year: Int? = null
-    ): Result<TvShowSearchResponse>
+    //endregion
+
+    // *********************************************************
+    // Trending APIs
+    // *********************************************************
+    //region Trending APIs
 
     /**
      * Get the trending movies, TV shows and people.
@@ -566,55 +671,5 @@ interface TmdbApiV3 {
         @Query("language") language: String = "en-US",
     ): Result<PersonSearchResponse>
 
-    /**
-     * Get the full details of a tv show.
-     *
-     * @param seriesId The tv series to get the details for
-     * @param language The language for the results (ISO 639-1 format)
-     * @param appendToResponse comma-separated additional queries for data related to this movie,
-     * see [the docs](https://developer.themoviedb.org/reference/tv-series-details)
-     */
-    @GET("tv/{series_id}")
-    suspend fun getTvShowDetails(
-        @Path("series_id") seriesId: Long,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
-        @Query("append_to_response") appendToResponse: String? = null
-    ): Result<TvShowDetails>
-
-    /**
-     * Get the details for a season of a tv show.
-     *
-     * @param seriesId The tv series
-     * @param seasonNumber The season of the tv show
-     * @param language The language for the results (ISO 639-1 format)
-     * @param appendToResponse comma-separated additional queries for data related to this movie,
-     * see [the docs](https://developer.themoviedb.org/reference/tv-series-details)
-     */
-    @GET("tv/{series_id}/season/{season_number}")
-    suspend fun getTvSeasonDetails(
-        @Path("series_id") seriesId: Long,
-        @Path("season_number") seasonNumber: Int,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
-        @Query("append_to_response") appendToResponse: String? = null
-    ): Result<TvSeasonDetails>
-
-    // TODO [24-02-23 9:50p.m.] -- tv episodes also have append_to_response queries, but it wasn't
-    //  as important as for other detail types, so I skipped it for now.
-    /**
-     * Get the details for a season of a tv show.
-     *
-     * @param seriesId The tv series
-     * @param seasonNumber The season of the tv show
-     * @param language The language for the results (ISO 639-1 format)
-     */
-    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}")
-    suspend fun getTvEpisodeDetails(
-        @Path("series_id") seriesId: Long,
-        @Path("season_number") seasonNumber: Int,
-        @Path("episode_number") episodeNumber: Int,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US"
-    ): Result<TvEpisodeDetails>
+    //endregion
 }
