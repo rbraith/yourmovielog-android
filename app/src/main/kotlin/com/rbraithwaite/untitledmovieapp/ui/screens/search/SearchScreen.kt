@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.search
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
@@ -22,7 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import kotlin.reflect.KClass
@@ -36,7 +40,11 @@ fun SearchScreen(
 ) {
     val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
 
+    // TODO [24-03-23 6:42p.m.] -- .
+//    val searchResultsUiState by viewModel.searchResultsUiState.collectAsStateWithLifecycle()
+
     LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
@@ -44,46 +52,37 @@ fun SearchScreen(
         item {
             SearchInputWidget(searchInputUiState)
         }
+
+        item {
+            NewCustomMediaButton(title = "TEMP hardcoded media")
+        }
+
+        // Results header
+        item {
+            Text(
+                text  = "Results",
+                fontSize = 20.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
     }
+}
 
 
-
-//    val searchInput by viewModel.searchInput.collectAsStateWithLifecycle()
-//    val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
-//
-//    LazyColumn(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .randomBackgroundColor()
-//    ) {
-//        item {
-//            SearchInputWidget(
-//                searchInput = searchInput,
-//                onSwitchInputMode = {
-//                    // TO IMPLEMENT
-//                    Timber.d("SearchInputWidget onSwitchInputMode")
-//                },
-//                modifier = Modifier.fillMaxWidth()
-//            )
-//        }
-//
-//        item {
-//            Divider(color = Color.Red)
-//        }
-//
-//        // Results header
-//        item {
-//            Text("Results")
-//        }
-//
-//        SearchResults(
-//            searchResults = searchResults,
-////            onSelectResult = {
-////                // TODO [24-02-2 12:16a.m.] broken.
-//////                onNavToNewReviewScreen(it)
-////            }
-//        )
-//    }
+@Composable
+fun NewCustomMediaButton(
+    title: String,
+) {
+    Button(
+        onClick = {
+                  // TODO [24-03-23 6:44p.m.] -- .
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(64.dp)
+    ) {
+        Text("Add review for \"$title\"")
+    }
 }
 
 
@@ -230,28 +229,7 @@ private fun SearchButton(
 //    Text("Loading...")
 //}
 //
-//@Composable
-//fun ResultItemNewCustomMedia(
-//    title: String,
-//    // TODO [24-02-2 12:16a.m.] broken.
-////    onSelect: (SearchResult.CustomMedia) -> Unit
-//) {
-//    Button(
-//        onClick = {
-//            // REFACTOR [23-12-20 1:44a.m.] -- hardcoded 0L id for new custom media...
-//            // TODO [24-02-2 12:16a.m.] broken.
-////            onSelect(SearchResult.CustomMedia(CustomMovie(
-////                id=0L,
-////                title=title
-////            )))
-//        },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(64.dp)
-//    ) {
-//        Text("Add review for \"$title\"")
-//    }
-//}
+
 //
 //fun LazyListScope.SearchResults(
 //    searchResults: SearchResults,
