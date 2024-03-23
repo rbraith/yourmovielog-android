@@ -28,6 +28,7 @@ import retrofit2.http.Query
 interface TmdbApiV3 {
     object Constants {
         const val BASE_URL = "https://api.themoviedb.org/3/"
+        const val DEFAULT_LANGUAGE = "en-US"
     }
 
     // *********************************************************
@@ -47,8 +48,7 @@ interface TmdbApiV3 {
     suspend fun searchMulti(
         @Query("query") query: String,
         @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [23-11-21 11:16p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") pageNumber: Int = 1
     ): Result<SearchMultiResponse>
 
@@ -79,8 +79,7 @@ interface TmdbApiV3 {
     suspend fun searchMovies(
         @Query("query") query: String,
         @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("primary_release_year") primaryReleaseYear: String? = null,
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null,
@@ -99,8 +98,7 @@ interface TmdbApiV3 {
     suspend fun searchPeople(
         @Query("query") query: String,
         @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
     ): Result<PersonSearchResponse>
 
@@ -119,8 +117,7 @@ interface TmdbApiV3 {
         @Query("query") query: String,
         @Query("first_air_date_year") firstAirDateYear: Int? = null,
         @Query("include_adult") includeAdult: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("year") year: Int? = null
     ): Result<TvShowSearchResponse>
@@ -190,8 +187,7 @@ interface TmdbApiV3 {
         @Query("certification_country") certificationCountry: String? = null,
         @Query("include_adult") includeAdult: Boolean = false,
         @Query("include_video") includeVideo: Boolean = false,
-        // REFACTOR [24-02-10 10:04p.m.] -- hardcoded language.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
         @Query("primary_release_date.gte") primaryReleaseDateGte: String? = null,
@@ -276,8 +272,7 @@ interface TmdbApiV3 {
         @Query("first_air_date.lte") firstAirDateLte: String? = null,
         @Query("include_adult") includeAdult: Boolean = false,
         @Query("include_null_first_air_dates") includeNullFirstAirDates: Boolean = false,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("screened_theatrically") screenedTheatrically: Boolean? = null,
         @Query("sort_by") sortBy: String = "popularity.desc",
@@ -377,8 +372,7 @@ interface TmdbApiV3 {
      */
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
     ): Result<DiscoverMovieResponse>
@@ -392,8 +386,7 @@ interface TmdbApiV3 {
      */
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
     ): Result<DiscoverMovieResponse>
@@ -407,8 +400,7 @@ interface TmdbApiV3 {
      */
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
-        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
     ): Result<DiscoverMovieResponse>
@@ -422,8 +414,7 @@ interface TmdbApiV3 {
      */
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
-        // REFACTOR [24-02-12 11:58p.m.] -- hardcoded lang string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("region") region: String? = null
     ): Result<DiscoverMovieResponse>
@@ -438,8 +429,7 @@ interface TmdbApiV3 {
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Long,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<MovieDetailsResponse>
 
@@ -459,8 +449,7 @@ interface TmdbApiV3 {
      */
     @GET("tv/airing_today")
     suspend fun getTvShowsAiringToday(
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("timezone") timezone: String? = null
     ): Result<DiscoverTvResponse>
@@ -474,8 +463,7 @@ interface TmdbApiV3 {
      */
     @GET("tv/on_the_air")
     suspend fun getTvShowsOnTheAir(
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1,
         @Query("timezone") timezone: String? = null
     ): Result<DiscoverTvResponse>
@@ -488,8 +476,7 @@ interface TmdbApiV3 {
      */
     @GET("tv/popular")
     suspend fun getPopularTvShows(
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1
     ): Result<DiscoverTvResponse>
 
@@ -501,8 +488,7 @@ interface TmdbApiV3 {
      */
     @GET("tv/top_rated")
     suspend fun getTopRatedTvShow(
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1
     ): Result<DiscoverTvResponse>
 
@@ -517,8 +503,7 @@ interface TmdbApiV3 {
     @GET("tv/{series_id}")
     suspend fun getTvShowDetails(
         @Path("series_id") seriesId: Long,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<TvShowDetails>
 
@@ -535,8 +520,7 @@ interface TmdbApiV3 {
     suspend fun getTvSeasonDetails(
         @Path("series_id") seriesId: Long,
         @Path("season_number") seasonNumber: Int,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<TvSeasonDetails>
 
@@ -554,8 +538,7 @@ interface TmdbApiV3 {
         @Path("series_id") seriesId: Long,
         @Path("season_number") seasonNumber: Int,
         @Path("episode_number") episodeNumber: Int,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US"
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE
     ): Result<TvEpisodeDetails>
 
     //endregion
@@ -573,8 +556,7 @@ interface TmdbApiV3 {
      */
     @GET("person/popular")
     suspend fun getPopularPeople(
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("page") page: Int = 1
     ): Result<PopularPeopleResponse>
 
@@ -588,8 +570,7 @@ interface TmdbApiV3 {
     @GET("person/{person_id}")
     suspend fun getPersonDetails(
         @Path("person_id") personId: Long,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
         @Query("append_to_response") appendToResponse: String? = null
     ): Result<PersonDetailsResponse>
 
@@ -628,8 +609,7 @@ interface TmdbApiV3 {
     @GET("trending/all/{time_window}")
     suspend fun getTrendingAll(
         @Path("time_window") timeWindow: String,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
     ): Result<SearchMultiResponse>
 
     /**
@@ -641,8 +621,7 @@ interface TmdbApiV3 {
     @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
         @Path("time_window") timeWindow: String,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
     ): Result<MovieSearchResponse>
 
     /**
@@ -654,8 +633,7 @@ interface TmdbApiV3 {
     @GET("trending/tv/{time_window}")
     suspend fun getTrendingTvShows(
         @Path("time_window") timeWindow: String,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
     ): Result<TvShowSearchResponse>
 
     /**
@@ -667,8 +645,7 @@ interface TmdbApiV3 {
     @GET("trending/person/{time_window}")
     suspend fun getTrendingPeople(
         @Path("time_window") timeWindow: String,
-        // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = Constants.DEFAULT_LANGUAGE,
     ): Result<PersonSearchResponse>
 
     //endregion
