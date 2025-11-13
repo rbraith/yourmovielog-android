@@ -152,6 +152,9 @@ dependencies {
     testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
 
+    // Reflection for DelegateFake
+    testImplementation(kotlin("reflect"))
+
     testImplementation(project(":test_data_utils"))
     kspTest(project(":test_data_utils"))
 

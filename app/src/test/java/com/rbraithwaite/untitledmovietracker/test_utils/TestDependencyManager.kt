@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
+import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
@@ -7,6 +8,7 @@ import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGen
 import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
+import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.MovieBuilder
@@ -20,7 +22,7 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeRevie
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.network.FakeTmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.LongIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.ReviewEntityIdSelector
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeMediaRepository
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.MockDelegateMediaRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
@@ -85,8 +87,11 @@ class TestDependencyManager(
         )
     }
 
-    val mediaRepository: DelegateFakeMediaRepository by lazy {
-        DelegateFakeMediaRepository(coroutineDispatcher, tmdbApiV3)
+    val mediaRepository: MockDelegateMediaRepository by lazy {
+        MockDelegateMediaRepository(MediaRepositoryImpl(
+            coroutineDispatcher,
+            tmdbApiV3
+        ))
     }
 
     // *********************************************************
