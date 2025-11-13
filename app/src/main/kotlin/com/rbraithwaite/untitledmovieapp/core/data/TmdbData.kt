@@ -2,8 +2,10 @@ package com.rbraithwaite.untitledmovieapp.core.data
 
 import java.time.LocalDate
 
-// TODO [25-10-26 4:39p.m.] deprecated: delete this.
-sealed interface TmdbLite {
+/**
+ * Media or person data from TMDB
+ */
+sealed interface TmdbData {
     data class Movie(
         val id: Long,
         val isAdult: Boolean,
@@ -19,7 +21,7 @@ sealed interface TmdbLite {
         val video: Boolean,
         val voteAverage: Float,
         val voteCount: Int
-    ): TmdbLite
+    ): TmdbData
 
     data class TvShow(
         val id: Long,
@@ -36,7 +38,7 @@ sealed interface TmdbLite {
         val voteAverage: Float,
         val voteCount: Int,
         val originCountry: List<String>
-    ): TmdbLite
+    ): TmdbData
 
     data class Person(
         val id: Long,
@@ -48,5 +50,5 @@ sealed interface TmdbLite {
         val gender: Int,
         val knownForDepartment: String,
         val profilePath: String?
-    ): TmdbLite
+    ): TmdbData
 }

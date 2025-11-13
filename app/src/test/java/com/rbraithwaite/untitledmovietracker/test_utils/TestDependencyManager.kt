@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.MovieBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.CustomMovieEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeCustomMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeReviewRepository
@@ -19,6 +20,7 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeRevie
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.network.FakeTmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.LongIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.ReviewEntityIdSelector
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeMediaRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
@@ -75,12 +77,16 @@ class TestDependencyManager(
         )
     }
 
-    val mediaRepository: DelegateFakeCustomMediaRepository by lazy {
+    val customMediaRepository: DelegateFakeCustomMediaRepository by lazy {
         DelegateFakeCustomMediaRepository(
             externalScope,
             coroutineDispatcher,
             customMediaDao
         )
+    }
+
+    val mediaRepository: DelegateFakeMediaRepository by lazy {
+        DelegateFakeMediaRepository(coroutineDispatcher, tmdbApiV3)
     }
 
     // *********************************************************
@@ -94,6 +100,7 @@ class TestDependencyManager(
     }
 
     interface TestBackendStateInitializer {
+        // TODO [25-11-6 1:21a.m.] deprecated - delete this.
         // SMELL [24-02-6 12:12a.m.] -- this isn't good, it reveals information about which
         //  api method is used. It'd be better to properly populate the backend as a database,
         //  using full tmdb media detail objs.
@@ -102,6 +109,8 @@ class TestDependencyManager(
             tvShows: List<TvShow> = emptyList(),
             people: List<Person> = emptyList()
         )
+
+        suspend fun withMovies(vararg movies: MovieBuilder)
     }
 
     private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
@@ -142,6 +151,18 @@ class TestDependencyManager(
 //                depManager.backend.insert(person)
 //            }
         }
+
+        override suspend fun withMovies(vararg movies: MovieBuilder) {
+            val depManager = this@TestDependencyManager
+
+            val movieIdSelector = MovieIdSelector()
+            for (movie in movies) {
+                depManager.backend.insert(
+                    movie.build(),
+                    movieIdSelector
+                )
+            }
+        }
     }
 
     suspend fun initializeDatabaseState(initBlock: suspend TestDatabaseStateInitializer.() -> Unit) {
@@ -153,6 +174,20 @@ class TestDependencyManager(
     }
 
     //endregion
+}
+
+private class MovieIdSelector: LongIdSelector<Movie>() {
+    override fun getId(entity: Movie): Long {
+        return entity.id
+    }
+
+    override fun updateId(
+        entity: Movie,
+        newId: Long
+    ): Movie {
+        return entity.copy(id = newId)
+    }
+
 }
 
 private class SearchMultiResultMovieIdSelector: LongIdSelector<Movie>() {

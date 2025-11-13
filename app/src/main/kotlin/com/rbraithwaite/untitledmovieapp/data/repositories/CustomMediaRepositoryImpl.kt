@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// TODO [25-10-26 4:43p.m.] deprecated: delete this.
 class CustomMediaRepositoryImpl @Inject constructor(
     private val externalScope: CoroutineScope,
     @SingletonModule.IoDispatcher

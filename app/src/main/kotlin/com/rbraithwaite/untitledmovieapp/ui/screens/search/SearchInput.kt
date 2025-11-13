@@ -23,5 +23,6 @@ typealias SearchInputType = KClass<out SearchInput>
 
 data class SearchInputUiState(
     val searchInput: SearchInput,
-    val onChangeSearchInputType: (SearchInputType) -> Unit
+    val onChangeSearchInputType: (SearchInputType) -> Unit,
+    val runSearch: () -> Unit
 )

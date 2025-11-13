@@ -50,6 +50,7 @@ class MainScreenState(
     fun navigateFromDrawerTo(dest: MainDrawerDest) {
         navController.navigateFromDrawerTo(dest)
         selectedDrawerDest.value = dest
+        // TODO [25-10-23 2:50p.m.] make this a public fun 'closeDrawer'.
         coroutineScope.launch {
             drawerState.close()
         }
@@ -66,6 +67,8 @@ class MainScreenState(
     }
 }
 
+// TODO [25-10-23 2:51p.m.] the initial selected drawer dest should be a param
+//  ...does a dynamic initial stat val like that even work with remember?
 @Composable
 private fun rememberMainScreenState(): MainScreenState {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -126,6 +129,7 @@ private fun MainNavDrawer(
     }
 }
 
+// TODO [25-10-23 2:53p.m.] consider hoisting onClick and selected.
 @Composable
 private fun MainNavDrawerItem(
     label: String,

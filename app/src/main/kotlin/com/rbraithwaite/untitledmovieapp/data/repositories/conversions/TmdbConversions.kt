@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.data.repositories.conversions
 
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbData
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
@@ -50,8 +51,28 @@ fun TmdbLite.Movie.toEntity(): TmdbLiteMovieEntity {
     )
 }
 
+// TODO [25-10-26 5:30p.m.] deprecated: delete.
 fun Movie.toTmdbLiteMovie(): TmdbLite.Movie {
     return TmdbLite.Movie(
+        id = id,
+        isAdult = adult,
+        backdropPath = backdropPath,
+        title = title,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        posterPath = posterPath,
+        popularity = popularity,
+        genreIds = genreIds,
+        releaseDate = parseTmdbDateString(releaseDate),
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount
+    )
+}
+
+fun Movie.toTmdbDataMovie(): TmdbData.Movie {
+    return TmdbData.Movie(
         id = id,
         isAdult = adult,
         backdropPath = backdropPath,

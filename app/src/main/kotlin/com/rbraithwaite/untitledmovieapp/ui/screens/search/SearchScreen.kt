@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -28,7 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbData
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import timber.log.Timber
 import kotlin.reflect.KClass
 
 
@@ -39,9 +44,7 @@ fun SearchScreen(
 //    onNavToNewReviewScreen: (SearchResult) -> Unit
 ) {
     val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
-
-    // TODO [24-03-23 6:42p.m.] -- .
-//    val searchResultsUiState by viewModel.searchResultsUiState.collectAsStateWithLifecycle()
+    val searchResultsUiState by viewModel.searchResultsUiState.collectAsStateWithLifecycle()
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -57,14 +60,7 @@ fun SearchScreen(
             NewCustomMediaButton(title = "TEMP hardcoded media")
         }
 
-        // Results header
-        item {
-            Text(
-                text  = "Results",
-                fontSize = 20.sp,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
+        searchResultsList(searchResultsUiState)
     }
 }
 
@@ -87,9 +83,7 @@ fun NewCustomMediaButton(
 
 
 @Composable
-private fun SearchInputWidget(
-    state: SearchInputUiState
-) {
+private fun SearchInputWidget(state: SearchInputUiState) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -123,7 +117,7 @@ private fun SearchInputWidget(
             Spacer(modifier = Modifier.height(16.dp))
 
             SearchButton(
-                onClick = { /*TODO*/ },
+                onClick = state.runSearch,
                 modifier = Modifier.align(Alignment.End)
             )
 
@@ -146,5 +140,50 @@ private fun SearchButton(
         )
 
         Text("Search")
+    }
+}
+
+private fun LazyListScope.searchResultsList(searchResultsUiState: SearchResultsUiState) {
+    item {
+        Text(
+            text  = "Results",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+    }
+
+    when (searchResultsUiState) {
+        is SearchResultsUiState.NoInput -> item { DebugPlaceholder("No Input") }
+        is SearchResultsUiState.Loading -> item { DebugPlaceholder("Loading") }
+        is SearchResultsUiState.Success -> {
+            items(searchResultsUiState.searchResults, key = { it.getListKey() }) { searchResult ->
+                when (searchResult) {
+                    is SearchResult.Tmdb -> {
+                        when (val tmdbData = searchResult.value) {
+                            is TmdbData.Movie -> Text(tmdbData.title)
+                            is TmdbData.TvShow -> Text(tmdbData.name)
+                            is TmdbData.Person -> Text(tmdbData.name)
+                        }
+                    }
+                    is SearchResult.Media -> {
+                        // TO IMPLEMENT
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun SearchResult.getListKey(): Any {
+    return when (this) {
+        is SearchResult.Media -> this.value.media.uuid
+        is SearchResult.Tmdb -> {
+            val tmdbData = this.value
+            when (tmdbData) {
+                is TmdbData.Movie -> tmdbData.id
+                is TmdbData.TvShow -> tmdbData.id
+                is TmdbData.Person -> tmdbData.id
+            }
+        }
     }
 }

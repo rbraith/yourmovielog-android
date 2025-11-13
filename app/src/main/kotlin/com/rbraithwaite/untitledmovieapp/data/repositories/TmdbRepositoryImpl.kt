@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// TODO [25-10-26 4:43p.m.] deprecated: delete this.
 class TmdbRepositoryImpl @Inject constructor(
     private val tmdbDao: TmdbDao,
     private val tmdbApiV3: TmdbApiV3,

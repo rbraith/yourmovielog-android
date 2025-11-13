@@ -42,49 +42,49 @@ class MainActivity: ComponentActivity() {
                 }
 
                 // 'add review' flow
-                navigation(startDestination = "search", route = "add_review_flow") {
-                    composable(route = "search") {
-                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
-                            rememberKey = it,
-                            scopeRoute = "add_review_flow"
-                        )
-
-                        // TODO [24-02-2 12:14a.m.] broken.
-//                        SearchScreen(
-//                            hiltViewModel(),
-//                            onNavToNewReviewScreen = { searchResult ->
-//                                addReviewFlowSharedData.newReviewSearchResult = searchResult
-//                                navController.navigate(route = "new_review")
-//                            }
+//                navigation(startDestination = "search", route = "add_review_flow") {
+//                    composable(route = "search") {
+//                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
+//                            rememberKey = it,
+//                            scopeRoute = "add_review_flow"
 //                        )
-                    }
-
-                    composable(route = "new_review") { navBackStackEntry ->
-                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
-                            rememberKey = navBackStackEntry,
-                            scopeRoute = "add_review_flow"
-                        )
-
-                        val viewModel = hiltViewModel<NewReviewViewModel>()
-
-                        // TODO [24-02-2 12:14a.m.] broken.
-//                        val viewModelInitialized = waitFor(navBackStackEntry) {
-//                            viewModel.init(addReviewFlowSharedData.newReviewSearchResult)
-//                        }
 //
-//                        if (viewModelInitialized) {
-//                            NewReviewScreen(
-//                                viewModel = viewModel,
-//                                onConfirmReview = {
-//                                    // TO IMPLEMENT
-//                                },
-//                                onNavBack = {
-//                                    // TO IMPLEMENT
-//                                }
-//                            )
-//                        }
-                    }
-                }
+//                        // TODO [24-02-2 12:14a.m.] broken.
+////                        SearchScreen(
+////                            hiltViewModel(),
+////                            onNavToNewReviewScreen = { searchResult ->
+////                                addReviewFlowSharedData.newReviewSearchResult = searchResult
+////                                navController.navigate(route = "new_review")
+////                            }
+////                        )
+//                    }
+//
+//                    composable(route = "new_review") { navBackStackEntry ->
+//                        val addReviewFlowSharedData = navController.getScopedViewModel<AddReviewFlowSharedData>(
+//                            rememberKey = navBackStackEntry,
+//                            scopeRoute = "add_review_flow"
+//                        )
+//
+//                        val viewModel = hiltViewModel<NewReviewViewModel>()
+//
+//                        // TODO [24-02-2 12:14a.m.] broken.
+////                        val viewModelInitialized = waitFor(navBackStackEntry) {
+////                            viewModel.init(addReviewFlowSharedData.newReviewSearchResult)
+////                        }
+////
+////                        if (viewModelInitialized) {
+////                            NewReviewScreen(
+////                                viewModel = viewModel,
+////                                onConfirmReview = {
+////                                    // TO IMPLEMENT
+////                                },
+////                                onNavBack = {
+////                                    // TO IMPLEMENT
+////                                }
+////                            )
+////                        }
+//                    }
+//                }
             }
         }
     }
