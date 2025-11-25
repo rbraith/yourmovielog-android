@@ -5,6 +5,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.combined.TmdbLiteMovieWithGenres
 import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
+import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -87,6 +88,25 @@ fun Movie.toTmdbDataMovie(): TmdbData.Movie {
         video = video,
         voteAverage = voteAverage,
         voteCount = voteCount
+    )
+}
+
+fun TvShow.toTmdbDataTvShow(): TmdbData.TvShow {
+    return TmdbData.TvShow(
+        id = id,
+        isAdult = adult,
+        backdropPath = backdropPath,
+        name = name,
+        originalLanguage = originalLanguage,
+        originalName = originalName,
+        overview = overview,
+        posterPath = posterPath,
+        genreIds = genreIds,
+        popularity = popularity,
+        firstAirDate = parseTmdbDateString(firstAirDate),
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        originCountry = originCountry
     )
 }
 

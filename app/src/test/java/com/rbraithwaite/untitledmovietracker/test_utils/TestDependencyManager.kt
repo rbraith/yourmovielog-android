@@ -12,6 +12,7 @@ import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.MovieBuilder
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.TvShowBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.CustomMovieEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeCustomMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeReviewRepository
@@ -105,17 +106,8 @@ class TestDependencyManager(
     }
 
     interface TestBackendStateInitializer {
-        // TODO [25-11-6 1:21a.m.] deprecated - delete this.
-        // SMELL [24-02-6 12:12a.m.] -- this isn't good, it reveals information about which
-        //  api method is used. It'd be better to properly populate the backend as a database,
-        //  using full tmdb media detail objs.
-        suspend fun withSearchMultiResults(
-            movies: List<Movie> = emptyList(),
-            tvShows: List<TvShow> = emptyList(),
-            people: List<Person> = emptyList()
-        )
-
         suspend fun withMovies(vararg movies: MovieBuilder)
+        suspend fun withTvShows(vararg tvShows: TvShowBuilder)
     }
 
     private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
@@ -133,30 +125,6 @@ class TestDependencyManager(
     }
 
     private inner class TestBackendStateInitializerImpl: TestBackendStateInitializer {
-        override suspend fun withSearchMultiResults(
-            movies: List<Movie>,
-            tvShows: List<TvShow>,
-            people: List<Person>
-        ) {
-            val depManager = this@TestDependencyManager
-
-            val movieIdSelector = SearchMultiResultMovieIdSelector()
-            for (movie in movies) {
-                depManager.backend.insert(
-                    movie,
-                    movieIdSelector
-                )
-            }
-
-            // TODO [24-02-6 12:17a.m.] -- eh let's worry about these later.
-//            for (tvShow in tvShows) {
-//                depManager.backend.insert(tvShow)
-//            }
-//            for (person in people) {
-//                depManager.backend.insert(person)
-//            }
-        }
-
         override suspend fun withMovies(vararg movies: MovieBuilder) {
             val depManager = this@TestDependencyManager
 
@@ -166,6 +134,15 @@ class TestDependencyManager(
                     movie.build(),
                     movieIdSelector
                 )
+            }
+        }
+
+        override suspend fun withTvShows(vararg tvShows: TvShowBuilder) {
+            val depManager = this@TestDependencyManager
+
+            val idSelector = TvShowIdSelector()
+            for (tvShow in tvShows) {
+                depManager.backend.insert(tvShow.build(), idSelector)
             }
         }
     }
@@ -192,15 +169,17 @@ private class MovieIdSelector: LongIdSelector<Movie>() {
     ): Movie {
         return entity.copy(id = newId)
     }
-
 }
 
-private class SearchMultiResultMovieIdSelector: LongIdSelector<Movie>() {
-    override fun getId(entity: Movie): Long {
+private class TvShowIdSelector: LongIdSelector<TvShow>() {
+    override fun getId(entity: TvShow): Long {
         return entity.id
     }
 
-    override fun updateId(entity: Movie, newId: Long): Movie {
+    override fun updateId(
+        entity: TvShow,
+        newId: Long
+    ): TvShow {
         return entity.copy(id = newId)
     }
 }

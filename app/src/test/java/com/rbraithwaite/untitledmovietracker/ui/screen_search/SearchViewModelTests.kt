@@ -9,6 +9,7 @@ import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aMovie
+import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.aTvShow
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +21,6 @@ import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
-import kotlin.math.exp
 
 class SearchViewModelTests {
     @get:Rule
@@ -76,26 +76,32 @@ class SearchViewModelTests {
 
     @Test
     fun quickSearchMultiTest() = runTest {
-        // GIVEN some TMDB Media with a particular title
+        // GIVEN some TMDB Media with titles matching a given string
         // ------------------------------------------
-        val expectedTitle = "expected"
+        val searchQuery = "expected"
+        val expectedMovieTitle = "$searchQuery movie"
+        val expectedTvShowName = "$searchQuery tv show"
 
         testDependencyManager.initializeBackendState {
             withMovies(
-                aMovie().withTitle(expectedTitle),
+                aMovie().withTitle(expectedMovieTitle),
                 aMovie().withTitle("invalid")
+            )
+            withTvShows(
+                aTvShow().withName(expectedTvShowName),
+                aTvShow().withName("invalid")
             )
         }
 
         val searchResults = viewModel.searchResultsUiState
         assertThat("", searchResults.value is SearchResultsUiState.NoInput)
 
-        // WHEN a "quick search multi" is run with some input matching that media title
+        // WHEN a "quick search multi" is run with that string as input
         // -----------------------------------------
         val searchInputUiState = viewModel.searchInputUiState.value
         val quickSearch = searchInputUiState.searchInput as QuickSearch.Multi
 
-        quickSearch.onChangeQuery(expectedTitle)
+        quickSearch.onChangeQuery(searchQuery)
         searchInputUiState.runSearch()
 
         // THEN the results are updated and show that media
@@ -105,10 +111,13 @@ class SearchViewModelTests {
         val successResult = searchResults.value as SearchResultsUiState.Success
 
         with (successResult.searchResults) {
-            assertThat(size, willBe(1))
+            assertThat(size, willBe(2))
 
             val movie = (get(0) as SearchResult.Tmdb).value as TmdbData.Movie
-            assertThat(movie.title, willBe(expectedTitle))
+            assertThat(movie.title, willBe(expectedMovieTitle))
+
+            val tvShow = (get(1) as SearchResult.Tmdb).value as TmdbData.TvShow
+            assertThat(tvShow.name, willBe(expectedTvShowName))
         }
     }
 

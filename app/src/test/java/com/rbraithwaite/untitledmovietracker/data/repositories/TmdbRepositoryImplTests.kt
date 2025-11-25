@@ -100,17 +100,13 @@ class TmdbRepositoryImplTests {
         val movieExpected = aMovie()
             .withTitle("hello world")
             .withId(expectedMovieId)
-            .build()
 
         val movieShouldNotFind = aMovie()
             .withTitle("shouldn't be found")
             .withId(123L)
-            .build()
 
         testDependencyManager.initializeBackendState {
-            withSearchMultiResults(
-                movies = listOf(movieExpected, movieShouldNotFind)
-            )
+            withMovies(movieExpected, movieShouldNotFind)
         }
 
         // WHEN you search the repo

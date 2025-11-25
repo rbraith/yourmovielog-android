@@ -160,9 +160,9 @@ private fun LazyListScope.searchResultsList(searchResultsUiState: SearchResultsU
                 when (searchResult) {
                     is SearchResult.Tmdb -> {
                         when (val tmdbData = searchResult.value) {
-                            is TmdbData.Movie -> Text(tmdbData.title)
-                            is TmdbData.TvShow -> Text(tmdbData.name)
-                            is TmdbData.Person -> Text(tmdbData.name)
+                            is TmdbData.Movie -> Text("movie: ${tmdbData.title}")
+                            is TmdbData.TvShow -> Text("tv show: ${tmdbData.name}")
+                            is TmdbData.Person -> Text("person: ${tmdbData.name}")
                         }
                     }
                     is SearchResult.Media -> {
