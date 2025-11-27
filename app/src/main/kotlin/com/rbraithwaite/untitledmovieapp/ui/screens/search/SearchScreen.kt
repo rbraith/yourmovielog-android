@@ -33,6 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.core.data.SearchResult
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbData
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -40,8 +41,7 @@ import kotlin.reflect.KClass
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
-    // TODO [24-02-2 12:15a.m.] broken.
-//    onNavToNewReviewScreen: (SearchResult) -> Unit
+    onNavToNewReviewScreen: (args: NewReviewArgs) -> Unit
 ) {
     val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
     val searchResultsUiState by viewModel.searchResultsUiState.collectAsStateWithLifecycle()
@@ -57,7 +57,9 @@ fun SearchScreen(
         }
 
         item {
-            NewCustomMediaButton(title = "TEMP hardcoded media")
+            NewCustomMediaButton(searchInputUiState, onClickAddReview = {
+                onNavToNewReviewScreen(NewReviewArgs.NewMedia(it))
+            })
         }
 
         searchResultsList(searchResultsUiState)
@@ -67,17 +69,24 @@ fun SearchScreen(
 
 @Composable
 fun NewCustomMediaButton(
-    title: String,
+    state: SearchInputUiState,
+    onClickAddReview: (mediaTitle: String) -> Unit
 ) {
+    val searchInput = state.searchInput
+    val mediaTitle = when (searchInput) {
+        is QuickSearch.Multi -> searchInput.query
+        else -> "NOT IMPLEMENTED"
+    }
+
     Button(
         onClick = {
-                  // TODO [24-03-23 6:44p.m.] -- .
+            onClickAddReview(mediaTitle)
         },
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
     ) {
-        Text("Add review for \"$title\"")
+        Text("Add review for \"$mediaTitle\"")
     }
 }
 

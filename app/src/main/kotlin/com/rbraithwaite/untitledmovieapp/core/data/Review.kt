@@ -4,6 +4,7 @@ import kotlin.reflect.KClass
 
 typealias MediaReviewExtrasType = KClass<out Review.Extras>
 
+// TODO [25-11-25 4:39p.m.] deprecated, delete this.
 data class Review(
     val id: Long = 0,
     val rating: Int? = null,

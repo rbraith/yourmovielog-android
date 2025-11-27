@@ -3,7 +3,6 @@ package com.rbraithwaite.untitledmovieapp.core.data
 import java.time.LocalDateTime
 import java.util.UUID
 
-
 /** Common Media fields */
 sealed interface Media {
     /** This media's unique id */

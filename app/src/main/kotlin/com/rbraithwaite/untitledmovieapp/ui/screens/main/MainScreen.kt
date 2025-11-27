@@ -1,6 +1,9 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.main
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -28,17 +31,27 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 enum class MainDrawerDest(val route: String) {
-    ADD_REVIEW("add-review"),
+    ADD_REVIEW_FLOW("add-review-flow"),
     SEARCH("search")
+}
+
+enum class AddReviewFlowDest(val route: String) {
+    SEARCH("search"),
+    ADD_REVIEW("add-review/{arg-type}/{arg-value}")
 }
 
 class MainScreenState(
@@ -74,7 +87,7 @@ private fun rememberMainScreenState(): MainScreenState {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-    val selectedDrawerDest = remember { mutableStateOf(MainDrawerDest.ADD_REVIEW) }
+    val selectedDrawerDest = remember { mutableStateOf(MainDrawerDest.ADD_REVIEW_FLOW) }
 
     return remember {
         MainScreenState(
@@ -118,7 +131,7 @@ private fun MainNavDrawer(
     ) {
         MainNavDrawerItem(
             label = "Add Review",
-            dest = MainDrawerDest.ADD_REVIEW,
+            dest = MainDrawerDest.ADD_REVIEW_FLOW,
             mainScreenState = mainScreenState
         )
         MainNavDrawerItem(
@@ -173,11 +186,50 @@ private fun MainNavHost(
 ) {
     NavHost(
         navController = mainScreenState.navController,
-        startDestination = MainDrawerDest.ADD_REVIEW.route,
+        startDestination = MainDrawerDest.ADD_REVIEW_FLOW.route,
         modifier = modifier
     ) {
-        composable(route = MainDrawerDest.ADD_REVIEW.route) {
-            SearchScreen(hiltViewModel())
+        // Add Review Flow
+        navigation(
+            startDestination = AddReviewFlowDest.SEARCH.route,
+            route = MainDrawerDest.ADD_REVIEW_FLOW.route)
+        {
+            composable(route = AddReviewFlowDest.SEARCH.route) {
+                SearchScreen(hiltViewModel(), onNavToNewReviewScreen = { args ->
+                    mainScreenState.navController.navigate(
+                        route = "add-review/${args.asRouteString()}"
+                    )
+                })
+            }
+
+            composable(
+                route = AddReviewFlowDest.ADD_REVIEW.route,
+                arguments = listOf(
+                    navArgument("arg-type") { type = NavType.StringType },
+                    navArgument("arg-value") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val args = NewReviewArgs.fromBackStackEntry(backStackEntry)
+
+                var title = "NOT IMPLEMENTED"
+                when (args) {
+                    is NewReviewArgs.NewMedia -> {
+                        title = args.value
+                    }
+                }
+
+                Column {
+                    DebugPlaceholder(
+                        label = "Add Review Screen",
+                        modifier = Modifier.fillMaxWidth().height(200.dp)
+                    )
+
+                    DebugPlaceholder(
+                        label = title,
+                        modifier = Modifier.fillMaxWidth().height(200.dp)
+                    )
+                }
+            }
         }
 
         composable(route = MainDrawerDest.SEARCH.route) {
