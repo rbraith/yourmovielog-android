@@ -83,6 +83,30 @@ class NewReviewViewModelTests {
     }
 
     @Test
+    fun editTitleTest() {
+        // GIVEN a review of a 'new media' movie
+        // ------------------------------------------
+        val initialTitle = "initial title"
+
+        viewModel.init(NewReviewArgs.NewMedia(initialTitle))
+
+
+        // WHEN that movie's title is edited
+        // ------------------------------------------
+        val expectedTitle = "edited title"
+
+        var editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        editReviewState.editTitle(expectedTitle)
+
+
+        // THEN the new title is updated in the ui state
+        // ------------------------------------------
+        editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        val movie = editReviewState.media as NewReviewMovie
+        assertThat(movie.movie.title, willBe(expectedTitle))
+    }
+
+    @Test
     fun onConfirmReview_forTmdbMovie() = runTest {
         // TODO [24-02-2 12:09a.m.] broken.
 //        // GIVEN a new review for a tmdb movie

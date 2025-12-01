@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +14,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
@@ -38,26 +42,24 @@ fun NewReviewScreen(
     val uiStateSafe = uiState ?: return
 
     Scaffold(
-//        topBar = {
-//            NewReviewScreenTopAppBar(
-//                onNavBack = onNavBack,
-//                onConfirmReview = {
+        topBar = {
+            NewReviewScreenTopAppBar(
+                onNavBack = {
+                    // TO IMPLEMENT
+                },
+                onConfirmReview = {
+                    // TODO [25-12-1 5:10p.m.] broken.
 //                    uiStateSafe.onConfirmReview()
 //                    onConfirmReview()
-//                }
-//            )
-//        }
+                }
+            )
+        }
     ) { contentPadding ->
-        val media = (uiStateSafe as? NewReviewUiState.EditReview)?.media
-        val mediaTitle = (media as? NewReviewMovie)?.movie?.title ?: "what"
+        val screenState = rememberNewReviewScreenState()
 
-        DebugPlaceholder(
-            label = mediaTitle,
-            modifier = Modifier.padding(contentPadding).fillMaxSize()
-        )
-//        Box(modifier = Modifier.padding(it)) {
-//            NewReviewScreenContent(uiStateSafe)
-//        }
+        Box(modifier = Modifier.padding(contentPadding)) {
+            NewReviewScreenContent(uiStateSafe, screenState)
+        }
     }
 }
 
@@ -87,7 +89,7 @@ private fun NewReviewScreenTopAppBar(
 @Composable
 private fun NewReviewScreenContent(
     uiState: NewReviewUiState,
-    screenState: NewReviewScreenState = rememberNewReviewScreenState()
+    screenState: NewReviewScreenState
 ) {
 //    if (screenState.shouldShowRatingDialog) {
 //        RatingPickerDialog(
@@ -112,11 +114,49 @@ private fun NewReviewScreenContent(
 //        )
 //    }
 //
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .randomBackgroundColor()
-//    ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Yellow)
+    ) {
+        when (uiState) {
+            is NewReviewUiState.Loading -> {
+                // TO IMPLEMENT
+                DebugPlaceholder(label = "loading")
+            }
+            is NewReviewUiState.EditReview -> {
+                TabRow(
+                    selectedTabIndex = 0
+                ) {
+                    Tab(
+                        text = { Text("movie") },
+                        selected = true,
+                        onClick = { /*TODO*/ }
+                    )
+                    Tab(
+                        text = { Text("tv show") },
+                        selected = true,
+                        onClick = { /*TODO*/ }
+                    )
+                }
+                // TODO [25-12-1 5:25p.m.] optional secondary tab row for tv subtypes - show, season, episode.
+
+                when (uiState.media) {
+                    is NewReviewMovie -> {
+                        Text("movie title")
+                        TextField(
+                            value = uiState.media.movie.title,
+                            onValueChange = { uiState.editTitle(it) }
+                        )
+                    }
+                    else -> {
+                        // TO IMPLEMENT
+                        DebugPlaceholder(label = "non-movie media")
+                    }
+                }
+            }
+        }
+    }
 //        when (val mediaUiState = uiState.mediaUiState) {
 //            is CustomMediaUiState -> {
 //                Text("title")

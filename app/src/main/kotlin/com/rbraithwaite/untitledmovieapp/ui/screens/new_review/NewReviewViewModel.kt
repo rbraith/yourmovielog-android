@@ -11,6 +11,7 @@ import com.rbraithwaite.untitledmovieapp.core.data.TvShow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -200,21 +201,21 @@ class NewReviewViewModel @Inject constructor(
     }
 
     private fun editTitle(title: String) {
-        // TODO [24-02-2 12:17a.m.] broken.
-//        _uiState.update { state ->
-//            state?.let {
-//                if (it.mediaUiState is CustomMediaUiState) {
-//                    val dataCopy = it.mediaUiState.media.data.run {
-//                        copy(title = title)
-//                    }
-//                    val mediaCopy = it.mediaUiState.media.copy(data = dataCopy)
-//                    val mediaUiStateCopy = it.mediaUiState.copy(media = mediaCopy)
-//                    it.copy(mediaUiState = mediaUiStateCopy)
-//                } else {
-//                    it
-//                }
-//            }
-//        }
+        _uiState.update { state ->
+            updateMediaTitles(title)
+            state?.let {
+                if (it is NewReviewUiState.EditReview) {
+                    when (it.media) {
+                        is NewReviewMovie -> it.copy(media = newReviewMovie)
+                        is NewReviewTvShow -> it.copy(media = newReviewTvShow)
+                        is NewReviewTvShowSeason -> it.copy(media = newReviewTvShowSeason)
+                        is NewReviewTvShowEpisode -> it.copy(media = newReviewTvShowEpisode)
+                    }
+                } else {
+                    it
+                }
+            }
+        }
     }
 
     private fun editRating(rating: Int?) {
