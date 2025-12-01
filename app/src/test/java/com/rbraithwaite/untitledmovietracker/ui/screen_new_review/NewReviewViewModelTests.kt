@@ -1,6 +1,9 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 
 import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewMovie
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewUiState
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
@@ -14,6 +17,7 @@ class NewReviewViewModelTests {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    // TODO [25-12-1 5:00p.m.] replace with test dependency manager.
     private val mockCustomMediaRepository: CustomMediaRepository = mock(CustomMediaRepository::class.java)
 
     private val viewModel = NewReviewViewModel(mockCustomMediaRepository)
@@ -26,24 +30,27 @@ class NewReviewViewModelTests {
     }
 
     @Test
-    fun afterInit_usingNewCustomMediaSearchResult() {
-        // TODO [24-02-2 12:08a.m.] broken.
-//        val expectedMediaTitle = "test"
-//        // REFACTOR [23-12-20 2:45p.m.] -- hardcoded 0L id for new custom media.
-//        val searchResult = SearchResult.CustomMedia(CustomMovie(0L, expectedMediaTitle))
-//
-//        val blankReview = Review()
-//
-//        viewModel.init(searchResult)
-//
-//        val uiState = viewModel.uiState.value
-//
-//        assertThat("", uiState?.mediaUiState is CustomMediaUiState)
-//
-//        val customMediaUiState = uiState?.mediaUiState as CustomMediaUiState
-//        assertThat(customMediaUiState.media, willBeEqualTo(searchResult))
-//        assertThat(customMediaUiState.isTitleEditable, willBe(true))
-//        assertThat(uiState.review, willBeEqualTo(blankReview))
+    fun afterInit_usingNewMediaArg() {
+        // GIVEN the viewmodel is initialized with a 'new media' argument
+        // ------------------------------------------
+        val expectedMediaTitle = "test"
+        viewModel.init(NewReviewArgs.NewMedia(expectedMediaTitle))
+
+
+        // WHEN the initial ui state is queried
+        // ------------------------------------------
+        val uiState = viewModel.uiState.value
+
+
+        // THEN the ui state should be a movie with the new media title
+        // ------------------------------------------
+        assertThat("", uiState is NewReviewUiState.EditReview)
+        val editReview = uiState as NewReviewUiState.EditReview
+
+        assertThat("", editReview.media is NewReviewMovie)
+        val newReviewMovie = editReview.media as NewReviewMovie
+
+        assertThat(newReviewMovie.movie.title, willBe(expectedMediaTitle))
     }
 
     @Test
@@ -70,10 +77,9 @@ class NewReviewViewModelTests {
 
     @Test
     fun uiStateIsNull_ifInitWithNull() {
-        // TODO [24-02-2 12:39a.m.] broken.
-//        viewModel.init(null)
+        viewModel.init(null)
 
-//        assertThat(viewModel.uiState.value, willBe(null))
+        assertThat(viewModel.uiState.value, willBe(null))
     }
 
     @Test

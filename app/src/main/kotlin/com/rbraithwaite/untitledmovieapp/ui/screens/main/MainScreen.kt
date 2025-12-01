@@ -39,6 +39,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
+import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewScreen
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineScope
@@ -211,24 +212,33 @@ private fun MainNavHost(
             ) { backStackEntry ->
                 val args = NewReviewArgs.fromBackStackEntry(backStackEntry)
 
-                var title = "NOT IMPLEMENTED"
-                when (args) {
-                    is NewReviewArgs.NewMedia -> {
-                        title = args.value
-                    }
-                }
+                val viewModel: NewReviewViewModel = hiltViewModel()
+                viewModel.init(args)
 
-                Column {
-                    DebugPlaceholder(
-                        label = "Add Review Screen",
-                        modifier = Modifier.fillMaxWidth().height(200.dp)
-                    )
+                NewReviewScreen(
+                    viewModel = viewModel,
+                    onNavBack = { TODO() },
+                    onConfirmReview = { TODO() }
+                )
 
-                    DebugPlaceholder(
-                        label = title,
-                        modifier = Modifier.fillMaxWidth().height(200.dp)
-                    )
-                }
+//                var title = "NOT IMPLEMENTED"
+//                when (args) {
+//                    is NewReviewArgs.NewMedia -> {
+//                        title = args.value
+//                    }
+//                }
+//
+//                Column {
+//                    DebugPlaceholder(
+//                        label = "Add Review Screen",
+//                        modifier = Modifier.fillMaxWidth().height(200.dp)
+//                    )
+//
+//                    DebugPlaceholder(
+//                        label = title,
+//                        modifier = Modifier.fillMaxWidth().height(200.dp)
+//                    )
+//                }
             }
         }
 

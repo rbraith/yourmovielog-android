@@ -23,7 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.untitledmovieapp.ui.debug.randomBackgroundColor
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rbraithwaite.untitledmovieapp.core.data.Movie
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
+import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
 import java.time.Month
 
 @Composable
@@ -36,19 +38,26 @@ fun NewReviewScreen(
     val uiStateSafe = uiState ?: return
 
     Scaffold(
-        topBar = {
-            NewReviewScreenTopAppBar(
-                onNavBack = onNavBack,
-                onConfirmReview = {
-                    uiStateSafe.onConfirmReview()
-                    onConfirmReview()
-                }
-            )
-        }
-    ) {
-        Box(modifier = Modifier.padding(it)) {
-            NewReviewScreenContent(uiStateSafe)
-        }
+//        topBar = {
+//            NewReviewScreenTopAppBar(
+//                onNavBack = onNavBack,
+//                onConfirmReview = {
+//                    uiStateSafe.onConfirmReview()
+//                    onConfirmReview()
+//                }
+//            )
+//        }
+    ) { contentPadding ->
+        val media = (uiStateSafe as? NewReviewUiState.EditReview)?.media
+        val mediaTitle = (media as? NewReviewMovie)?.movie?.title ?: "what"
+
+        DebugPlaceholder(
+            label = mediaTitle,
+            modifier = Modifier.padding(contentPadding).fillMaxSize()
+        )
+//        Box(modifier = Modifier.padding(it)) {
+//            NewReviewScreenContent(uiStateSafe)
+//        }
     }
 }
 
@@ -80,82 +89,82 @@ private fun NewReviewScreenContent(
     uiState: NewReviewUiState,
     screenState: NewReviewScreenState = rememberNewReviewScreenState()
 ) {
-    if (screenState.shouldShowRatingDialog) {
-        RatingPickerDialog(
-            onDismiss = {  screenState.dismissRatingDialog() },
-            onConfirm = { newRating ->
-                screenState.dismissRatingDialog()
-                uiState.editRating(newRating)
-            }
-        )
-    }
-
-    if (screenState.shouldShowDateDialog) {
-        ReviewDatePickerDialog(
-            initialReviewDate = uiState.review.reviewDate,
-            onConfirm = {
-                screenState.dismissDateDialog()
-                uiState.editReviewDate(it)
-            },
-            onDismiss = {
-                screenState.dismissDateDialog()
-            }
-        )
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .randomBackgroundColor()
-    ) {
-        when (val mediaUiState = uiState.mediaUiState) {
-            is CustomMediaUiState -> {
-                Text("title")
-                if (mediaUiState.isTitleEditable) {
-                    TextField(
-                        // TODO [24-02-2 12:22a.m.] broken.
-                        value = "",
-//                        value = mediaUiState.media.data.title,
-                        onValueChange = {
-                            // TODO [24-02-2 12:17a.m.] broken.
-//                            mediaUiState.editTitle(it)
-                        }
-                    )
-                }
-                // TODO [23-12-20 2:06a.m.] -- define (!isTitleEditable) UI.
-            }
-            // TODO [24-02-2 12:22a.m.] broken.
-//            is TmdbMovieUiState -> {
-//                val tmdbMovie = mediaUiState.tmdbMovie
-//
-//                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
-//                Text("overview: ${tmdbMovie.data.overview}")
-//                Divider()
+//    if (screenState.shouldShowRatingDialog) {
+//        RatingPickerDialog(
+//            onDismiss = {  screenState.dismissRatingDialog() },
+//            onConfirm = { newRating ->
+//                screenState.dismissRatingDialog()
+//                uiState.editRating(newRating)
 //            }
-        }
-
-        Text("rating")
-        Button(onClick = { screenState.showRatingDialog() }) {
-            Text(formatRating(uiState.review.rating))
-        }
-
-        Text("date")
-        Button(onClick = { screenState.showDateDialog() }) {
-            Text(formatReviewDate(uiState.review.reviewDate))
-        }
-
-        Text("review")
-        TextField(
-            value = uiState.review.review ?: "",
-            onValueChange = { uiState.editReview(it) },
-            minLines = 2
-        )
-
-        Text("where did you watch this?")
-        Button(onClick = { /*TODO*/ }) {
-            Text("add context")
-        }
-    }
+//        )
+//    }
+//
+//    if (screenState.shouldShowDateDialog) {
+//        ReviewDatePickerDialog(
+//            initialReviewDate = uiState.review.reviewDate,
+//            onConfirm = {
+//                screenState.dismissDateDialog()
+//                uiState.editReviewDate(it)
+//            },
+//            onDismiss = {
+//                screenState.dismissDateDialog()
+//            }
+//        )
+//    }
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .randomBackgroundColor()
+//    ) {
+//        when (val mediaUiState = uiState.mediaUiState) {
+//            is CustomMediaUiState -> {
+//                Text("title")
+//                if (mediaUiState.isTitleEditable) {
+//                    TextField(
+//                        // TODO [24-02-2 12:22a.m.] broken.
+//                        value = "",
+////                        value = mediaUiState.media.data.title,
+//                        onValueChange = {
+//                            // TODO [24-02-2 12:17a.m.] broken.
+////                            mediaUiState.editTitle(it)
+//                        }
+//                    )
+//                }
+//                // TODO [23-12-20 2:06a.m.] -- define (!isTitleEditable) UI.
+//            }
+//            // TODO [24-02-2 12:22a.m.] broken.
+////            is TmdbMovieUiState -> {
+////                val tmdbMovie = mediaUiState.tmdbMovie
+////
+////                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
+////                Text("overview: ${tmdbMovie.data.overview}")
+////                Divider()
+////            }
+//        }
+//
+//        Text("rating")
+//        Button(onClick = { screenState.showRatingDialog() }) {
+//            Text(formatRating(uiState.review.rating))
+//        }
+//
+//        Text("date")
+//        Button(onClick = { screenState.showDateDialog() }) {
+//            Text(formatReviewDate(uiState.review.reviewDate))
+//        }
+//
+//        Text("review")
+//        TextField(
+//            value = uiState.review.review ?: "",
+//            onValueChange = { uiState.editReview(it) },
+//            minLines = 2
+//        )
+//
+//        Text("where did you watch this?")
+//        Button(onClick = { /*TODO*/ }) {
+//            Text("add context")
+//        }
+//    }
 }
 
 // REFACTOR [23-10-11 1:52a.m.] -- move formatting logic to separate class - NewReviewFormatting.

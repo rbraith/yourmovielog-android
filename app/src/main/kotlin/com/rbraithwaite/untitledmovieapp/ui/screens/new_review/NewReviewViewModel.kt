@@ -1,26 +1,46 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
+import com.rbraithwaite.untitledmovieapp.core.data.Movie
 import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
+import com.rbraithwaite.untitledmovieapp.core.data.TmdbData
+import com.rbraithwaite.untitledmovieapp.core.data.TvShow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
-data class NewReviewUiState(
-    val mediaUiState: MediaUiState,
-    val review: Review,
-    val onConfirmReview: () -> Unit,
-    val editRating: (Int?) -> Unit,
-    val editReview: (String?) -> Unit,
-    val editWatchContext: (String?) -> Unit,
-    val editReviewDate: (ReviewDate?) -> Unit
-)
+sealed interface NewReviewUiState {
+    data object Loading : NewReviewUiState
+    data class EditReview(
+        val media: NewReviewMedia,
+        val tmdbData: TmdbData?,
+        val review: MediaReview,
+
+        // edit media callbacks
+        val editTitle: (String) -> Unit,
+
+        // edit review callbacks
+        val editRating: (Int?) -> Unit,
+        val editReview: (String?) -> Unit,
+        val editWatchContext: (String?) -> Unit,
+        val editReviewDate: (ReviewDate?) -> Unit,
+
+        // other callbacks
+        val onConfirmReview: () -> Unit,
+    ): NewReviewUiState
+}
+
+sealed interface NewReviewMedia
+data class NewReviewMovie(val movie: Movie): NewReviewMedia
+data class NewReviewTvShow(val tvShow: TvShow): NewReviewMedia
+data class NewReviewTvShowSeason(val newReviewTvShow: NewReviewTvShow, val tvShowSeason: TvShow.Season): NewReviewMedia
+data class NewReviewTvShowEpisode(val newReviewTvShowSeason: NewReviewTvShowSeason, val tvShowEpisode: TvShow.Episode): NewReviewMedia
 
 sealed interface MediaUiState
 data class CustomMediaUiState(
@@ -39,9 +59,35 @@ data class CustomMediaUiState(
 class NewReviewViewModel @Inject constructor(
     private val customMediaRepository: CustomMediaRepository
 ) : ViewModel() {
-
     private val _uiState: MutableStateFlow<NewReviewUiState?> = MutableStateFlow(null)
     val uiState: StateFlow<NewReviewUiState?> = _uiState
+
+    private var newReviewMovie: NewReviewMovie
+    private var newReviewTvShow: NewReviewTvShow
+    private var newReviewTvShowSeason: NewReviewTvShowSeason
+    private var newReviewTvShowEpisode: NewReviewTvShowEpisode
+
+    private var tmdbData: TmdbData? = null
+
+    private val defaultMedia: NewReviewMedia
+        get() = newReviewMovie
+
+    init {
+        val now = LocalDateTime.now()
+        newReviewMovie = NewReviewMovie(Movie("", UUID.randomUUID(), now, now, null))
+        newReviewTvShow = NewReviewTvShow(TvShow("", UUID.randomUUID(), now, now, null))
+        newReviewTvShowSeason = NewReviewTvShowSeason(newReviewTvShow, TvShow.Season(1, UUID.randomUUID(), now, now, null))
+        newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason,TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))
+    }
+
+    fun init(args: NewReviewArgs?) {
+        when (args) {
+            is NewReviewArgs.NewMedia -> {
+                updateMediaTitles(args.value)
+                _uiState.value = initialUiState(defaultMedia, null)
+            }
+        }
+    }
 
     // TODO [24-02-2 12:17a.m.] broken.
 //    fun init(searchResult: SearchResult?) {
@@ -73,55 +119,84 @@ class NewReviewViewModel @Inject constructor(
 //        }
 //    }
 
-    // TODO [24-02-2 12:17a.m.] broken.
-//    private fun initialUiState(mediaUiState: MediaUiState): NewReviewUiState {
-//        val emptyReview = Review()
-//
-//        return NewReviewUiState(
-//            mediaUiState,
-//            emptyReview,
-//            ::onConfirmReview,
-//            ::editRating,
-//            ::editReview,
-//            ::editWatchContext,
-//            ::editReviewDate
-//        )
-//    }
+    private fun updateMediaTitles(newTitle: String) {
+        newReviewMovie = newReviewMovie.copy(movie = newReviewMovie.movie.copy(title = newTitle))
+
+        newReviewTvShow = newReviewTvShow.copy(tvShow = newReviewTvShow.tvShow.copy(title = newTitle))
+
+        newReviewTvShowSeason = newReviewTvShowSeason.copy(newReviewTvShow = newReviewTvShow)
+
+        newReviewTvShowEpisode = newReviewTvShowEpisode.copy(
+            newReviewTvShowSeason = newReviewTvShowSeason,
+            tvShowEpisode = newReviewTvShowEpisode.tvShowEpisode.copy(title = newTitle)
+        )
+    }
+
+    private fun initialUiState(
+        media: NewReviewMedia,
+        tmdbData: TmdbData?
+    ): NewReviewUiState {
+        return NewReviewUiState.EditReview(
+            media,
+            tmdbData,
+            createEmptyReview(),
+            ::editTitle,
+            ::editRating,
+            ::editReview,
+            ::editWatchContext,
+            ::editReviewDate,
+            ::onConfirmReview
+        )
+    }
+
+    private fun createEmptyReview(): MediaReview {
+        return MediaReview(
+            // TODO [25-11-27 3:59p.m.] do I want to be generating the UUID at this point?
+            UUID.randomUUID(),
+            null,
+            null,
+            null,
+            null,
+            LocalDateTime.now(),
+            LocalDateTime.now()
+        )
+    }
+
 
     private fun onConfirmReview() {
-        viewModelScope.launch {
-            val review = _uiState.value!!.review
-            when (val mediaUiState = _uiState.value!!.mediaUiState) {
-                is CustomMediaUiState -> {
-                    // TODO [24-02-2 12:17a.m.] broken.
-//                    val customMedia = mediaUiState.media
-//
-//                    // REFACTOR [23-12-20 1:54a.m.] -- wtf am I doing here? am I using CustomMedia
-//                    //  or SearchResult.CustomMedia?
-//                    val customMovie2 = CustomMovie(
-//                        customMedia.data.id,
-//                        customMedia.data.title
-//                    )
-//
-//                    if (customMedia.data.id == 0L) {
-//                        customMediaRepository.addNewCustomMediaWithReview(
-//                            customMovie2,
-//                            review
-//                        )
-//                    }
-                }
-                // TODO [24-02-2 12:17a.m.] broken.
-//                is TmdbMovieUiState -> {
-//                    // TEST NEEDED [24-01-22 12:02a.m.] i need to fix NewReviewViewModelTests
-//                    //  convert to delegate fakes to test this upsert call.
-//                    customMediaRepository.upsertTmdbLite(mediaUiState.tmdbMovie.data)
-//                    customMediaRepository.addTmdbMovieReview(
-//                        tmdbMovieId = mediaUiState.tmdbMovie.data.id,
-//                        review = review
-//                    )
+//        viewModelScope.launch {
+//            val review = _uiState.value!!.review
+//            when (val mediaUiState = _uiState.value!!.mediaUiState) {
+//                is CustomMediaUiState -> {
+//                    // TODO [24-02-2 12:17a.m.] broken.
+////                    val customMedia = mediaUiState.media
+////
+////                    // REFACTOR [23-12-20 1:54a.m.] -- wtf am I doing here? am I using CustomMedia
+////                    //  or SearchResult.CustomMedia?
+////                    val customMovie2 = CustomMovie(
+////                        customMedia.data.id,
+////                        customMedia.data.title
+////                    )
+////
+////                    if (customMedia.data.id == 0L) {
+////                        customMediaRepository.addNewCustomMediaWithReview(
+////                            customMovie2,
+////                            review
+////                        )
+////                    }
 //                }
-            }
-        }
+//                // TODO [24-02-2 12:17a.m.] broken.
+////                is TmdbMovieUiState -> {
+////                    // TEST NEEDED [24-01-22 12:02a.m.] i need to fix NewReviewViewModelTests
+////                    //  convert to delegate fakes to test this upsert call.
+////                    customMediaRepository.upsertTmdbLite(mediaUiState.tmdbMovie.data)
+////                    customMediaRepository.addTmdbMovieReview(
+////                        tmdbMovieId = mediaUiState.tmdbMovie.data.id,
+////                        review = review
+////                    )
+////                }
+//            }
+//        }
     }
 
     private fun editTitle(title: String) {
@@ -167,10 +242,11 @@ class NewReviewViewModel @Inject constructor(
     }
 
     private fun updateReview(block: Review.() -> Review) {
-        _uiState.update {state ->
-            state?.let {
-                it.copy(review = it.review.block())
-            }
-        }
+        // TODO [25-11-27 4:00p.m.] broken.
+//        _uiState.update {state ->
+//            state?.let {
+//                it.copy(review = it.review.block())
+//            }
+//        }
     }
 }
