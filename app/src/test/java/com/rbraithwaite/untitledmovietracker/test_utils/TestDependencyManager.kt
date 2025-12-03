@@ -1,6 +1,5 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
-import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
@@ -16,7 +15,6 @@ import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_e
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.MovieBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.TvShowBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.CustomMovieEntityIdSelector
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeCustomMediaRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeReviewRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeCustomMediaDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
@@ -86,14 +84,6 @@ class TestDependencyManager(
             customMediaDao,
             externalScope,
             coroutineDispatcher
-        )
-    }
-
-    val customMediaRepository: DelegateFakeCustomMediaRepository by lazy {
-        DelegateFakeCustomMediaRepository(
-            externalScope,
-            coroutineDispatcher,
-            customMediaDao
         )
     }
 

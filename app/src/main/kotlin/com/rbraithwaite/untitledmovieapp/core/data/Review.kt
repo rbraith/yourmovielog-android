@@ -34,7 +34,6 @@ data class Review(
 
     sealed interface Extras {
         sealed interface RelatedMedia: Extras {
-            data class Custom(val data: CustomMedia): RelatedMedia
             data class Tmdb(val data: TmdbLite): RelatedMedia
         }
     }

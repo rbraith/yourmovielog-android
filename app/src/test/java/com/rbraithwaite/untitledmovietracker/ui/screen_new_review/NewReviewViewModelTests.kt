@@ -1,7 +1,5 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 
-import com.rbraithwaite.untitledmovieapp.core.data.Movie
-import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewMovie
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewUiState
@@ -13,7 +11,6 @@ import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
 import org.mockito.kotlin.argForWhich
 import org.mockito.kotlin.verify
 

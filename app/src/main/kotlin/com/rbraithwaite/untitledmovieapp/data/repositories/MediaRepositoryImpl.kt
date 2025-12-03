@@ -7,7 +7,6 @@ import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
-import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toTmdbDataMovie
@@ -17,7 +16,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 class MediaRepositoryImpl @Inject constructor(

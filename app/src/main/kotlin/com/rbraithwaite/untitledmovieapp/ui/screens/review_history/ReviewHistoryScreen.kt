@@ -90,7 +90,6 @@ private fun Review.formatMediaType(): String {
     val relatedMedia = getExtra<Review.Extras.RelatedMedia>() ?: return "?"
 
     return when (relatedMedia) {
-        is Review.Extras.RelatedMedia.Custom -> "custom"
         is Review.Extras.RelatedMedia.Tmdb -> {
             when (relatedMedia.data) {
                 is TmdbLite.Movie -> "tmdb movie"
@@ -107,9 +106,6 @@ private fun Review.formatMediaTitle(): String {
     val relatedMedia = getExtra<Review.Extras.RelatedMedia>() ?: return "??"
 
     return when (relatedMedia) {
-        // TODO [24-02-2 12:17a.m.] broken.
-//        is Review.Extras.RelatedMedia.Custom -> relatedMedia.data.title
-        is Review.Extras.RelatedMedia.Custom -> ""
         is Review.Extras.RelatedMedia.Tmdb -> {
             when (val media = relatedMedia.data) {
                 is TmdbLite.Movie -> media.title

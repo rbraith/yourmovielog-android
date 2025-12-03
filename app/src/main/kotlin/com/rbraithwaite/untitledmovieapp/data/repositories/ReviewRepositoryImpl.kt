@@ -3,7 +3,6 @@ package com.rbraithwaite.untitledmovieapp.data.repositories
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
-import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toCustomMovie
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toReview
 import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
@@ -49,13 +48,14 @@ class ReviewRepositoryImpl @Inject constructor(
     override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {
         var reviews = reviewDao.getAllReviews().map { it.toReview() }
 
-        for (extrasType in extras) {
-            when (extrasType) {
-                Review.Extras.RelatedMedia::class -> {
-                    reviews = applyRelatedMediaExtraDataTo(reviews)
-                }
-            }
-        }
+        // TODO [25-12-3 5:34p.m.] broken.
+//        for (extrasType in extras) {
+//            when (extrasType) {
+//                Review.Extras.RelatedMedia::class -> {
+//                    reviews = applyRelatedMediaExtraDataTo(reviews)
+//                }
+//            }
+//        }
 
         return reviews
     }
@@ -68,41 +68,43 @@ class ReviewRepositoryImpl @Inject constructor(
         }.join()
     }
 
-    private suspend fun applyRelatedMediaExtraDataTo(reviews: List<Review>): List<Review> {
-        return reviews
-            .groupBy { it.mediaType::class }
-            .let { updateWithCustomRelatedMedia(it) }
-            .let { updateWithTmdbMovieRelatedMedia(it) }
-            .entries.flatMap { it.value }.sortedBy { it.id }
-    }
+    // TODO [25-12-3 5:34p.m.] broken.
+//    private suspend fun applyRelatedMediaExtraDataTo(reviews: List<Review>): List<Review> {
+//        return reviews
+//            .groupBy { it.mediaType::class }
+//            .let { updateWithCustomRelatedMedia(it) }
+//            .let { updateWithTmdbMovieRelatedMedia(it) }
+//            .entries.flatMap { it.value }.sortedBy { it.id }
+//    }
 
-    private suspend fun updateWithCustomRelatedMedia(
-        groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>
-    ): Map<KClass<out Review.MediaType>, List<Review>> {
-        val groupKey = Review.MediaType.CustomMovie::class
-        val customMovieReviewGroup =
-            groupedReviewsByMediaType[groupKey]
-                ?: return groupedReviewsByMediaType
-
-        val customMovieIds = customMovieReviewGroup.map { (it.mediaType as Review.MediaType.CustomMovie).id }
-        val customMovies = customMediaDao.findCustomMoviesWithIds(customMovieIds)
-
-        val reviewsWithCustomMedia = customMovieReviewGroup.map { review ->
-            val relatedMedia = customMovies.firstOrNull {
-                it.id == (review.mediaType as Review.MediaType.CustomMovie).id
-            }
-
-            if (relatedMedia == null) {
-                review// return unchanged if related media id isn't found
-            } else {
-                review.withExtras(Review.Extras.RelatedMedia.Custom(relatedMedia.toCustomMovie()))
-            }
-        }
-
-        return groupedReviewsByMediaType.toMutableMap().apply {
-            put(groupKey, reviewsWithCustomMedia)
-        }
-    }
+//    private suspend fun updateWithCustomRelatedMedia(
+//        groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>
+//    ): Map<KClass<out Review.MediaType>, List<Review>> {
+        // TODO [25-12-3 5:33p.m.] broken.
+//        val groupKey = Review.MediaType.CustomMovie::class
+//        val customMovieReviewGroup =
+//            groupedReviewsByMediaType[groupKey]
+//                ?: return groupedReviewsByMediaType
+//
+//        val customMovieIds = customMovieReviewGroup.map { (it.mediaType as Review.MediaType.CustomMovie).id }
+//        val customMovies = customMediaDao.findCustomMoviesWithIds(customMovieIds)
+//
+//        val reviewsWithCustomMedia = customMovieReviewGroup.map { review ->
+//            val relatedMedia = customMovies.firstOrNull {
+//                it.id == (review.mediaType as Review.MediaType.CustomMovie).id
+//            }
+//
+//            if (relatedMedia == null) {
+//                review// return unchanged if related media id isn't found
+//            } else {
+//                review.withExtras(Review.Extras.RelatedMedia.Custom(relatedMedia.toCustomMovie()))
+//            }
+//        }
+//
+//        return groupedReviewsByMediaType.toMutableMap().apply {
+//            put(groupKey, reviewsWithCustomMedia)
+//        }
+//    }
 
     private suspend fun updateWithTmdbMovieRelatedMedia(
         groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>

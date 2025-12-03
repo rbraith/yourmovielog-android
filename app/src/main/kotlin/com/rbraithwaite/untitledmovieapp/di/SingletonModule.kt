@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.core.repositories.TmdbRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
@@ -13,7 +12,6 @@ import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
-import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.network.TmdbApiV3
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiType
 import com.rbraithwaite.untitledmovieapp.data.network.models.SearchMultiTypeDeserializer
@@ -47,9 +45,6 @@ import javax.inject.Singleton
 abstract class SingletonBinderModule {
     @Binds
     abstract fun bindTmdbRepository(tmdbRepositoryImpl: TmdbRepositoryImpl): TmdbRepository
-
-    @Binds
-    abstract fun bindCustomMediaRepository(customMediaRepositoryImpl: CustomMediaRepositoryImpl): CustomMediaRepository
 
     @Binds
     abstract fun bindReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
