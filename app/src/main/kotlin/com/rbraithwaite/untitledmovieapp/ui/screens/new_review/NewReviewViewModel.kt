@@ -1,6 +1,7 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.new_review
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.Movie
 import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
@@ -8,10 +9,13 @@ import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
 import com.rbraithwaite.untitledmovieapp.core.data.TmdbData
 import com.rbraithwaite.untitledmovieapp.core.data.TvShow
+import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
+import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -58,7 +62,8 @@ data class CustomMediaUiState(
 
 @HiltViewModel
 class NewReviewViewModel @Inject constructor(
-    private val customMediaRepository: CustomMediaRepository
+    private val mediaRepository: MediaRepository,
+    private val reviewRepository: ReviewRepository
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<NewReviewUiState?> = MutableStateFlow(null)
     val uiState: StateFlow<NewReviewUiState?> = _uiState
@@ -165,6 +170,28 @@ class NewReviewViewModel @Inject constructor(
 
 
     private fun onConfirmReview() {
+        viewModelScope.launch {
+            // TODO [25-12-2 2:57a.m.] handle null review or media case.
+            val review = (_uiState.value as? NewReviewUiState.EditReview)?.review ?: return@launch
+            val media = (_uiState.value as? NewReviewUiState.EditReview)?.media ?: return@launch
+
+            // TODO [25-12-2 2:59a.m.] there's more subtlety that will be needed here, or somewhere in this viewmodel.
+            //  new media have editable values, while existing media or tmdb-derived media don't.
+
+            when (media) {
+                is NewReviewMovie -> {
+                    mediaRepository.addMedia(media.movie)
+                    reviewRepository.addReview(review, media.movie.uuid)
+                }
+                else -> {
+                    // TODO [25-12-2 3:01a.m.] will need to consider how to handle tv seasons/episodes,
+                    //  since they also require the tv show data
+                    //  actually probably just: upsert (maybe?) tv show; then add season or episode w/ tv show uuid.
+                    TODO("Other media types not yet implemented")
+                }
+            }
+        }
+
 //        viewModelScope.launch {
 //            val review = _uiState.value!!.review
 //            when (val mediaUiState = _uiState.value!!.mediaUiState) {
@@ -242,12 +269,11 @@ class NewReviewViewModel @Inject constructor(
         }
     }
 
-    private fun updateReview(block: Review.() -> Review) {
-        // TODO [25-11-27 4:00p.m.] broken.
-//        _uiState.update {state ->
-//            state?.let {
-//                it.copy(review = it.review.block())
-//            }
-//        }
+    private fun updateReview(block: MediaReview.() -> MediaReview) {
+        _uiState.update {state ->
+            (state as? NewReviewUiState.EditReview)?.let {
+                it.copy(review = it.review.block())
+            } ?: state
+        }
     }
 }

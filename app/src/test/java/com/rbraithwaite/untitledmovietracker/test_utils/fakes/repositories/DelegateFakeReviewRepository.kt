@@ -1,5 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories
 
+import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
 import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
@@ -10,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
 import org.mockito.kotlin.mock
+import java.util.UUID
 
 // REFACTOR [24-01-18 11:27p.m.] -- it'd be nice to extract this DelegateFake pattern,
 //  maybe another annotation codegen library.
@@ -40,6 +42,13 @@ class DelegateFakeReviewRepository(
         this.mockEnabled = mockEnabled
         work()
         this.mockEnabled = oldMockEnabled
+    }
+
+    override suspend fun addReview(review: MediaReview, mediaId: UUID) {
+        if (mockEnabled) {
+            mock.addReview(review, mediaId)
+        }
+        real.addReview(review, mediaId)
     }
 
     override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {

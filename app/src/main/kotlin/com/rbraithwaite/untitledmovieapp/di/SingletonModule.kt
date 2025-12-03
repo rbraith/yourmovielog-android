@@ -10,6 +10,7 @@ import com.rbraithwaite.untitledmovieapp.core.repositories.TmdbRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovieapp.data.database.AppDatabase
 import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
+import com.rbraithwaite.untitledmovieapp.data.database.dao.MediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
 import com.rbraithwaite.untitledmovieapp.data.repositories.CustomMediaRepositoryImpl
@@ -94,6 +95,12 @@ object SingletonModule {
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "movie-tracker-db").build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMediaDao(database: AppDatabase): MediaDao {
+        return database.mediaDao()
     }
 
     @Singleton

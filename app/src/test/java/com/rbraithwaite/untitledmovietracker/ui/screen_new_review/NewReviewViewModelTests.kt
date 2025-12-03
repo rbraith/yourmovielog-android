@@ -1,10 +1,12 @@
 package com.rbraithwaite.untitledmovietracker.ui.screen_new_review
 
+import com.rbraithwaite.untitledmovieapp.core.data.Movie
 import com.rbraithwaite.untitledmovieapp.core.repositories.CustomMediaRepository
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewMovie
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewUiState
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
+import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.untitledmovietracker.test_utils.willBe
 import kotlinx.coroutines.test.runTest
@@ -12,15 +14,23 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.argForWhich
+import org.mockito.kotlin.verify
 
 class NewReviewViewModelTests {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    // TODO [25-12-1 5:00p.m.] replace with test dependency manager.
-    private val mockCustomMediaRepository: CustomMediaRepository = mock(CustomMediaRepository::class.java)
+    private val testDependencyManager = TestDependencyManager(
+        mainDispatcherRule.testScope,
+        mainDispatcherRule.testDispatcher
+    )
+    private val fakeMediaDao = testDependencyManager.mediaDao
+    private val fakeReviewDao = testDependencyManager.reviewDao
+    private val fakeMediaRepository = testDependencyManager.mediaRepository
+    private val fakeReviewRepository = testDependencyManager.reviewRepository
 
-    private val viewModel = NewReviewViewModel(mockCustomMediaRepository)
+    private val viewModel = NewReviewViewModel(fakeMediaRepository, fakeReviewRepository)
 
     @Test
     fun beforeInit_uiStateIsNull() = runTest {
@@ -104,6 +114,36 @@ class NewReviewViewModelTests {
         editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
         val movie = editReviewState.media as NewReviewMovie
         assertThat(movie.movie.title, willBe(expectedTitle))
+    }
+
+    @Test
+    fun onConfirmReview_forNewMedia() = runTest {
+        // GIVEN there is an active new review for a new media
+        // ------------------------------------------
+        val movieTitle = "movie title"
+        val reviewRating = 12
+
+        viewModel.init(NewReviewArgs.NewMedia(movieTitle))
+
+        val editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        editReviewState.editTitle(movieTitle)
+        editReviewState.editRating(reviewRating)
+
+
+        // WHEN the review is confirmed
+        // ------------------------------------------
+        editReviewState.onConfirmReview()
+
+
+        // THEN both the review and the media are correctly persisted
+        // ------------------------------------------
+        verify(testDependencyManager.mediaDao.mock).insertMovie(argForWhich {
+            this.title == movieTitle
+        })
+
+        verify(testDependencyManager.reviewDao.mock).insertReview(argForWhich {
+            this.rating == reviewRating
+        })
     }
 
     @Test

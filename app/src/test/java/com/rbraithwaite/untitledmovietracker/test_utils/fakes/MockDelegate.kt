@@ -39,24 +39,32 @@ abstract class MockDelegate<T : Any>(
     }
 
     /**
-     * All function implementations of a [MockDelegate] should delegate to this function. This handles
-     * executing the [delegate] method and optionally the [mock] method
+     * All non-suspend method implementations of a [MockDelegate] should delegate to this function.
+     * This handles executing the [delegate] method and optionally the [mock] method
      */
-    protected suspend fun <ReturnType> delegate(funcName: String, vararg args: Any?): ReturnType {
+    protected fun <ReturnType> funDelegate(funcName: String, vararg args: Any?): ReturnType {
         if (mockEnabled) {
             val mockFunc = getFunction(mock, funcName)
-            if (mockFunc.isSuspend) {
-                mockFunc.callSuspend(mock, *args)
-            } else {
-                mockFunc.call(mock, *args)
-            }
+            mockFunc.call(mock, *args)
         }
         val delegateFunc = getFunction(delegate, funcName)
-        val retVal = if (delegateFunc.isSuspend) {
-            delegateFunc.callSuspend(delegate, *args)
-        } else {
-            delegateFunc.call(delegate, *args)
+        val retVal = delegateFunc.call(delegate, *args)
+
+        @Suppress("UNCHECKED_CAST")
+        return retVal as ReturnType
+    }
+
+    /**
+     * All suspend method implementations of a [MockDelegate] should delegate to this function. This handles
+     * executing the [delegate] method and optionally the [mock] method
+     */
+    protected suspend fun <ReturnType> suspendFunDelegate(funcName: String, vararg args: Any?): ReturnType {
+        if (mockEnabled) {
+            val mockFunc = getFunction(mock, funcName)
+            mockFunc.callSuspend(mock, *args)
         }
+        val delegateFunc = getFunction(delegate, funcName)
+        val retVal = delegateFunc.callSuspend(delegate, *args)
 
         @Suppress("UNCHECKED_CAST")
         return retVal as ReturnType

@@ -2,6 +2,8 @@ package com.rbraithwaite.untitledmovietracker.test_utils
 
 import com.rbraithwaite.untitledmovieapp.core.repositories.MediaRepository
 import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaMovieEntity
+import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
@@ -18,6 +20,7 @@ import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.Deleg
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeReviewRepository
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeCustomMediaDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
+import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeMediaDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeTmdbDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeReviewDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.network.FakeTmdbApiV3
@@ -39,6 +42,8 @@ class TestDependencyManager(
 ) {
     private val localDatabase: FakeDatabase by lazy {
         FakeDatabase(listOf(
+            MediaMovieEntity::class,
+            MediaReviewEntity::class,
             CustomMovieEntity::class,
             ReviewEntity::class,
             TmdbLiteMovieEntity::class,
@@ -52,6 +57,10 @@ class TestDependencyManager(
             TvShow::class,
             Person::class
         ))
+    }
+
+    val mediaDao: FakeMediaDao by lazy {
+        FakeMediaDao(localDatabase)
     }
 
     val tmdbDao: FakeTmdbDao by lazy {
@@ -91,7 +100,9 @@ class TestDependencyManager(
     val mediaRepository: MockDelegateMediaRepository by lazy {
         MockDelegateMediaRepository(MediaRepositoryImpl(
             coroutineDispatcher,
-            tmdbApiV3
+            externalScope,
+            tmdbApiV3,
+            mediaDao
         ))
     }
 
