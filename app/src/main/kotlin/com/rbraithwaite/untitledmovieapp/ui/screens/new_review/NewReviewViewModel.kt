@@ -89,8 +89,11 @@ class NewReviewViewModel @Inject constructor(
     fun init(args: NewReviewArgs?) {
         when (args) {
             is NewReviewArgs.NewMedia -> {
-                updateMediaTitles(args.value)
+                updateMediaTitles(args.title)
                 _uiState.value = initialUiState(defaultMedia, null)
+            }
+            else -> {
+                // TO IMPLEMENT
             }
         }
     }

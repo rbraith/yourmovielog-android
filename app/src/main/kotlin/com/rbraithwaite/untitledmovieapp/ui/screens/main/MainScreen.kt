@@ -1,9 +1,6 @@
 package com.rbraithwaite.untitledmovieapp.ui.screens.main
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -38,21 +35,19 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.rbraithwaite.untitledmovieapp.ui.debug.DebugPlaceholder
+import com.rbraithwaite.untitledmovieapp.ui.screens.main.add_review_flow.AddReviewFlowDest
+import com.rbraithwaite.untitledmovieapp.ui.screens.main.add_review_flow.AddReviewFlowSharedData
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewScreen
 import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
+import com.rbraithwaite.untitledmovieapp.ui.utils.getScopedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 enum class MainDrawerDest(val route: String) {
     ADD_REVIEW_FLOW("add-review-flow"),
     SEARCH("search")
-}
-
-enum class AddReviewFlowDest(val route: String) {
-    SEARCH("search"),
-    ADD_REVIEW("add-review/{arg-type}/{arg-value}")
 }
 
 class MainScreenState(
@@ -196,49 +191,27 @@ private fun MainNavHost(
             route = MainDrawerDest.ADD_REVIEW_FLOW.route)
         {
             composable(route = AddReviewFlowDest.SEARCH.route) {
+                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(it, MainDrawerDest.ADD_REVIEW_FLOW.route)
+
                 SearchScreen(hiltViewModel(), onNavToNewReviewScreen = { args ->
+                    addReviewFlowSharedData.newReviewArgs = args
                     mainScreenState.navController.navigate(
-                        route = "add-review/${args.asRouteString()}"
+                        route = AddReviewFlowDest.ADD_REVIEW.route,
                     )
                 })
             }
 
-            composable(
-                route = AddReviewFlowDest.ADD_REVIEW.route,
-                arguments = listOf(
-                    navArgument("arg-type") { type = NavType.StringType },
-                    navArgument("arg-value") { type = NavType.StringType }
-                )
-            ) { backStackEntry ->
-                val args = NewReviewArgs.fromBackStackEntry(backStackEntry)
+            composable(route = AddReviewFlowDest.ADD_REVIEW.route) {
+                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(it, MainDrawerDest.ADD_REVIEW_FLOW.route)
 
                 val viewModel: NewReviewViewModel = hiltViewModel()
-                viewModel.init(args)
+                viewModel.init(addReviewFlowSharedData.newReviewArgs)
 
                 NewReviewScreen(
                     viewModel = viewModel,
                     onNavBack = { TODO() },
                     onConfirmReview = { TODO() }
                 )
-
-//                var title = "NOT IMPLEMENTED"
-//                when (args) {
-//                    is NewReviewArgs.NewMedia -> {
-//                        title = args.value
-//                    }
-//                }
-//
-//                Column {
-//                    DebugPlaceholder(
-//                        label = "Add Review Screen",
-//                        modifier = Modifier.fillMaxWidth().height(200.dp)
-//                    )
-//
-//                    DebugPlaceholder(
-//                        label = title,
-//                        modifier = Modifier.fillMaxWidth().height(200.dp)
-//                    )
-//                }
             }
         }
 

@@ -9,19 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.rbraithwaite.untitledmovieapp.AddReviewFlowSharedData
 import com.rbraithwaite.untitledmovieapp.ui.screens.main.MainScreen
-import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewScreen
-import com.rbraithwaite.untitledmovieapp.ui.screens.new_review.NewReviewViewModel
-import com.rbraithwaite.untitledmovieapp.ui.screens.search.SearchScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,32 +79,4 @@ class MainActivity: ComponentActivity() {
             }
         }
     }
-}
-
-// REFACTOR [23-12-20 1:28a.m.] -- move to utils.
-// REFACTOR [23-12-20 1:28a.m.] -- find a better name, maybe 'sequentialEffect'.
-@Composable
-inline fun waitFor(rememberKey: Any? = null, crossinline codeBlock: () -> Unit): Boolean {
-    var isFinished by remember(rememberKey) { mutableStateOf(false) }
-    LaunchedEffect(rememberKey) {
-        codeBlock()
-        isFinished = true
-    }
-    return isFinished
-}
-
-// REFACTOR [23-12-20 1:28a.m.] -- move to utils.
-/**
- * @param rememberKey This is used to remember the scope backstack entry
- * @param scopeRoute The route to scope the returned ViewModel to.
- */
-@Composable
-inline fun <reified T : ViewModel> NavHostController.getScopedViewModel(
-    rememberKey: NavBackStackEntry,
-    scopeRoute: String
-): T {
-    val scopeEntry = remember(rememberKey) {
-        this.getBackStackEntry(scopeRoute)
-    }
-    return hiltViewModel(scopeEntry)
 }
