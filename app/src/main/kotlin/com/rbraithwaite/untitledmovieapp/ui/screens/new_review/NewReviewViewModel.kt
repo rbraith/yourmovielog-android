@@ -45,19 +45,6 @@ data class NewReviewTvShow(val tvShow: TvShow): NewReviewMedia
 data class NewReviewTvShowSeason(val newReviewTvShow: NewReviewTvShow, val tvShowSeason: TvShow.Season): NewReviewMedia
 data class NewReviewTvShowEpisode(val newReviewTvShowSeason: NewReviewTvShowSeason, val tvShowEpisode: TvShow.Episode): NewReviewMedia
 
-sealed interface MediaUiState
-data class CustomMediaUiState(
-    // TODO [24-02-2 12:17a.m.] broken.
-//    val media: SearchResult.CustomMedia,
-    val isTitleEditable: Boolean,
-    val editTitle: (String) -> Unit
-): MediaUiState
-
-// TODO [24-02-2 12:17a.m.] broken.
-//data class TmdbMovieUiState(
-////    val tmdbMovie: SearchResult.TmdbMovie
-//): MediaUiState
-
 @HiltViewModel
 class NewReviewViewModel @Inject constructor(
     private val mediaRepository: MediaRepository,

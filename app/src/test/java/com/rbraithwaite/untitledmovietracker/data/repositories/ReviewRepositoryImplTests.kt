@@ -1,6 +1,5 @@
 package com.rbraithwaite.untitledmovietracker.data.repositories
 
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.TestDependencyManager
 import com.rbraithwaite.untitledmovietracker.test_utils.asVarArg
@@ -20,11 +19,9 @@ class ReviewRepositoryImplTests {
     private val testDependencyManager = TestDependencyManager(testScope, testDispatcher)
 
     private val reviewDao = testDependencyManager.reviewDao
-    private val tmdbDao = testDependencyManager.tmdbDao
 
     private val reviewRepository = ReviewRepositoryImpl(
         reviewDao,
-        tmdbDao,
         testScope,
         testDispatcher
     )

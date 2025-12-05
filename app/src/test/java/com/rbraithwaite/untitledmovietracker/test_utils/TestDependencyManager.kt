@@ -1,29 +1,19 @@
 package com.rbraithwaite.untitledmovietracker.test_utils
 
-import com.rbraithwaite.untitledmovieapp.data.database.entities.CustomMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaMovieEntity
 import com.rbraithwaite.untitledmovieapp.data.database.entities.MediaReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.ReviewEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieEntity
-import com.rbraithwaite.untitledmovieapp.data.database.entities.TmdbLiteMovieGenreJunction
 import com.rbraithwaite.untitledmovieapp.data.network.models.Movie
 import com.rbraithwaite.untitledmovieapp.data.network.models.Person
 import com.rbraithwaite.untitledmovieapp.data.network.models.TvShow
 import com.rbraithwaite.untitledmovieapp.data.repositories.MediaRepositoryImpl
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.CustomMovieEntityBuilder
-import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.database_entities.ReviewEntityBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.MovieBuilder
 import com.rbraithwaite.untitledmovietracker.test_utils.data_builders.network_models.TvShowBuilder
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.CustomMovieEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.DelegateFakeReviewRepository
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeCustomMediaDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeDatabase
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeMediaDao
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeTmdbDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeReviewDao
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.network.FakeTmdbApiV3
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.LongIdSelector
-import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.ReviewEntityIdSelector
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories.MockDelegateMediaRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -42,10 +32,6 @@ class TestDependencyManager(
         FakeDatabase(listOf(
             MediaMovieEntity::class,
             MediaReviewEntity::class,
-            CustomMovieEntity::class,
-            ReviewEntity::class,
-            TmdbLiteMovieEntity::class,
-            TmdbLiteMovieGenreJunction::class
         ))
     }
 
@@ -61,10 +47,6 @@ class TestDependencyManager(
         FakeMediaDao(localDatabase)
     }
 
-    val tmdbDao: FakeTmdbDao by lazy {
-        FakeTmdbDao(localDatabase)
-    }
-
     val reviewDao: FakeReviewDao by lazy {
         FakeReviewDao(localDatabase)
     }
@@ -76,7 +58,6 @@ class TestDependencyManager(
     val reviewRepository: DelegateFakeReviewRepository by lazy {
         DelegateFakeReviewRepository(
             reviewDao,
-            tmdbDao,
             externalScope,
             coroutineDispatcher
         )
@@ -96,28 +77,9 @@ class TestDependencyManager(
     // *********************************************************
     //region Test State Initialization
 
-    interface TestDatabaseStateInitializer {
-        suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder)
-        suspend fun withReviews(vararg reviews: ReviewEntityBuilder)
-    }
-
     interface TestBackendStateInitializer {
         suspend fun withMovies(vararg movies: MovieBuilder)
         suspend fun withTvShows(vararg tvShows: TvShowBuilder)
-    }
-
-    private inner class TestDatabaseStateInitializerImpl: TestDatabaseStateInitializer {
-        override suspend fun withCustomMovies(vararg customMovies: CustomMovieEntityBuilder) {
-            customMovies.map { it.build() }.forEach {
-                this@TestDependencyManager.localDatabase.insert(it, CustomMovieEntityIdSelector())
-            }
-        }
-
-        override suspend fun withReviews(vararg reviews: ReviewEntityBuilder) {
-            reviews.map { it.build() }.forEach {
-                this@TestDependencyManager.localDatabase.insert(it, ReviewEntityIdSelector())
-            }
-        }
     }
 
     private inner class TestBackendStateInitializerImpl: TestBackendStateInitializer {
@@ -141,10 +103,6 @@ class TestDependencyManager(
                 depManager.backend.insert(tvShow.build(), idSelector)
             }
         }
-    }
-
-    suspend fun initializeDatabaseState(initBlock: suspend TestDatabaseStateInitializer.() -> Unit) {
-        TestDatabaseStateInitializerImpl().initBlock()
     }
 
     suspend fun initializeBackendState(initialize: suspend TestBackendStateInitializer.() -> Unit) {

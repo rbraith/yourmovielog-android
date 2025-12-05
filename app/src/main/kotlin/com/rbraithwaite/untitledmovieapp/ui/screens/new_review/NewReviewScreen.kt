@@ -157,54 +157,6 @@ private fun NewReviewScreenContent(
             }
         }
     }
-//        when (val mediaUiState = uiState.mediaUiState) {
-//            is CustomMediaUiState -> {
-//                Text("title")
-//                if (mediaUiState.isTitleEditable) {
-//                    TextField(
-//                        // TODO [24-02-2 12:22a.m.] broken.
-//                        value = "",
-////                        value = mediaUiState.media.data.title,
-//                        onValueChange = {
-//                            // TODO [24-02-2 12:17a.m.] broken.
-////                            mediaUiState.editTitle(it)
-//                        }
-//                    )
-//                }
-//                // TODO [23-12-20 2:06a.m.] -- define (!isTitleEditable) UI.
-//            }
-//            // TODO [24-02-2 12:22a.m.] broken.
-////            is TmdbMovieUiState -> {
-////                val tmdbMovie = mediaUiState.tmdbMovie
-////
-////                Text("title: ${tmdbMovie.data.title} (${tmdbMovie.data.releaseDate?.year})")
-////                Text("overview: ${tmdbMovie.data.overview}")
-////                Divider()
-////            }
-//        }
-//
-//        Text("rating")
-//        Button(onClick = { screenState.showRatingDialog() }) {
-//            Text(formatRating(uiState.review.rating))
-//        }
-//
-//        Text("date")
-//        Button(onClick = { screenState.showDateDialog() }) {
-//            Text(formatReviewDate(uiState.review.reviewDate))
-//        }
-//
-//        Text("review")
-//        TextField(
-//            value = uiState.review.review ?: "",
-//            onValueChange = { uiState.editReview(it) },
-//            minLines = 2
-//        )
-//
-//        Text("where did you watch this?")
-//        Button(onClick = { /*TODO*/ }) {
-//            Text("add context")
-//        }
-//    }
 }
 
 // REFACTOR [23-10-11 1:52a.m.] -- move formatting logic to separate class - NewReviewFormatting.
