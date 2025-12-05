@@ -69,9 +69,7 @@ class SearchViewModelTests {
 
     @Test
     fun initialSearchResultsIsNoInput() {
-        // TODO [24-02-25 4:46p.m.] -- broken.
-//        val searchResults = viewModel.searchResults
-//        assertThat(searchResults.value is SearchResults.NoInput, willBe(true))
+        assertThat("", viewModel.searchResultsUiState.value is SearchResultsUiState.NoInput)
     }
 
     @Test
@@ -132,15 +130,21 @@ class SearchViewModelTests {
 
     @Test
     fun quickSearchInputUpdatesProperly() {
-        // TODO [24-02-25 4:47p.m.] -- broken.
-//        val searchInput = viewModel.searchInputUiState
-//        var quickInput = searchInput.value as SearchInput.Quick
-//        assertThat(quickInput.input, willBeEqualTo(""))
-//
-//        val expectedUpdatedInput = "updated input"
-//        quickInput.updateInput(expectedUpdatedInput)
-//
-//        quickInput = searchInput.value as SearchInput.Quick
-//        assertThat(quickInput.input, willBeEqualTo(expectedUpdatedInput))
+        // GIVEN the search input is "quick search multi"
+        // ------------------------------------------
+        val searchInput = viewModel.searchInputUiState
+        var quickMulti = searchInput.value.searchInput as QuickSearch.Multi
+        assertThat(quickMulti.query, willBe(""))
+
+        // WHEN the user enters a search query
+        // ------------------------------------------
+        val expectedSearchQuery = "expected"
+        quickMulti.onChangeQuery(expectedSearchQuery)
+
+
+        // THEN the search input state correctly updates with that query
+        // ------------------------------------------
+        quickMulti = searchInput.value.searchInput as QuickSearch.Multi
+        assertThat(quickMulti.query, willBe(expectedSearchQuery))
     }
 }
