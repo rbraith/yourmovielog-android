@@ -96,36 +96,6 @@ class NewReviewViewModel @Inject constructor(
         }
     }
 
-    // TODO [24-02-2 12:17a.m.] broken.
-//    fun init(searchResult: SearchResult?) {
-//        searchResult?.let {
-//            val mediaUiState: MediaUiState = when (it) {
-//                is SearchResult.CustomMedia -> {
-//                    // REFACTOR [23-12-20 1:56a.m.] -- should I convert to CustomMedia here?
-//                    //  what am I doing with CustomMedia vs SearchResult.CustomMedia? should the
-//                    //  search result just have a CustomMedia in it instead of duplicating the fields?
-//                    CustomMediaUiState(
-//                        media = it,
-//                        // REFACTOR [23-10-11 12:28a.m.] -- hardcoded - call 0L NEW_ENTITY or something.
-//                        isTitleEditable = it.data.id == 0L,
-//                        editTitle = ::editTitle
-//                    )
-//                }
-//                is SearchResult.TmdbMovie -> {
-//                    TmdbMovieUiState(it)
-//                }
-//                else -> {
-//                    // TO IMPLEMENT
-//                    TODO("Other search result types not yet implemented")
-//                }
-//            }
-//
-//            _uiState.update { _ ->
-//                initialUiState(mediaUiState)
-//            }
-//        }
-//    }
-
     private fun updateMediaTitles(newTitle: String) {
         newReviewMovie = newReviewMovie.copy(movie = newReviewMovie.movie.copy(title = newTitle))
 
@@ -192,40 +162,6 @@ class NewReviewViewModel @Inject constructor(
                 }
             }
         }
-
-//        viewModelScope.launch {
-//            val review = _uiState.value!!.review
-//            when (val mediaUiState = _uiState.value!!.mediaUiState) {
-//                is CustomMediaUiState -> {
-//                    // TODO [24-02-2 12:17a.m.] broken.
-////                    val customMedia = mediaUiState.media
-////
-////                    // REFACTOR [23-12-20 1:54a.m.] -- wtf am I doing here? am I using CustomMedia
-////                    //  or SearchResult.CustomMedia?
-////                    val customMovie2 = CustomMovie(
-////                        customMedia.data.id,
-////                        customMedia.data.title
-////                    )
-////
-////                    if (customMedia.data.id == 0L) {
-////                        customMediaRepository.addNewCustomMediaWithReview(
-////                            customMovie2,
-////                            review
-////                        )
-////                    }
-//                }
-//                // TODO [24-02-2 12:17a.m.] broken.
-////                is TmdbMovieUiState -> {
-////                    // TEST NEEDED [24-01-22 12:02a.m.] i need to fix NewReviewViewModelTests
-////                    //  convert to delegate fakes to test this upsert call.
-////                    customMediaRepository.upsertTmdbLite(mediaUiState.tmdbMovie.data)
-////                    customMediaRepository.addTmdbMovieReview(
-////                        tmdbMovieId = mediaUiState.tmdbMovie.data.id,
-////                        review = review
-////                    )
-////                }
-//            }
-//        }
     }
 
     private fun editTitle(title: String) {
