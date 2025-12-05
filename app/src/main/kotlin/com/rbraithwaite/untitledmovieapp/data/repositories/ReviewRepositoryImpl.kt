@@ -1,11 +1,8 @@
 package com.rbraithwaite.untitledmovieapp.data.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toEntity
-import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toReview
-import com.rbraithwaite.untitledmovieapp.data.database.dao.CustomMediaDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.TmdbDao
 import com.rbraithwaite.untitledmovieapp.data.database.dao.ReviewDao
 import com.rbraithwaite.untitledmovieapp.data.repositories.conversions.toTmdbLiteMovie
@@ -20,7 +17,6 @@ import kotlin.reflect.KClass
 class ReviewRepositoryImpl @Inject constructor(
     private val reviewDao: ReviewDao,
     private val tmdbDao: TmdbDao,
-    private val customMediaDao: CustomMediaDao,
     private val externalScope: CoroutineScope,
     @SingletonModule.IoDispatcher
     private val coroutineDispatcher: CoroutineDispatcher
@@ -35,29 +31,6 @@ class ReviewRepositoryImpl @Inject constructor(
         launchExternal {
             reviewDao.insertReview(review.toEntity(mediaId))
         }
-    }
-
-    override suspend fun upsertReviews(vararg reviews: Review) {
-        launchExternal {
-            val entities = reviews.map { it.toEntity() }.toTypedArray()
-            reviewDao.upsertReviews(*entities)
-        }
-    }
-
-    // TODO [24-01-21 1:33a.m.] -- I need a transaction helper here to wrap the multiple dao calls.
-    override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {
-        var reviews = reviewDao.getAllReviews().map { it.toReview() }
-
-        // TODO [25-12-3 5:34p.m.] broken.
-//        for (extrasType in extras) {
-//            when (extrasType) {
-//                Review.Extras.RelatedMedia::class -> {
-//                    reviews = applyRelatedMediaExtraDataTo(reviews)
-//                }
-//            }
-//        }
-
-        return reviews
     }
 
     //endregion
@@ -105,34 +78,4 @@ class ReviewRepositoryImpl @Inject constructor(
 //            put(groupKey, reviewsWithCustomMedia)
 //        }
 //    }
-
-    private suspend fun updateWithTmdbMovieRelatedMedia(
-        groupedReviewsByMediaType: Map<KClass<out Review.MediaType>, List<Review>>
-    ): Map<KClass<out Review.MediaType>, List<Review>> {
-        val groupKey = Review.MediaType.TmdbMovie::class
-        val reviewGroup =
-            groupedReviewsByMediaType[groupKey]
-                ?: return groupedReviewsByMediaType
-
-        val movieIds = reviewGroup.map { (it.mediaType as Review.MediaType.TmdbMovie).id }
-        val movies = tmdbDao.findTmdbLiteMoviesById(movieIds)
-
-        val reviewsWithMovies = reviewGroup.map { review ->
-            val relatedMovie = movies.firstOrNull {
-                it.tmdbMovie.id == (review as Review.MediaType.TmdbMovie).id
-            }
-
-            if (relatedMovie == null) {
-                review
-            } else {
-                review.withExtras(
-                    Review.Extras.RelatedMedia.Tmdb(relatedMovie.toTmdbLiteMovie())
-                )
-            }
-        }
-
-        return groupedReviewsByMediaType.toMutableMap().apply {
-            put(groupKey, reviewsWithMovies)
-        }
-    }
 }

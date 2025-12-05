@@ -73,15 +73,10 @@ class TestDependencyManager(
         FakeTmdbApiV3(backend)
     }
 
-    val customMediaDao: FakeCustomMediaDao by lazy {
-        FakeCustomMediaDao(localDatabase)
-    }
-
     val reviewRepository: DelegateFakeReviewRepository by lazy {
         DelegateFakeReviewRepository(
             reviewDao,
             tmdbDao,
-            customMediaDao,
             externalScope,
             coroutineDispatcher
         )

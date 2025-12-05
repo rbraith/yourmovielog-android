@@ -1,9 +1,6 @@
 package com.rbraithwaite.untitledmovieapp
 
-import com.rbraithwaite.untitledmovieapp.core.data.Review
-import com.rbraithwaite.untitledmovieapp.core.data.MediaReviewExtrasType
 import com.rbraithwaite.untitledmovieapp.core.data.ReviewDate
-import com.rbraithwaite.untitledmovieapp.core.data.TmdbLite
 import kotlin.random.Random
 import kotlin.random.nextInt
 

@@ -1,7 +1,6 @@
 package com.rbraithwaite.untitledmovietracker.test_utils.fakes.repositories
 
 import com.rbraithwaite.untitledmovieapp.core.data.MediaReview
-import com.rbraithwaite.untitledmovieapp.core.data.Review
 import com.rbraithwaite.untitledmovieapp.core.repositories.ReviewRepository
 import com.rbraithwaite.untitledmovieapp.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.untitledmovietracker.test_utils.fakes.database.FakeTmdbDao
@@ -18,7 +17,6 @@ import java.util.UUID
 class DelegateFakeReviewRepository(
     reviewDao: FakeReviewDao,
     tmdbDao: FakeTmdbDao,
-    customMediaDao: FakeCustomMediaDao,
     externalScope: CoroutineScope,
     coroutineDispatcher: CoroutineDispatcher,
 ): ReviewRepository {
@@ -27,7 +25,6 @@ class DelegateFakeReviewRepository(
     private val real: ReviewRepository = ReviewRepositoryImpl(
         reviewDao,
         tmdbDao,
-        customMediaDao,
         externalScope,
         coroutineDispatcher
     )
@@ -49,19 +46,5 @@ class DelegateFakeReviewRepository(
             mock.addReview(review, mediaId)
         }
         real.addReview(review, mediaId)
-    }
-
-    override suspend fun getAllReviews(extras: Set<KClass<out Review.Extras>>): List<Review> {
-        if (mockEnabled) {
-            mock.getAllReviews(extras)
-        }
-        return real.getAllReviews(extras)
-    }
-
-    override suspend fun upsertReviews(vararg reviews: Review) {
-        if (mockEnabled) {
-            mock.upsertReviews(*reviews)
-        }
-        real.upsertReviews(*reviews)
     }
 }
