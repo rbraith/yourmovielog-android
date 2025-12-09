@@ -21,11 +21,11 @@ val tmdbApiSecretsProperties = Properties()
 tmdbApiSecretsProperties.load(FileInputStream(tmdbApiSecretsFile))
 
 android {
-    namespace = "com.rbraithwaite.untitledmovietracker"
+    namespace = "com.rbraithwaite.yourmovielog"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rbraithwaite.untitledmovietracker"
+        applicationId = "com.rbraithwaite.yourmovielog"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

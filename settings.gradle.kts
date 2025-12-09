@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Untitled Movie Tracker"
+rootProject.name = "Your Movie Log"
 include(":app")
 include(":test_data_utils")
