@@ -1,10 +1,12 @@
 package com.rbraithwaite.yourmovielog.ui.screen_new_review
 
+import com.rbraithwaite.yourmovielog.core.data.Movie
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewMovie
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewUiState
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
-import com.rbraithwaite.yourmovielog.test_utils.TestDependencyManager
+import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
+import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository
 import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.yourmovielog.test_utils.willBe
 import kotlinx.coroutines.test.runTest
@@ -18,14 +20,8 @@ class NewReviewViewModelTests {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val testDependencyManager = TestDependencyManager(
-        mainDispatcherRule.testScope,
-        mainDispatcherRule.testDispatcher
-    )
-    private val fakeMediaDao = testDependencyManager.mediaDao
-    private val fakeReviewDao = testDependencyManager.reviewDao
-    private val fakeMediaRepository = testDependencyManager.mediaRepository
-    private val fakeReviewRepository = testDependencyManager.reviewRepository
+    private val fakeMediaRepository = FakeMediaRepository()
+    private val fakeReviewRepository = FakeReviewRepository()
 
     private val viewModel = NewReviewViewModel(fakeMediaRepository, fakeReviewRepository)
 
@@ -112,12 +108,15 @@ class NewReviewViewModelTests {
 
         // THEN both the review and the media are correctly persisted
         // ------------------------------------------
-        verify(testDependencyManager.mediaDao.mock).insertMovie(argForWhich {
-            this.title == movieTitle
-        })
+        val mediaList = fakeMediaRepository.getMedia()
+        assertThat(mediaList.size, willBe(1))
 
-        verify(testDependencyManager.reviewDao.mock).insertReview(argForWhich {
-            this.rating == reviewRating
-        })
+        val movie = mediaList[0] as Movie
+        assertThat(movie.title, willBe(movieTitle))
+
+        val reviewList = fakeReviewRepository.getReviews()
+        assertThat(reviewList.size, willBe(1))
+
+        assertThat(reviewList[0].rating, willBe(reviewRating))
     }
 }

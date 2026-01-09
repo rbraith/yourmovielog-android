@@ -7,9 +7,9 @@ import com.rbraithwaite.yourmovielog.ui.screens.search.QuickSearch
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchResultsUiState
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchViewModel
 import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
-import com.rbraithwaite.yourmovielog.test_utils.TestDependencyManager
-import com.rbraithwaite.yourmovielog.test_utils.data_builders.network_models.aMovie
-import com.rbraithwaite.yourmovielog.test_utils.data_builders.network_models.aTvShow
+import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbMovie
+import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbTvShow
+import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
 import com.rbraithwaite.yourmovielog.test_utils.willBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
@@ -26,11 +26,7 @@ class SearchViewModelTests {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val testDependencyManager = TestDependencyManager(
-        mainDispatcherRule.testScope,
-        mainDispatcherRule.testDispatcher
-    )
-    private val fakeMediaRepository = testDependencyManager.mediaRepository
+    private val fakeMediaRepository = FakeMediaRepository()
 
     // lazy seems to be needed for MainDispatcherRule to work?? (can't init viewModel right here,
     // needs to be when running the test)
@@ -80,14 +76,14 @@ class SearchViewModelTests {
         val expectedMovieTitle = "$searchQuery movie"
         val expectedTvShowName = "$searchQuery tv show"
 
-        testDependencyManager.initializeBackendState {
-            withMovies(
-                aMovie().withTitle(expectedMovieTitle),
-                aMovie().withTitle("invalid")
+        fakeMediaRepository.initialize {
+            withTmdbMovies(
+                aTmdbMovie().withTitle(expectedMovieTitle),
+                aTmdbMovie().withTitle("invalid")
             )
-            withTvShows(
-                aTvShow().withName(expectedTvShowName),
-                aTvShow().withName("invalid")
+            withTmdbTvShows(
+                aTmdbTvShow().withName(expectedTvShowName),
+                aTmdbTvShow().withName("invalid")
             )
         }
 
