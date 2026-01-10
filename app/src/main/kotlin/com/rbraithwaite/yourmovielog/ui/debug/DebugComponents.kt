@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.Color
 // REFACTOR [23-08-29 9:02p.m.] -- this should be extracted to a library.
 @Composable
 fun DebugPlaceholder(
+    modifier: Modifier = Modifier,
     label: String = "WIP",
     color: Color? = null,
-    modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.Center,

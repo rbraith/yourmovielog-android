@@ -153,8 +153,8 @@ private fun LazyListScope.searchResultsList(searchResultsUiState: SearchResultsU
     }
 
     when (searchResultsUiState) {
-        is SearchResultsUiState.NoInput -> item { DebugPlaceholder("No Input") }
-        is SearchResultsUiState.Loading -> item { DebugPlaceholder("Loading") }
+        is SearchResultsUiState.NoInput -> item { DebugPlaceholder(label = "No Input") }
+        is SearchResultsUiState.Loading -> item { DebugPlaceholder(label = "Loading") }
         is SearchResultsUiState.Success -> {
             items(searchResultsUiState.searchResults, key = { it.getListKey() }) { searchResult ->
                 when (searchResult) {

@@ -73,8 +73,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    lint {
+        warningsAsErrors = true
+        abortOnError = true
+        checkReleaseBuilds = true
+
+        htmlReport = true
+        xmlReport = true
+        htmlOutput = file("build/reports/lint/lint-output.html")
+        xmlOutput = file("build/reports/lint/lint-output.xml")
     }
 }
 
