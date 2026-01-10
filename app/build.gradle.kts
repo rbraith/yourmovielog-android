@@ -2,17 +2,17 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin)
 
     // Hilt
     // -------------------------------------------
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt)
 
     // Room
     // -------------------------------------------
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
 }
 
 // Load TMDB API secrets
@@ -77,87 +77,79 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     // TODO [23-08-21 11:33p.m.] -- this material dep probably isn't needed since I'm using compose.
-    implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.google.material)
 
     // Compose
     // -------------------------------------------
-    val composeBom = platform("androidx.compose:compose-bom:2023.08.00")
+    val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
 
 
     // Compose Extra
     // -------------------------------------------
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2") // for collectAsStateWithLifecycle
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose) // for collectAsStateWithLifecycle
 
 
     // Navigation
     // -------------------------------------------
-    val navVersion = "2.7.1"
-    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation(libs.androidx.navigation.compose)
 
     // Hilt
     // -------------------------------------------
-    val hiltVersion = "2.48"
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation(libs.hilt)
     // REFACTOR [23-10-10 3:15p.m.] -- complete migration to KSP
     //  https://developer.android.com/build/migrate-to-ksp.
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.nav.compose)
 
     // Room
     // -------------------------------------------
-    val roomVersion = "2.5.2"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
 
     // Network
     // -------------------------------------------
-    // retrofit
-    val retrofitVersion = "2.9.0"
-    val okHttpVersion = "4.2.1"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-
-    // gson
-    implementation("com.google.code.gson:gson:2.10.1")
-
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.scalars)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.gson)
 
     // Misc
     // -------------------------------------------
-    implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.timber)
 
     // java 8 desugaring
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+    // TODO [26-01-9 10:03p.m.] why was I desugaring again? try to get rid of this and
+    //  upgrade java version.
+    coreLibraryDesugaring(libs.desugar.libs)
 
 
     // Unit tests
     // -------------------------------------------
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-    // TODO [23-10-12 10:32p.m.] -- mockito-kotlin latest requires java 11 support.
-    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
-    testImplementation("org.hamcrest:hamcrest:2.2")
-    testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.okhttp.mockwebserver)
 
+    // TODO [26-01-9 10:07p.m.] get rid of this.
     // Reflection for DelegateFake
     testImplementation(kotlin("reflect"))
 
     testImplementation(project(":test_data_utils"))
     kspTest(project(":test_data_utils"))
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso)
 }
