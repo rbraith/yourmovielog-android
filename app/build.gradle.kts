@@ -44,6 +44,9 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
 
         release {
