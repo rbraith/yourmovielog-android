@@ -21,6 +21,7 @@ mockitoKotlinVersion = "3.2.0"
 hamcrestVersion = "2.2"
 androidxJunitExtVersion = "1.1.5"
 espressoVersion = "3.5.1"
+detektVersion = "1.23.8"
 
 # plugins
 androidGradlePluginVersion = "8.9.1"
@@ -67,6 +68,8 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 # Misc
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 desugar-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarLibsVersion" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektVersion" }
+
 
 # Testing
 junit = { module = "junit:junit", version.ref = "junitVersion" }
@@ -85,3 +88,4 @@ jetbrains-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinV
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }

@@ -1,9 +1,12 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin)
+    alias(libs.plugins.detekt)
 
     // Hilt
     // -------------------------------------------
@@ -149,6 +152,8 @@ dependencies {
     //  upgrade java version.
     coreLibraryDesugaring(libs.desugar.libs)
 
+    detektPlugins(libs.detekt.formatting)
+
 
     // Unit tests
     // -------------------------------------------
@@ -167,4 +172,23 @@ dependencies {
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom("${rootProject.projectDir}/detekt.yml")
+    baseline = file("detekt-baseline.xml")
+}
+
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = "1.8"
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt/detekt.html"))
+        // TODO [26-01-10 5:22p.m.] later add checkstyle format for CI
+    }
+}
+
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "1.8"
 }
