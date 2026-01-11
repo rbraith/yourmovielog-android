@@ -1,7 +1,6 @@
 package com.rbraithwaite.yourmovielog.data.repositories
 
 import com.rbraithwaite.yourmovielog.core.data.Media
-import com.rbraithwaite.yourmovielog.core.data.Movie as CoreMovie
 import com.rbraithwaite.yourmovielog.core.data.SearchResult
 import com.rbraithwaite.yourmovielog.core.repositories.MediaRepository
 import com.rbraithwaite.yourmovielog.data.database.dao.MediaDao
@@ -17,13 +16,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import com.rbraithwaite.yourmovielog.core.data.Movie as CoreMovie
 
 class MediaRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val externalScope: CoroutineScope,
     private val tmdbApiV3: TmdbApiV3,
     private val mediaDao: MediaDao
-): MediaRepository {
+) : MediaRepository {
     override suspend fun addMedia(media: Media) {
         externalScope.launch(ioDispatcher) {
             when (media) {

@@ -6,7 +6,6 @@ import com.rbraithwaite.yourmovielog.data.network.models.TvShow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
 fun Movie.toTmdbDataMovie(): TmdbData.Movie {
     return TmdbData.Movie(
         id = id,

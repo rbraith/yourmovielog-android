@@ -187,7 +187,6 @@ private fun formatReviewDate(reviewDate: ReviewDate?): String {
     return "$dayText$monthText$yearText"
 }
 
-
 @Preview
 @Composable
 fun PreviewNewReviewScreen() {

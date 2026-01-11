@@ -2,7 +2,6 @@ package com.rbraithwaite.yourmovielog.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class TvShowCredit(
     @SerializedName("id")
     val id: Long,
@@ -221,7 +220,6 @@ data class TvShowDetails(
     @SerializedName("watch/providers")
     val watchProviders: WatchProviders?
 )
-
 
 data class TvKeywords(
     @SerializedName("results")

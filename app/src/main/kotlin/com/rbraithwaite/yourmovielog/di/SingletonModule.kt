@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.rbraithwaite.yourmovielog.BuildConfig
 import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository
 import com.rbraithwaite.yourmovielog.data.database.AppDatabase
-import com.rbraithwaite.yourmovielog.data.repositories.ReviewRepositoryImpl
 import com.rbraithwaite.yourmovielog.data.database.dao.MediaDao
 import com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao
 import com.rbraithwaite.yourmovielog.data.network.TmdbApiV3
 import com.rbraithwaite.yourmovielog.data.network.models.SearchMultiType
 import com.rbraithwaite.yourmovielog.data.network.models.SearchMultiTypeDeserializer
 import com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterFactory
-import com.rbraithwaite.yourmovielog.BuildConfig
+import com.rbraithwaite.yourmovielog.data.repositories.ReviewRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -42,7 +42,6 @@ abstract class SingletonBinderModule {
     @Binds
     abstract fun bindReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
 }
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -159,5 +158,4 @@ object SingletonModule {
     }
 
     //endregion
-
 }

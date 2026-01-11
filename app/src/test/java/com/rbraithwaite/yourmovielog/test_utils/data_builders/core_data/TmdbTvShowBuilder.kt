@@ -9,9 +9,9 @@ fun aTmdbTvShow(buildBlock: TmdbTvShowBuilder.() -> Unit = {}): TmdbTvShowBuilde
 }
 
 @BaseBuilder
-abstract class AbstractTmdbTvShowBuilder: TestDataBuilder<TmdbData.TvShow>()
+abstract class AbstractTmdbTvShowBuilder : TestDataBuilder<TmdbData.TvShow>()
 
-class TmdbTvShowBuilder: BaseAbstractTmdbTvShowBuilder<TmdbTvShowBuilder>() {
+class TmdbTvShowBuilder : BaseAbstractTmdbTvShowBuilder<TmdbTvShowBuilder>() {
     override var data = TmdbData.TvShow(
         id = 0L,
         isAdult = false,

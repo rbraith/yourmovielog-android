@@ -193,7 +193,6 @@ class TmdbApiV3Tests {
         }
         assert(result.isSuccess)
 
-
         val movieDetails = result.getOrThrow()
 
         assertThat(movieDetails.id, willBe(466420))

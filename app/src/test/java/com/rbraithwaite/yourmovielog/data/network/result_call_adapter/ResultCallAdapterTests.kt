@@ -82,7 +82,7 @@ class ResultCallAdapterTests {
 
         assertThat("", result.isFailure)
         assertThat("", result.exceptionOrNull() is NetworkError.Http)
-        with (result.exceptionOrNull() as NetworkError.Http) {
+        with(result.exceptionOrNull() as NetworkError.Http) {
             assertThat(this.code, willBe(expectedCode))
         }
     }

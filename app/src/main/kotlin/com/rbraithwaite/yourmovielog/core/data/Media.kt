@@ -7,14 +7,16 @@ import java.util.UUID
 sealed interface Media {
     /** This media's unique id */
     val uuid: UUID
+
     /** The datetime this media was created at. */
     val createdAt: LocalDateTime
+
     /** The datetime this media was last modified at. This will be the same as [createdAt] when the media is created. */
     val modifiedAt: LocalDateTime
+
     /** The id for the TMDB data related to this media, if any. */
     val tmdbId: String?
 }
-
 
 data class Movie(
     /** The title of the movie */
@@ -25,7 +27,6 @@ data class Movie(
     override val modifiedAt: LocalDateTime,
     override val tmdbId: String?
 ) : Media
-
 
 data class TvShow(
     /** The title of the tv show */
@@ -60,7 +61,6 @@ data class TvShow(
         override val tmdbId: String?
     ) : Media
 }
-
 
 data class MediaWithTmdb(
     val media: Media,

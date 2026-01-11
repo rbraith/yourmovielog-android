@@ -143,7 +143,7 @@ private fun MainNavDrawerItem(
     mainScreenState: MainScreenState
 ) {
     NavigationDrawerItem(
-        label = { Text(label)},
+        label = { Text(label) },
         selected = mainScreenState.isDrawerDestSelected(dest),
         onClick = {
             mainScreenState.navigateFromDrawerTo(dest)
@@ -185,10 +185,13 @@ private fun MainNavHost(
         // Add Review Flow
         navigation(
             startDestination = AddReviewFlowDest.SEARCH.route,
-            route = MainDrawerDest.ADD_REVIEW_FLOW.route)
-        {
+            route = MainDrawerDest.ADD_REVIEW_FLOW.route
+        ) {
             composable(route = AddReviewFlowDest.SEARCH.route) {
-                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(it, MainDrawerDest.ADD_REVIEW_FLOW.route)
+                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(
+                    it,
+                    MainDrawerDest.ADD_REVIEW_FLOW.route
+                )
 
                 SearchScreen(hiltViewModel(), onNavToNewReviewScreen = { args ->
                     addReviewFlowSharedData.newReviewArgs = args
@@ -199,7 +202,10 @@ private fun MainNavHost(
             }
 
             composable(route = AddReviewFlowDest.ADD_REVIEW.route) {
-                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(it, MainDrawerDest.ADD_REVIEW_FLOW.route)
+                val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel<AddReviewFlowSharedData>(
+                    it,
+                    MainDrawerDest.ADD_REVIEW_FLOW.route
+                )
 
                 val viewModel: NewReviewViewModel = hiltViewModel()
                 viewModel.init(addReviewFlowSharedData.newReviewArgs)

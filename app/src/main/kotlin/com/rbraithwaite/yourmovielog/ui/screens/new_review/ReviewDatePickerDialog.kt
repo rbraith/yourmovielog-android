@@ -147,6 +147,7 @@ fun PreviewReviewDatePickerDialog() {
         onConfirm = {}
     )
 }
+
 @Composable
 private fun ReviewDatePickerContent(
     state: ReviewDatePickerState
@@ -156,21 +157,23 @@ private fun ReviewDatePickerContent(
             yearText = state.selectedYearText,
             monthText = state.selectedMonthText,
             dayText = state.selectedDayText,
-            onChangeSelector = { when (it) {
-                SelectorType.YEAR_SELECTOR -> {
-                    state.selectorType = it
-                }
-                SelectorType.MONTH_SELECTOR -> {
-                    if (state.selectedYear != YEAR_NONE) {
+            onChangeSelector = {
+                when (it) {
+                    SelectorType.YEAR_SELECTOR -> {
                         state.selectorType = it
                     }
-                }
-                SelectorType.DAY_SELECTOR -> {
-                    if (state.selectedMonth != MONTH_NONE) {
-                        state.selectorType = it
+                    SelectorType.MONTH_SELECTOR -> {
+                        if (state.selectedYear != YEAR_NONE) {
+                            state.selectorType = it
+                        }
+                    }
+                    SelectorType.DAY_SELECTOR -> {
+                        if (state.selectedMonth != MONTH_NONE) {
+                            state.selectorType = it
+                        }
                     }
                 }
-            } }
+            }
         )
 
         when (state.selectorType) {
@@ -276,7 +279,7 @@ private fun MonthSelector(
         FilterChip(
             selected = selectedMonth == MONTH_NONE,
             onClick = { onSelectMonth(MONTH_NONE) },
-            label = { Text("NONE")}
+            label = { Text("NONE") }
         )
 
         for ((i, month) in MONTHS.withIndex()) {

@@ -31,4 +31,4 @@ data class TvShow(
     val voteCount: Int,
     @SerializedName("origin_country")
     val originCountry: List<String>
-): SearchMultiType
+) : SearchMultiType

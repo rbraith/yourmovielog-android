@@ -4,7 +4,7 @@ import com.rbraithwaite.yourmovielog.core.data.MediaReview
 import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository
 import java.util.UUID
 
-class FakeReviewRepository: ReviewRepository {
+class FakeReviewRepository : ReviewRepository {
 
     private val reviews: MutableList<MediaReview> = mutableListOf()
 

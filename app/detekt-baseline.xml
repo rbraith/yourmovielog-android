@@ -2,8 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ArgumentListWrapping:MainScreen.kt$( startDestination = AddReviewFlowDest.SEARCH.route, route = MainDrawerDest.ADD_REVIEW_FLOW.route)</ID>
-    <ID>ArgumentListWrapping:MainScreen.kt$(it, MainDrawerDest.ADD_REVIEW_FLOW.route)</ID>
     <ID>ConstructorParameterNaming:TvSeasonDetails.kt$TvSeasonDetails$@SerializedName("_id") val _id: String</ID>
     <ID>Filename:DiscoverTv.kt$com.rbraithwaite.yourmovielog.data.network.models.DiscoverTv.kt</ID>
     <ID>Filename:MovieSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.MovieSearch.kt</ID>
@@ -11,85 +9,6 @@
     <ID>Filename:PersonSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.PersonSearch.kt</ID>
     <ID>Filename:PopularPeople.kt$com.rbraithwaite.yourmovielog.data.network.models.PopularPeople.kt</ID>
     <ID>Filename:TvShowSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.TvShowSearch.kt</ID>
-    <ID>FinalNewline:AddReviewFlow.kt$com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow.AddReviewFlow.kt</ID>
-    <ID>FinalNewline:ApiTestUtils.kt$com.rbraithwaite.yourmovielog.test_utils.ApiTestUtils.kt</ID>
-    <ID>FinalNewline:AppDatabase.kt$com.rbraithwaite.yourmovielog.data.database.AppDatabase.kt</ID>
-    <ID>FinalNewline:AppendMovieDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendMovieDetails.kt</ID>
-    <ID>FinalNewline:AppendPersonDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendPersonDetails.kt</ID>
-    <ID>FinalNewline:AppendTvSeasonDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendTvSeasonDetails.kt</ID>
-    <ID>FinalNewline:AppendTvShowDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendTvShowDetails.kt</ID>
-    <ID>FinalNewline:Certifications.kt$com.rbraithwaite.yourmovielog.data.network.models.Certifications.kt</ID>
-    <ID>FinalNewline:CompanyLogos.kt$com.rbraithwaite.yourmovielog.data.network.models.CompanyLogos.kt</ID>
-    <ID>FinalNewline:Configuration.kt$com.rbraithwaite.yourmovielog.data.network.models.Configuration.kt</ID>
-    <ID>FinalNewline:Credits.kt$com.rbraithwaite.yourmovielog.data.network.models.Credits.kt</ID>
-    <ID>FinalNewline:DebugComponents.kt$com.rbraithwaite.yourmovielog.ui.debug.DebugComponents.kt</ID>
-    <ID>FinalNewline:DebugModifierUtils.kt$com.rbraithwaite.yourmovielog.ui.debug.DebugModifierUtils.kt</ID>
-    <ID>FinalNewline:DiscoverMovie.kt$com.rbraithwaite.yourmovielog.data.network.models.DiscoverMovie.kt</ID>
-    <ID>FinalNewline:DiscoverMovieOptions.kt$com.rbraithwaite.yourmovielog.data.network.discover.DiscoverMovieOptions.kt</ID>
-    <ID>FinalNewline:DiscoverTv.kt$com.rbraithwaite.yourmovielog.data.network.models.DiscoverTv.kt</ID>
-    <ID>FinalNewline:DiscoverTvOptions.kt$com.rbraithwaite.yourmovielog.data.network.discover.DiscoverTvOptions.kt</ID>
-    <ID>FinalNewline:ExternalIds.kt$com.rbraithwaite.yourmovielog.data.network.models.ExternalIds.kt</ID>
-    <ID>FinalNewline:FakeMediaRepository.kt$com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository.kt</ID>
-    <ID>FinalNewline:FakeReviewRepository.kt$com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository.kt</ID>
-    <ID>FinalNewline:Genre.kt$com.rbraithwaite.yourmovielog.data.network.models.Genre.kt</ID>
-    <ID>FinalNewline:HamcrestUtils.kt$com.rbraithwaite.yourmovielog.test_utils.HamcrestUtils.kt</ID>
-    <ID>FinalNewline:Images.kt$com.rbraithwaite.yourmovielog.data.network.models.Images.kt</ID>
-    <ID>FinalNewline:LocalDateConverter.kt$com.rbraithwaite.yourmovielog.data.database.type_converters.LocalDateConverter.kt</ID>
-    <ID>FinalNewline:MainActivity.kt$com.rbraithwaite.yourmovielog.ui.MainActivity.kt</ID>
-    <ID>FinalNewline:MainScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.main.MainScreen.kt</ID>
-    <ID>FinalNewline:Media.kt$com.rbraithwaite.yourmovielog.core.data.Media.kt</ID>
-    <ID>FinalNewline:MediaConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.MediaConversions.kt</ID>
-    <ID>FinalNewline:MediaDao.kt$com.rbraithwaite.yourmovielog.data.database.dao.MediaDao.kt</ID>
-    <ID>FinalNewline:MediaMovieEntity.kt$com.rbraithwaite.yourmovielog.data.database.entities.MediaMovieEntity.kt</ID>
-    <ID>FinalNewline:MediaRepository.kt$com.rbraithwaite.yourmovielog.core.repositories.MediaRepository.kt</ID>
-    <ID>FinalNewline:MediaRepositoryImpl.kt$com.rbraithwaite.yourmovielog.data.repositories.MediaRepositoryImpl.kt</ID>
-    <ID>FinalNewline:MockWebServerRule.kt$com.rbraithwaite.yourmovielog.test_utils.rules.MockWebServerRule.kt</ID>
-    <ID>FinalNewline:MockitoUtils.kt$com.rbraithwaite.yourmovielog.test_utils.MockitoUtils.kt</ID>
-    <ID>FinalNewline:Movie.kt$com.rbraithwaite.yourmovielog.data.network.models.Movie.kt</ID>
-    <ID>FinalNewline:MovieSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.MovieSearch.kt</ID>
-    <ID>FinalNewline:NavUtils.kt$com.rbraithwaite.yourmovielog.ui.utils.NavUtils.kt</ID>
-    <ID>FinalNewline:NetworkError.kt$com.rbraithwaite.yourmovielog.data.network.NetworkError.kt</ID>
-    <ID>FinalNewline:NewReviewArgs.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs.kt</ID>
-    <ID>FinalNewline:NewReviewScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreen.kt</ID>
-    <ID>FinalNewline:NewReviewScreenState.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreenState.kt</ID>
-    <ID>FinalNewline:NewReviewViewModel.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel.kt</ID>
-    <ID>FinalNewline:NewReviewViewModelTests.kt$com.rbraithwaite.yourmovielog.ui.screen_new_review.NewReviewViewModelTests.kt</ID>
-    <ID>FinalNewline:Person.kt$com.rbraithwaite.yourmovielog.data.network.models.Person.kt</ID>
-    <ID>FinalNewline:PersonDetails.kt$com.rbraithwaite.yourmovielog.data.network.models.PersonDetails.kt</ID>
-    <ID>FinalNewline:PersonSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.PersonSearch.kt</ID>
-    <ID>FinalNewline:PopularPeople.kt$com.rbraithwaite.yourmovielog.data.network.models.PopularPeople.kt</ID>
-    <ID>FinalNewline:QuickSearchMultiFields.kt$com.rbraithwaite.yourmovielog.ui.screens.search.QuickSearchMultiFields.kt</ID>
-    <ID>FinalNewline:RatingPickerDialog.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.RatingPickerDialog.kt</ID>
-    <ID>FinalNewline:RepositoryModule.kt$com.rbraithwaite.yourmovielog.di.RepositoryModule.kt</ID>
-    <ID>FinalNewline:ResultCall.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCall.kt</ID>
-    <ID>FinalNewline:ResultCallAdapter.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapter.kt</ID>
-    <ID>FinalNewline:ResultCallAdapterFactory.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterFactory.kt</ID>
-    <ID>FinalNewline:ResultCallAdapterTests.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterTests.kt</ID>
-    <ID>FinalNewline:ReviewConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.ReviewConversions.kt</ID>
-    <ID>FinalNewline:ReviewDao.kt$com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao.kt</ID>
-    <ID>FinalNewline:ReviewDate.kt$com.rbraithwaite.yourmovielog.core.data.ReviewDate.kt</ID>
-    <ID>FinalNewline:ReviewDateConverter.kt$com.rbraithwaite.yourmovielog.data.database.type_converters.ReviewDateConverter.kt</ID>
-    <ID>FinalNewline:ReviewDatePickerDialog.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.ReviewDatePickerDialog.kt</ID>
-    <ID>FinalNewline:ReviewRepository.kt$com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository.kt</ID>
-    <ID>FinalNewline:ReviewRepositoryImpl.kt$com.rbraithwaite.yourmovielog.data.repositories.ReviewRepositoryImpl.kt</ID>
-    <ID>FinalNewline:SearchInput.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchInput.kt</ID>
-    <ID>FinalNewline:SearchInputModeSelector.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchInputModeSelector.kt</ID>
-    <ID>FinalNewline:SearchMultiResponse.kt$com.rbraithwaite.yourmovielog.data.network.models.SearchMultiResponse.kt</ID>
-    <ID>FinalNewline:SearchResult.kt$com.rbraithwaite.yourmovielog.core.data.SearchResult.kt</ID>
-    <ID>FinalNewline:SearchScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchScreen.kt</ID>
-    <ID>FinalNewline:SearchViewModel.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchViewModel.kt</ID>
-    <ID>FinalNewline:SearchViewModelTests.kt$com.rbraithwaite.yourmovielog.ui.screen_search.SearchViewModelTests.kt</ID>
-    <ID>FinalNewline:SingletonModule.kt$com.rbraithwaite.yourmovielog.di.SingletonModule.kt</ID>
-    <ID>FinalNewline:TmdbApiV3.kt$com.rbraithwaite.yourmovielog.data.network.TmdbApiV3.kt</ID>
-    <ID>FinalNewline:TmdbApiV3Tests.kt$com.rbraithwaite.yourmovielog.data.network.TmdbApiV3Tests.kt</ID>
-    <ID>FinalNewline:TmdbConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.TmdbConversions.kt</ID>
-    <ID>FinalNewline:TmdbData.kt$com.rbraithwaite.yourmovielog.core.data.TmdbData.kt</ID>
-    <ID>FinalNewline:TmdbKeywords.kt$com.rbraithwaite.yourmovielog.data.network.models.TmdbKeywords.kt</ID>
-    <ID>FinalNewline:TmdbMovieBuilder.kt$com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbMovieBuilder.kt</ID>
-    <ID>FinalNewline:TmdbTvShowBuilder.kt$com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbTvShowBuilder.kt</ID>
-    <ID>FinalNewline:TvShow.kt$com.rbraithwaite.yourmovielog.data.network.models.TvShow.kt</ID>
-    <ID>FinalNewline:TvShowSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.TvShowSearch.kt</ID>
-    <ID>FinalNewline:Video.kt$com.rbraithwaite.yourmovielog.data.network.models.Video.kt</ID>
     <ID>FunctionNaming:DebugComponents.kt$@Composable fun DebugPlaceholder( modifier: Modifier = Modifier, label: String = "WIP", color: Color? = null, )</ID>
     <ID>FunctionNaming:MainScreen.kt$@Composable fun MainScreen()</ID>
     <ID>FunctionNaming:MainScreen.kt$@Composable private fun MainNavDrawer( mainScreenState: MainScreenState )</ID>
@@ -116,12 +35,6 @@
     <ID>FunctionNaming:SearchScreen.kt$@Composable fun SearchScreen( viewModel: SearchViewModel, onNavToNewReviewScreen: (args: NewReviewArgs) -&gt; Unit )</ID>
     <ID>FunctionNaming:SearchScreen.kt$@Composable private fun SearchButton( onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
     <ID>FunctionNaming:SearchScreen.kt$@Composable private fun SearchInputWidget(state: SearchInputUiState)</ID>
-    <ID>FunctionStartOfBodySpacing:RatingPickerDialog.kt$private fun isValidRatingString(ratingString: String): Boolean</ID>
-    <ID>ImportOrdering:MediaRepositoryImpl.kt$import com.rbraithwaite.yourmovielog.core.data.Media import com.rbraithwaite.yourmovielog.core.data.Movie as CoreMovie import com.rbraithwaite.yourmovielog.core.data.SearchResult import com.rbraithwaite.yourmovielog.core.repositories.MediaRepository import com.rbraithwaite.yourmovielog.data.database.dao.MediaDao import com.rbraithwaite.yourmovielog.data.network.TmdbApiV3 import com.rbraithwaite.yourmovielog.data.network.models.Movie import com.rbraithwaite.yourmovielog.data.network.models.TvShow import com.rbraithwaite.yourmovielog.data.repositories.conversions.toEntity import com.rbraithwaite.yourmovielog.data.repositories.conversions.toTmdbDataMovie import com.rbraithwaite.yourmovielog.data.repositories.conversions.toTmdbDataTvShow import com.rbraithwaite.yourmovielog.di.SingletonModule.IoDispatcher import kotlinx.coroutines.CoroutineDispatcher import kotlinx.coroutines.CoroutineScope import kotlinx.coroutines.launch import kotlinx.coroutines.withContext import javax.inject.Inject</ID>
-    <ID>ImportOrdering:NewReviewViewModelTests.kt$import com.rbraithwaite.yourmovielog.core.data.Movie import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewMovie import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewUiState import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule import com.rbraithwaite.yourmovielog.test_utils.willBe import kotlinx.coroutines.test.runTest import org.hamcrest.MatcherAssert.assertThat import org.junit.Rule import org.junit.Test import org.mockito.kotlin.argForWhich import org.mockito.kotlin.verify</ID>
-    <ID>ImportOrdering:ReviewRepositoryImpl.kt$import com.rbraithwaite.yourmovielog.core.data.MediaReview import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository import com.rbraithwaite.yourmovielog.data.repositories.conversions.toEntity import com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao import com.rbraithwaite.yourmovielog.di.SingletonModule import kotlinx.coroutines.CoroutineDispatcher import kotlinx.coroutines.CoroutineScope import kotlinx.coroutines.launch import java.util.UUID import javax.inject.Inject</ID>
-    <ID>ImportOrdering:SearchViewModelTests.kt$import com.rbraithwaite.yourmovielog.core.data.SearchResult import com.rbraithwaite.yourmovielog.core.data.TmdbData import com.rbraithwaite.yourmovielog.ui.screens.search.AdvancedSearch import com.rbraithwaite.yourmovielog.ui.screens.search.QuickSearch import com.rbraithwaite.yourmovielog.ui.screens.search.SearchResultsUiState import com.rbraithwaite.yourmovielog.ui.screens.search.SearchViewModel import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbMovie import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbTvShow import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository import com.rbraithwaite.yourmovielog.test_utils.willBe import kotlinx.coroutines.ExperimentalCoroutinesApi import kotlinx.coroutines.flow.StateFlow import kotlinx.coroutines.flow.collect import kotlinx.coroutines.launch import kotlinx.coroutines.test.TestScope import kotlinx.coroutines.test.UnconfinedTestDispatcher import kotlinx.coroutines.test.runTest import org.hamcrest.MatcherAssert.assertThat import org.junit.Rule import org.junit.Test</ID>
-    <ID>ImportOrdering:SingletonModule.kt$import android.content.Context import androidx.room.Room import com.google.gson.Gson import com.google.gson.GsonBuilder import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository import com.rbraithwaite.yourmovielog.data.database.AppDatabase import com.rbraithwaite.yourmovielog.data.repositories.ReviewRepositoryImpl import com.rbraithwaite.yourmovielog.data.database.dao.MediaDao import com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao import com.rbraithwaite.yourmovielog.data.network.TmdbApiV3 import com.rbraithwaite.yourmovielog.data.network.models.SearchMultiType import com.rbraithwaite.yourmovielog.data.network.models.SearchMultiTypeDeserializer import com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterFactory import com.rbraithwaite.yourmovielog.BuildConfig import dagger.Binds import dagger.Module import dagger.Provides import dagger.hilt.InstallIn import dagger.hilt.android.qualifiers.ApplicationContext import dagger.hilt.components.SingletonComponent import kotlinx.coroutines.CoroutineDispatcher import kotlinx.coroutines.CoroutineScope import kotlinx.coroutines.Dispatchers import kotlinx.coroutines.SupervisorJob import okhttp3.HttpUrl import okhttp3.HttpUrl.Companion.toHttpUrlOrNull import okhttp3.Interceptor import okhttp3.OkHttpClient import okhttp3.logging.HttpLoggingInterceptor import retrofit2.Retrofit import retrofit2.converter.gson.GsonConverterFactory import retrofit2.converter.scalars.ScalarsConverterFactory import timber.log.Timber import javax.inject.Qualifier import javax.inject.Singleton</ID>
     <ID>LongParameterList:TmdbApiV3.kt$TmdbApiV3$( @Query("air_date.gte") airDateGte: String? = null, @Query("air_date.lte") airDateLte: String? = null, @Query("first_air_date_year") firstAirDateYear: Int? = null, @Query("first_air_date.gte") firstAirDateGte: String? = null, @Query("first_air_date.lte") firstAirDateLte: String? = null, @Query("include_adult") includeAdult: Boolean = false, @Query("include_null_first_air_dates") includeNullFirstAirDates: Boolean = false, @Query("language") language: String = Constants.DEFAULT_LANGUAGE, @Query("page") page: Int = 1, @Query("screened_theatrically") screenedTheatrically: Boolean? = null, @Query("sort_by") sortBy: String = "popularity.desc", @Query("timezone") timezone: String? = null, @Query("vote_average.gte") voteAverageGte: Float? = null, @Query("vote_average.lte") voteAverageLte: Float? = null, @Query("vote_count.gte") voteCountGte: Float? = null, @Query("vote_count.lte") voteCountLte: Float? = null, @Query("watch_region") watchRegion: String? = null, @Query("with_companies") withCompanies: String? = null, @Query("with_genres") withGenres: String? = null, @Query("with_keywords") withKeywords: String? = null, @Query("with_networks") withNetworks: Int? = null, @Query("with_origin_country") withOriginCountry: String? = null, @Query("with_original_language") withOriginalLanguage: String? = null, @Query("with_runtime.gte") withRuntimeGte: Int? = null, @Query("with_runtime.lte") withRuntimeLte: Int? = null, @Query("with_status") withStatus: String? = null, @Query("with_watch_monetization_types") withWatchMonetizationTypes: String? = null, @Query("with_watch_providers") withWatchProviders: String? = null, @Query("without_companies") withoutCompanies: String? = null, @Query("without_genres") withoutGenres: String? = null, @Query("without_keywords") withoutKeywords: String? = null, @Query("without_watch_providers") withoutWatchProviders: String? = null, @Query("with_type") withType: String? = null )</ID>
     <ID>LongParameterList:TmdbApiV3.kt$TmdbApiV3$( @Query("certification") certification: String? = null, @Query("certification.gte") certificationGte: String? = null, @Query("certification.lte") certificationLte: String? = null, @Query("certification_country") certificationCountry: String? = null, @Query("include_adult") includeAdult: Boolean = false, @Query("include_video") includeVideo: Boolean = false, @Query("language") language: String = Constants.DEFAULT_LANGUAGE, @Query("page") page: Int = 1, @Query("primary_release_year") primaryReleaseYear: Int? = null, @Query("primary_release_date.gte") primaryReleaseDateGte: String? = null, @Query("primary_release_date.lte") primaryReleaseDateLte: String? = null, @Query("region") region: String? = null, @Query("release_date.gte") releaseDateGte: String? = null, @Query("release_date.lte") releaseDateLte: String? = null, @Query("sort_by") sortBy: String = "popularity.desc", @Query("vote_average.gte") voteAverageGte: Float? = null, @Query("vote_average.lte") voteAverageLte: Float? = null, @Query("vote_count.gte") voteCountGte: Float? = null, @Query("vote_count.lte") voteCountLte: Float? = null, @Query("watch_region") watchRegion: String? = null, @Query("with_cast") withCast: String? = null, @Query("with_companies") withCompanies: String? = null, @Query("with_crew") withCrew: String? = null, @Query("with_genres") withGenres: String? = null, @Query("with_keywords") withKeywords: String? = null, @Query("with_origin_country") withOriginCountry: String? = null, @Query("with_original_language") withOriginalLanguage: String? = null, @Query("with_people") withPeople: String? = null, @Query("with_release_type") withReleaseType: String? = null, @Query("with_runtime.gte") withRuntimeGte: Int? = null, @Query("with_runtime.lte") withRuntimeLte: Int? = null, @Query("with_watch_monetization_types") withWatchMonetizationTypes: String? = null, @Query("with_watch_providers") withWatchProviders: String? = null, @Query("without_companies") withoutCompanies: String? = null, @Query("without_genres") withoutGenres: String? = null, @Query("without_keywords") withoutKeywords: String? = null, @Query("without_watch_providers") withoutWatchProviders: String? = null, @Query("year") year: Int? = null )</ID>
     <ID>LongParameterList:TmdbApiV3.kt$TmdbApiV3$( @Query("query") query: String, @Query("first_air_date_year") firstAirDateYear: Int? = null, @Query("include_adult") includeAdult: Boolean = false, @Query("language") language: String = Constants.DEFAULT_LANGUAGE, @Query("page") page: Int = 1, @Query("year") year: Int? = null )</ID>
@@ -135,121 +48,10 @@
     <ID>MatchingDeclarationName:PersonSearch.kt$PersonSearchResponse</ID>
     <ID>MatchingDeclarationName:PopularPeople.kt$PopularPeopleResponse</ID>
     <ID>MatchingDeclarationName:TvShowSearch.kt$TvShowSearchResponse</ID>
-    <ID>MaxLineLength:MainScreen.kt$val addReviewFlowSharedData = mainScreenState.navController.getScopedViewModel&lt;AddReviewFlowSharedData&gt;(it, MainDrawerDest.ADD_REVIEW_FLOW.route)</ID>
-    <ID>MaxLineLength:NewReviewViewModel.kt$NewReviewTvShowEpisode : NewReviewMedia</ID>
-    <ID>MaxLineLength:NewReviewViewModel.kt$NewReviewViewModel$newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason,TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))</ID>
+    <ID>MaxLineLength:NewReviewViewModel.kt$NewReviewViewModel$newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason, TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))</ID>
     <ID>MaxLineLength:NewReviewViewModel.kt$NewReviewViewModel$newReviewTvShowSeason = NewReviewTvShowSeason(newReviewTvShow, TvShow.Season(1, UUID.randomUUID(), now, now, null))</ID>
     <ID>MaxLineLength:SearchViewModelTests.kt$SearchViewModelTests$// TODO [25-11-6 1:37a.m.] possible dispatcher bug here - how do I wait for the coroutine in SearchViewModel.runSearch()?</ID>
-    <ID>MaximumLineLength:MainScreen.kt$ </ID>
-    <ID>MaximumLineLength:NewReviewViewModel.kt$NewReviewTvShowEpisode$data</ID>
     <ID>MaximumLineLength:NewReviewViewModel.kt$NewReviewViewModel$ </ID>
-    <ID>NewLineAtEndOfFile:AddReviewFlow.kt$com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow.AddReviewFlow.kt</ID>
-    <ID>NewLineAtEndOfFile:ApiTestUtils.kt$com.rbraithwaite.yourmovielog.test_utils.ApiTestUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:AppDatabase.kt$com.rbraithwaite.yourmovielog.data.database.AppDatabase.kt</ID>
-    <ID>NewLineAtEndOfFile:AppendMovieDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendMovieDetails.kt</ID>
-    <ID>NewLineAtEndOfFile:AppendPersonDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendPersonDetails.kt</ID>
-    <ID>NewLineAtEndOfFile:AppendTvSeasonDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendTvSeasonDetails.kt</ID>
-    <ID>NewLineAtEndOfFile:AppendTvShowDetails.kt$com.rbraithwaite.yourmovielog.data.network.append_to_response.AppendTvShowDetails.kt</ID>
-    <ID>NewLineAtEndOfFile:Certifications.kt$com.rbraithwaite.yourmovielog.data.network.models.Certifications.kt</ID>
-    <ID>NewLineAtEndOfFile:CompanyLogos.kt$com.rbraithwaite.yourmovielog.data.network.models.CompanyLogos.kt</ID>
-    <ID>NewLineAtEndOfFile:Configuration.kt$com.rbraithwaite.yourmovielog.data.network.models.Configuration.kt</ID>
-    <ID>NewLineAtEndOfFile:Credits.kt$com.rbraithwaite.yourmovielog.data.network.models.Credits.kt</ID>
-    <ID>NewLineAtEndOfFile:DebugComponents.kt$com.rbraithwaite.yourmovielog.ui.debug.DebugComponents.kt</ID>
-    <ID>NewLineAtEndOfFile:DebugModifierUtils.kt$com.rbraithwaite.yourmovielog.ui.debug.DebugModifierUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:DiscoverMovie.kt$com.rbraithwaite.yourmovielog.data.network.models.DiscoverMovie.kt</ID>
-    <ID>NewLineAtEndOfFile:DiscoverMovieOptions.kt$com.rbraithwaite.yourmovielog.data.network.discover.DiscoverMovieOptions.kt</ID>
-    <ID>NewLineAtEndOfFile:DiscoverTv.kt$com.rbraithwaite.yourmovielog.data.network.models.DiscoverTv.kt</ID>
-    <ID>NewLineAtEndOfFile:DiscoverTvOptions.kt$com.rbraithwaite.yourmovielog.data.network.discover.DiscoverTvOptions.kt</ID>
-    <ID>NewLineAtEndOfFile:ExternalIds.kt$com.rbraithwaite.yourmovielog.data.network.models.ExternalIds.kt</ID>
-    <ID>NewLineAtEndOfFile:FakeMediaRepository.kt$com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:FakeReviewRepository.kt$com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:Genre.kt$com.rbraithwaite.yourmovielog.data.network.models.Genre.kt</ID>
-    <ID>NewLineAtEndOfFile:HamcrestUtils.kt$com.rbraithwaite.yourmovielog.test_utils.HamcrestUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:Images.kt$com.rbraithwaite.yourmovielog.data.network.models.Images.kt</ID>
-    <ID>NewLineAtEndOfFile:LocalDateConverter.kt$com.rbraithwaite.yourmovielog.data.database.type_converters.LocalDateConverter.kt</ID>
-    <ID>NewLineAtEndOfFile:MainActivity.kt$com.rbraithwaite.yourmovielog.ui.MainActivity.kt</ID>
-    <ID>NewLineAtEndOfFile:MainScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.main.MainScreen.kt</ID>
-    <ID>NewLineAtEndOfFile:Media.kt$com.rbraithwaite.yourmovielog.core.data.Media.kt</ID>
-    <ID>NewLineAtEndOfFile:MediaConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.MediaConversions.kt</ID>
-    <ID>NewLineAtEndOfFile:MediaDao.kt$com.rbraithwaite.yourmovielog.data.database.dao.MediaDao.kt</ID>
-    <ID>NewLineAtEndOfFile:MediaMovieEntity.kt$com.rbraithwaite.yourmovielog.data.database.entities.MediaMovieEntity.kt</ID>
-    <ID>NewLineAtEndOfFile:MediaRepository.kt$com.rbraithwaite.yourmovielog.core.repositories.MediaRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:MediaRepositoryImpl.kt$com.rbraithwaite.yourmovielog.data.repositories.MediaRepositoryImpl.kt</ID>
-    <ID>NewLineAtEndOfFile:MockWebServerRule.kt$com.rbraithwaite.yourmovielog.test_utils.rules.MockWebServerRule.kt</ID>
-    <ID>NewLineAtEndOfFile:MockitoUtils.kt$com.rbraithwaite.yourmovielog.test_utils.MockitoUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:Movie.kt$com.rbraithwaite.yourmovielog.data.network.models.Movie.kt</ID>
-    <ID>NewLineAtEndOfFile:MovieSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.MovieSearch.kt</ID>
-    <ID>NewLineAtEndOfFile:NavUtils.kt$com.rbraithwaite.yourmovielog.ui.utils.NavUtils.kt</ID>
-    <ID>NewLineAtEndOfFile:NetworkError.kt$com.rbraithwaite.yourmovielog.data.network.NetworkError.kt</ID>
-    <ID>NewLineAtEndOfFile:NewReviewArgs.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs.kt</ID>
-    <ID>NewLineAtEndOfFile:NewReviewScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreen.kt</ID>
-    <ID>NewLineAtEndOfFile:NewReviewScreenState.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreenState.kt</ID>
-    <ID>NewLineAtEndOfFile:NewReviewViewModel.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:NewReviewViewModelTests.kt$com.rbraithwaite.yourmovielog.ui.screen_new_review.NewReviewViewModelTests.kt</ID>
-    <ID>NewLineAtEndOfFile:Person.kt$com.rbraithwaite.yourmovielog.data.network.models.Person.kt</ID>
-    <ID>NewLineAtEndOfFile:PersonDetails.kt$com.rbraithwaite.yourmovielog.data.network.models.PersonDetails.kt</ID>
-    <ID>NewLineAtEndOfFile:PersonSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.PersonSearch.kt</ID>
-    <ID>NewLineAtEndOfFile:PopularPeople.kt$com.rbraithwaite.yourmovielog.data.network.models.PopularPeople.kt</ID>
-    <ID>NewLineAtEndOfFile:QuickSearchMultiFields.kt$com.rbraithwaite.yourmovielog.ui.screens.search.QuickSearchMultiFields.kt</ID>
-    <ID>NewLineAtEndOfFile:RatingPickerDialog.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.RatingPickerDialog.kt</ID>
-    <ID>NewLineAtEndOfFile:RepositoryModule.kt$com.rbraithwaite.yourmovielog.di.RepositoryModule.kt</ID>
-    <ID>NewLineAtEndOfFile:ResultCall.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCall.kt</ID>
-    <ID>NewLineAtEndOfFile:ResultCallAdapter.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:ResultCallAdapterFactory.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterFactory.kt</ID>
-    <ID>NewLineAtEndOfFile:ResultCallAdapterTests.kt$com.rbraithwaite.yourmovielog.data.network.result_call_adapter.ResultCallAdapterTests.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.ReviewConversions.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewDao.kt$com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewDate.kt$com.rbraithwaite.yourmovielog.core.data.ReviewDate.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewDateConverter.kt$com.rbraithwaite.yourmovielog.data.database.type_converters.ReviewDateConverter.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewDatePickerDialog.kt$com.rbraithwaite.yourmovielog.ui.screens.new_review.ReviewDatePickerDialog.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewRepository.kt$com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository.kt</ID>
-    <ID>NewLineAtEndOfFile:ReviewRepositoryImpl.kt$com.rbraithwaite.yourmovielog.data.repositories.ReviewRepositoryImpl.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchInput.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchInput.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchInputModeSelector.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchInputModeSelector.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchMultiResponse.kt$com.rbraithwaite.yourmovielog.data.network.models.SearchMultiResponse.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchResult.kt$com.rbraithwaite.yourmovielog.core.data.SearchResult.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchScreen.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchScreen.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchViewModel.kt$com.rbraithwaite.yourmovielog.ui.screens.search.SearchViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:SearchViewModelTests.kt$com.rbraithwaite.yourmovielog.ui.screen_search.SearchViewModelTests.kt</ID>
-    <ID>NewLineAtEndOfFile:SingletonModule.kt$com.rbraithwaite.yourmovielog.di.SingletonModule.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbApiV3.kt$com.rbraithwaite.yourmovielog.data.network.TmdbApiV3.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbApiV3Tests.kt$com.rbraithwaite.yourmovielog.data.network.TmdbApiV3Tests.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbConversions.kt$com.rbraithwaite.yourmovielog.data.repositories.conversions.TmdbConversions.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbData.kt$com.rbraithwaite.yourmovielog.core.data.TmdbData.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbKeywords.kt$com.rbraithwaite.yourmovielog.data.network.models.TmdbKeywords.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbMovieBuilder.kt$com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbMovieBuilder.kt</ID>
-    <ID>NewLineAtEndOfFile:TmdbTvShowBuilder.kt$com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbTvShowBuilder.kt</ID>
-    <ID>NewLineAtEndOfFile:TvShow.kt$com.rbraithwaite.yourmovielog.data.network.models.TvShow.kt</ID>
-    <ID>NewLineAtEndOfFile:TvShowSearch.kt$com.rbraithwaite.yourmovielog.data.network.models.TvShowSearch.kt</ID>
-    <ID>NewLineAtEndOfFile:Video.kt$com.rbraithwaite.yourmovielog.data.network.models.Video.kt</ID>
-    <ID>NoBlankLineBeforeRbrace:SearchScreen.kt$ </ID>
-    <ID>NoBlankLineBeforeRbrace:SingletonModule.kt$SingletonModule$ </ID>
-    <ID>NoConsecutiveBlankLines:App.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:CompanySearch.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:Credits.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:DiscoverMovieOptions.kt$DiscoverMovieOptions$ </ID>
-    <ID>NoConsecutiveBlankLines:FakeMediaRepository.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:Media.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:MockitoUtils.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:MovieDetails.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:NewReviewScreen.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:NewReviewViewModel.kt$NewReviewViewModel$ </ID>
-    <ID>NoConsecutiveBlankLines:NewReviewViewModelTests.kt$NewReviewViewModelTests$ </ID>
-    <ID>NoConsecutiveBlankLines:PersonDetails.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:SearchScreen.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:SearchViewModelTests.kt$SearchViewModelTests$ </ID>
-    <ID>NoConsecutiveBlankLines:SingletonModule.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:TmdbApiV3Tests.kt$TmdbApiV3Tests$ </ID>
-    <ID>NoConsecutiveBlankLines:TmdbConversions.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:TvEpisodeDetails.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:TvSeasonDetails.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:TvShowDetails.kt$ </ID>
-    <ID>NoConsecutiveBlankLines:WatchProvider.kt$ </ID>
-    <ID>NoMultipleSpaces:LocalDateConverter.kt$LocalDateConverter$ </ID>
-    <ID>NoMultipleSpaces:RatingPickerDialog.kt$ </ID>
-    <ID>NoMultipleSpaces:SearchInput.kt$QuickSearch$ </ID>
-    <ID>NoMultipleSpaces:SearchScreen.kt$ </ID>
-    <ID>NoUnusedImports:NewReviewViewModelTests.kt$com.rbraithwaite.yourmovielog.ui.screen_new_review.NewReviewViewModelTests.kt</ID>
     <ID>PackageName:AddReviewFlow.kt$package com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow</ID>
     <ID>PackageName:ApiTestUtils.kt$package com.rbraithwaite.yourmovielog.test_utils</ID>
     <ID>PackageName:AppendMovieDetails.kt$package com.rbraithwaite.yourmovielog.data.network.append_to_response</ID>
@@ -306,75 +108,9 @@
     <ID>PackageNaming:SearchViewModelTests.kt$package com.rbraithwaite.yourmovielog.ui.screen_search</ID>
     <ID>PackageNaming:TmdbMovieBuilder.kt$package com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data</ID>
     <ID>PackageNaming:TmdbTvShowBuilder.kt$package com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data</ID>
-    <ID>ParameterListWrapping:NewReviewViewModel.kt$NewReviewTvShowEpisode$(val newReviewTvShowSeason: NewReviewTvShowSeason, val tvShowEpisode: TvShow.Episode)</ID>
     <ID>ReturnCount:RatingPickerDialog.kt$private fun isValidRatingString(ratingString: String): Boolean</ID>
     <ID>ReturnCount:RatingPickerDialog.kt$private fun parseRatingString(ratingString: String): Int?</ID>
     <ID>ReturnCount:ResultCallAdapterFactory.kt$ResultCallAdapterFactory$override fun get( returnType: Type, annotations: Array&lt;out Annotation&gt;, retrofit: Retrofit ): CallAdapter&lt;*, *&gt;?</ID>
-    <ID>SpacingAroundColon:AddReviewFlow.kt$AddReviewFlowSharedData$:</ID>
-    <ID>SpacingAroundColon:FakeMediaRepository.kt$FakeMediaRepository$:</ID>
-    <ID>SpacingAroundColon:FakeMediaRepository.kt$FakeMediaRepository.InitializerImpl$:</ID>
-    <ID>SpacingAroundColon:FakeReviewRepository.kt$FakeReviewRepository$:</ID>
-    <ID>SpacingAroundColon:MainActivity.kt$MainActivity$:</ID>
-    <ID>SpacingAroundColon:MediaRepositoryImpl.kt$MediaRepositoryImpl$:</ID>
-    <ID>SpacingAroundColon:MockWebServerRule.kt$MockWebServerRule$:</ID>
-    <ID>SpacingAroundColon:Movie.kt$Movie$:</ID>
-    <ID>SpacingAroundColon:NetworkError.kt$NetworkError$:</ID>
-    <ID>SpacingAroundColon:NetworkError.kt$NetworkError.Http$:</ID>
-    <ID>SpacingAroundColon:NetworkError.kt$NetworkError.Network$:</ID>
-    <ID>SpacingAroundColon:NetworkError.kt$NetworkError.Unknown$:</ID>
-    <ID>SpacingAroundColon:NewReviewArgs.kt$NewReviewArgs.NewMedia$:</ID>
-    <ID>SpacingAroundColon:NewReviewViewModel.kt$NewReviewMovie$:</ID>
-    <ID>SpacingAroundColon:NewReviewViewModel.kt$NewReviewTvShow$:</ID>
-    <ID>SpacingAroundColon:NewReviewViewModel.kt$NewReviewTvShowEpisode$:</ID>
-    <ID>SpacingAroundColon:NewReviewViewModel.kt$NewReviewTvShowSeason$:</ID>
-    <ID>SpacingAroundColon:NewReviewViewModel.kt$NewReviewUiState.EditReview$:</ID>
-    <ID>SpacingAroundColon:Person.kt$Person$:</ID>
-    <ID>SpacingAroundColon:ResultCall.kt$ResultCall$:</ID>
-    <ID>SpacingAroundColon:ResultCall.kt$ResultCall.&lt;no name provided&gt;$:</ID>
-    <ID>SpacingAroundColon:ResultCallAdapter.kt$ResultCallAdapter$:</ID>
-    <ID>SpacingAroundColon:ResultCallAdapterFactory.kt$ResultCallAdapterFactory$:</ID>
-    <ID>SpacingAroundColon:ReviewRepositoryImpl.kt$ReviewRepositoryImpl$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$AdvancedSearch$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$AdvancedSearch.Movie$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$AdvancedSearch.TvShow$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$QuickSearch$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$QuickSearch.Movie$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$QuickSearch.Multi$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$QuickSearch.Person$:</ID>
-    <ID>SpacingAroundColon:SearchInput.kt$QuickSearch.TvShow$:</ID>
-    <ID>SpacingAroundColon:SearchMultiResponse.kt$SearchMultiTypeDeserializer$:</ID>
-    <ID>SpacingAroundColon:SearchResult.kt$SearchResult.Media$:</ID>
-    <ID>SpacingAroundColon:SearchResult.kt$SearchResult.Tmdb$:</ID>
-    <ID>SpacingAroundColon:SearchViewModel.kt$SearchResultsUiState.Loading$:</ID>
-    <ID>SpacingAroundColon:SearchViewModel.kt$SearchResultsUiState.NoInput$:</ID>
-    <ID>SpacingAroundColon:SearchViewModel.kt$SearchResultsUiState.Success$:</ID>
-    <ID>SpacingAroundColon:SearchViewModel.kt$SearchViewModel$:</ID>
-    <ID>SpacingAroundColon:TmdbData.kt$TmdbData.Movie$:</ID>
-    <ID>SpacingAroundColon:TmdbData.kt$TmdbData.Person$:</ID>
-    <ID>SpacingAroundColon:TmdbData.kt$TmdbData.TvShow$:</ID>
-    <ID>SpacingAroundColon:TmdbMovieBuilder.kt$AbstractTmdbMovieBuilder$:</ID>
-    <ID>SpacingAroundColon:TmdbMovieBuilder.kt$TmdbMovieBuilder$:</ID>
-    <ID>SpacingAroundColon:TmdbTvShowBuilder.kt$AbstractTmdbTvShowBuilder$:</ID>
-    <ID>SpacingAroundColon:TmdbTvShowBuilder.kt$TmdbTvShowBuilder$:</ID>
-    <ID>SpacingAroundColon:TvShow.kt$TvShow$:</ID>
-    <ID>SpacingAroundComma:NewReviewViewModel.kt$NewReviewViewModel$,</ID>
-    <ID>SpacingAroundCurly:MainScreen.kt${</ID>
-    <ID>SpacingAroundCurly:MainScreen.kt$}</ID>
-    <ID>SpacingAroundCurly:NewReviewViewModel.kt$NewReviewViewModel${</ID>
-    <ID>SpacingAroundCurly:ReviewDatePickerDialog.kt$}</ID>
-    <ID>SpacingAroundOperators:DiscoverMovieOptions.kt$-&gt;</ID>
-    <ID>SpacingAroundOperators:DiscoverMovieOptions.kt$DiscoverMovieOptions$-&gt;</ID>
-    <ID>SpacingAroundOperators:DiscoverTvOptions.kt$DiscoverTvOptions$-&gt;</ID>
-    <ID>SpacingAroundParens:DiscoverMovieOptions.kt$(</ID>
-    <ID>SpacingAroundParens:DiscoverTvOptions.kt$(</ID>
-    <ID>SpacingAroundParens:ResultCallAdapterTests.kt$ResultCallAdapterTests$(</ID>
-    <ID>SpacingAroundParens:SearchViewModelTests.kt$SearchViewModelTests$(</ID>
-    <ID>SpacingBetweenDeclarationsWithAnnotations:ReviewDatePickerDialog.kt$@Composable private fun ReviewDatePickerContent( state: ReviewDatePickerState )</ID>
-    <ID>SpacingBetweenDeclarationsWithComments:DiscoverMovieOptions.kt$DiscoverMovieOptions$// REFACTOR [24-02-10 10:04p.m.] -- hardcoded language.</ID>
-    <ID>SpacingBetweenDeclarationsWithComments:DiscoverTvOptions.kt$DiscoverTvOptions$// REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.</ID>
-    <ID>SpacingBetweenDeclarationsWithComments:Media.kt$Media$/** The datetime this media was created at. */</ID>
-    <ID>SpacingBetweenDeclarationsWithComments:Media.kt$Media$/** The datetime this media was last modified at. This will be the same as [createdAt] when the media is created. */</ID>
-    <ID>SpacingBetweenDeclarationsWithComments:Media.kt$Media$/** The id for the TMDB data related to this media, if any. */</ID>
     <ID>TooGenericExceptionCaught:SearchMultiResponse.kt$SearchMultiTypeDeserializer$e: Exception</ID>
     <ID>TooManyFunctions:DiscoverTvOptions.kt$DiscoverTvOptions</ID>
     <ID>TooManyFunctions:NewReviewViewModel.kt$NewReviewViewModel : ViewModel</ID>
@@ -386,7 +122,5 @@
     <ID>UnusedPrivateMember:NewReviewScreen.kt$private fun formatRating(rating: Int?): String</ID>
     <ID>UnusedPrivateMember:NewReviewScreen.kt$private fun formatReviewDate(reviewDate: ReviewDate?): String</ID>
     <ID>UnusedPrivateMember:SearchViewModelTests.kt$SearchViewModelTests$@OptIn(ExperimentalCoroutinesApi::class) private fun &lt;T&gt; TestScope.fixForStateIn(stateFlow: StateFlow&lt;T&gt;)</ID>
-    <ID>Wrapping:MainScreen.kt$(</ID>
-    <ID>Wrapping:ReviewDatePickerDialog.kt$when (it) { SelectorType.YEAR_SELECTOR -&gt; { state.selectorType = it } SelectorType.MONTH_SELECTOR -&gt; { if (state.selectedYear != YEAR_NONE) { state.selectorType = it } } SelectorType.DAY_SELECTOR -&gt; { if (state.selectedMonth != MONTH_NONE) { state.selectorType = it } } }</ID>
   </CurrentIssues>
 </SmellBaseline>

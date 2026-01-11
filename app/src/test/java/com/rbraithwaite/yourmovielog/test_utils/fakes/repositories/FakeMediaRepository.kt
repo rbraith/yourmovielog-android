@@ -7,8 +7,7 @@ import com.rbraithwaite.yourmovielog.core.repositories.MediaRepository
 import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbMovieBuilder
 import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbTvShowBuilder
 
-
-class FakeMediaRepository: MediaRepository {
+class FakeMediaRepository : MediaRepository {
 
     private val tmdbData: MutableList<TmdbData> = mutableListOf()
 
@@ -24,7 +23,7 @@ class FakeMediaRepository: MediaRepository {
         fun withTmdbTvShows(vararg tvShows: TmdbTvShowBuilder)
     }
 
-    private inner class InitializerImpl: Initializer {
+    private inner class InitializerImpl : Initializer {
         override fun withTmdbMovies(vararg movies: TmdbMovieBuilder) {
             this@FakeMediaRepository.tmdbData.addAll(movies.map { it.build() })
         }

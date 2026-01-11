@@ -2,8 +2,6 @@ package com.rbraithwaite.yourmovielog.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-
-
 data class TvEpisodeDetails(
     @SerializedName("air_date")
     val airDate: String,

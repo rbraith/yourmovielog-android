@@ -9,9 +9,9 @@ fun aTmdbMovie(buildBlock: TmdbMovieBuilder.() -> Unit = {}): TmdbMovieBuilder {
 }
 
 @BaseBuilder
-abstract class AbstractTmdbMovieBuilder: TestDataBuilder<TmdbData.Movie>()
+abstract class AbstractTmdbMovieBuilder : TestDataBuilder<TmdbData.Movie>()
 
-class TmdbMovieBuilder: BaseAbstractTmdbMovieBuilder<TmdbMovieBuilder>() {
+class TmdbMovieBuilder : BaseAbstractTmdbMovieBuilder<TmdbMovieBuilder>() {
     override var data = TmdbData.Movie(
         id = 0L,
         isAdult = false,

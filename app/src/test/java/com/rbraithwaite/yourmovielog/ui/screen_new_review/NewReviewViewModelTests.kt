@@ -1,20 +1,18 @@
 package com.rbraithwaite.yourmovielog.ui.screen_new_review
 
 import com.rbraithwaite.yourmovielog.core.data.Movie
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewMovie
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewUiState
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
 import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository
 import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.yourmovielog.test_utils.willBe
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewMovie
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewUiState
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.argForWhich
-import org.mockito.kotlin.verify
 
 class NewReviewViewModelTests {
     @get:Rule
@@ -39,11 +37,9 @@ class NewReviewViewModelTests {
         val expectedMediaTitle = "test"
         viewModel.init(NewReviewArgs.NewMedia(expectedMediaTitle))
 
-
         // WHEN the initial ui state is queried
         // ------------------------------------------
         val uiState = viewModel.uiState.value
-
 
         // THEN the ui state should be a movie with the new media title
         // ------------------------------------------
@@ -71,14 +67,12 @@ class NewReviewViewModelTests {
 
         viewModel.init(NewReviewArgs.NewMedia(initialTitle))
 
-
         // WHEN that movie's title is edited
         // ------------------------------------------
         val expectedTitle = "edited title"
 
         var editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
         editReviewState.editTitle(expectedTitle)
-
 
         // THEN the new title is updated in the ui state
         // ------------------------------------------
@@ -100,11 +94,9 @@ class NewReviewViewModelTests {
         editReviewState.editTitle(movieTitle)
         editReviewState.editRating(reviewRating)
 
-
         // WHEN the review is confirmed
         // ------------------------------------------
         editReviewState.onConfirmReview()
-
 
         // THEN both the review and the media are correctly persisted
         // ------------------------------------------

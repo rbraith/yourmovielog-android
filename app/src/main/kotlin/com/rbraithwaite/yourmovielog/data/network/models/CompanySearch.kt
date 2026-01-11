@@ -2,7 +2,6 @@ package com.rbraithwaite.yourmovielog.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class CompanySearchResult(
     @SerializedName("id")
     val id: Long,

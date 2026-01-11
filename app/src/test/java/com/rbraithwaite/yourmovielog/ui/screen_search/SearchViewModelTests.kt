@@ -2,15 +2,15 @@ package com.rbraithwaite.yourmovielog.ui.screen_search
 
 import com.rbraithwaite.yourmovielog.core.data.SearchResult
 import com.rbraithwaite.yourmovielog.core.data.TmdbData
+import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbMovie
+import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbTvShow
+import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
+import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
+import com.rbraithwaite.yourmovielog.test_utils.willBe
 import com.rbraithwaite.yourmovielog.ui.screens.search.AdvancedSearch
 import com.rbraithwaite.yourmovielog.ui.screens.search.QuickSearch
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchResultsUiState
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchViewModel
-import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
-import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbMovie
-import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.aTmdbTvShow
-import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
-import com.rbraithwaite.yourmovielog.test_utils.willBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -104,7 +104,7 @@ class SearchViewModelTests {
         //     wouldn't I need a StandardTestDispatcher? but main is replaced with Unconfined
         val successResult = searchResults.value as SearchResultsUiState.Success
 
-        with (successResult.searchResults) {
+        with(successResult.searchResults) {
             assertThat(size, willBe(2))
 
             val movie = (get(0) as SearchResult.Tmdb).value as TmdbData.Movie
@@ -136,7 +136,6 @@ class SearchViewModelTests {
         // ------------------------------------------
         val expectedSearchQuery = "expected"
         quickMulti.onChangeQuery(expectedSearchQuery)
-
 
         // THEN the search input state correctly updates with that query
         // ------------------------------------------

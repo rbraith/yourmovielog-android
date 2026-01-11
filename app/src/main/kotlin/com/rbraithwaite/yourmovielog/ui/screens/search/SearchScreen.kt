@@ -28,7 +28,6 @@ import com.rbraithwaite.yourmovielog.core.data.TmdbData
 import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
 
-
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
@@ -57,7 +56,6 @@ fun SearchScreen(
     }
 }
 
-
 @Composable
 fun NewCustomMediaButton(
     state: SearchInputUiState,
@@ -80,7 +78,6 @@ fun NewCustomMediaButton(
         Text("Add review for \"$mediaTitle\"")
     }
 }
-
 
 @Composable
 private fun SearchInputWidget(state: SearchInputUiState) {
@@ -120,7 +117,6 @@ private fun SearchInputWidget(state: SearchInputUiState) {
                 onClick = state.runSearch,
                 modifier = Modifier.align(Alignment.End)
             )
-
         }
     }
 }
@@ -146,7 +142,7 @@ private fun SearchButton(
 private fun LazyListScope.searchResultsList(searchResultsUiState: SearchResultsUiState) {
     item {
         Text(
-            text  = "Results",
+            text = "Results",
             fontSize = 20.sp,
             modifier = Modifier.padding(top = 8.dp)
         )

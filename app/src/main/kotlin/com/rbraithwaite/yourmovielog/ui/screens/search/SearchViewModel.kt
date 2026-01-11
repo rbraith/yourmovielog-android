@@ -16,14 +16,14 @@ sealed interface SearchResultsUiState {
     /**
      * The UI search results state when there is no user input
      */
-    data object NoInput: SearchResultsUiState
+    data object NoInput : SearchResultsUiState
 
     /**
      * The UI search result state when the user has provided input and we are waiting for the results
      */
     data class Loading(
         val newCustomMediaTitle: String
-    ): SearchResultsUiState
+    ) : SearchResultsUiState
 
     /**
      * The UI search result state with successfully found results.
@@ -31,13 +31,13 @@ sealed interface SearchResultsUiState {
     data class Success(
         val newCustomMediaTitle: String,
         val searchResults: List<SearchResult>
-    ): SearchResultsUiState
+    ) : SearchResultsUiState
 }
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val mediaRepository: MediaRepository
-): ViewModel() {
+) : ViewModel() {
     private val _searchInputUiState = MutableStateFlow(initSearchInputUiState())
     val searchInputUiState = _searchInputUiState.asStateFlow()
 

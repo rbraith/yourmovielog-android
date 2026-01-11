@@ -15,6 +15,6 @@ class LocalDateConverter {
 
     @TypeConverter
     fun fromLong(longVal: Long): LocalDate? {
-        return if (longVal == NULL_DATE)  null else LocalDate.ofEpochDay(longVal)
+        return if (longVal == NULL_DATE) null else LocalDate.ofEpochDay(longVal)
     }
 }

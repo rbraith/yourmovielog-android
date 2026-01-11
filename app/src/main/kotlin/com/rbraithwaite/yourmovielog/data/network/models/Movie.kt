@@ -31,4 +31,4 @@ data class Movie(
     val voteAverage: Float,
     @SerializedName("vote_count")
     val voteCount: Int
-): SearchMultiType
+) : SearchMultiType

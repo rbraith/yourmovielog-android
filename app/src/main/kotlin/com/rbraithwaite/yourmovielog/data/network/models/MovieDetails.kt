@@ -2,7 +2,6 @@ package com.rbraithwaite.yourmovielog.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class ProductionCompany(
     @SerializedName("id")
     val id: Long,
@@ -140,8 +139,3 @@ data class MovieDetailsResponse(
     @SerializedName("watch/providers")
     val watchProviders: WatchProviders?
 )
-
-
-
-
-

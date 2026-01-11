@@ -15,6 +15,7 @@ class DiscoverTvOptions {
     var firstAirDateLte: String? = null
     var includeAdult: Boolean = false
     var includeNullFirstAirDates: Boolean = false
+
     // REFACTOR [24-02-11 4:57p.m.] -- hardcoded language string.
     var language: String = "en-US"
     var page: Int = 1
@@ -127,7 +128,7 @@ class DiscoverTvOptions {
         private set
     var withWatchProviders: String? = null
         private set
-    fun withWatchOptions(watchRegion: String, optionsBlock: WatchOptions.()->Unit) {
+    fun withWatchOptions(watchRegion: String, optionsBlock: WatchOptions.() -> Unit) {
         WatchOptions(watchRegion).optionsBlock()
     }
 
@@ -226,7 +227,7 @@ suspend fun TmdbApiV3.discoverTvShows(
 ): Result<DiscoverTvResponse> {
     val discoverTvOptions = DiscoverTvOptions().apply(options)
 
-    with (discoverTvOptions) {
+    with(discoverTvOptions) {
         return discoverTvShows(
             airDateGte = airDateGte,
             airDateLte = airDateLte,

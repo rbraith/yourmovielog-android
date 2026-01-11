@@ -36,14 +36,17 @@ sealed interface NewReviewUiState {
 
         // other callbacks
         val onConfirmReview: () -> Unit,
-    ): NewReviewUiState
+    ) : NewReviewUiState
 }
 
 sealed interface NewReviewMedia
-data class NewReviewMovie(val movie: Movie): NewReviewMedia
-data class NewReviewTvShow(val tvShow: TvShow): NewReviewMedia
-data class NewReviewTvShowSeason(val newReviewTvShow: NewReviewTvShow, val tvShowSeason: TvShow.Season): NewReviewMedia
-data class NewReviewTvShowEpisode(val newReviewTvShowSeason: NewReviewTvShowSeason, val tvShowEpisode: TvShow.Episode): NewReviewMedia
+data class NewReviewMovie(val movie: Movie) : NewReviewMedia
+data class NewReviewTvShow(val tvShow: TvShow) : NewReviewMedia
+data class NewReviewTvShowSeason(val newReviewTvShow: NewReviewTvShow, val tvShowSeason: TvShow.Season) : NewReviewMedia
+data class NewReviewTvShowEpisode(
+    val newReviewTvShowSeason: NewReviewTvShowSeason,
+    val tvShowEpisode: TvShow.Episode
+) : NewReviewMedia
 
 @HiltViewModel
 class NewReviewViewModel @Inject constructor(
@@ -68,7 +71,7 @@ class NewReviewViewModel @Inject constructor(
         newReviewMovie = NewReviewMovie(Movie("", UUID.randomUUID(), now, now, null))
         newReviewTvShow = NewReviewTvShow(TvShow("", UUID.randomUUID(), now, now, null))
         newReviewTvShowSeason = NewReviewTvShowSeason(newReviewTvShow, TvShow.Season(1, UUID.randomUUID(), now, now, null))
-        newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason,TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))
+        newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason, TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))
     }
 
     fun init(args: NewReviewArgs?) {
@@ -125,7 +128,6 @@ class NewReviewViewModel @Inject constructor(
             LocalDateTime.now()
         )
     }
-
 
     private fun onConfirmReview() {
         viewModelScope.launch {
@@ -194,7 +196,7 @@ class NewReviewViewModel @Inject constructor(
     }
 
     private fun updateReview(block: MediaReview.() -> MediaReview) {
-        _uiState.update {state ->
+        _uiState.update { state ->
             (state as? NewReviewUiState.EditReview)?.let {
                 it.copy(review = it.review.block())
             } ?: state

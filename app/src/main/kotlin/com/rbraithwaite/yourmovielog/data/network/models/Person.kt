@@ -21,4 +21,4 @@ data class Person(
     val profilePath: String?,
     @SerializedName("known_for")
     val knownFor: List<SearchMultiType>
-): SearchMultiType
+) : SearchMultiType

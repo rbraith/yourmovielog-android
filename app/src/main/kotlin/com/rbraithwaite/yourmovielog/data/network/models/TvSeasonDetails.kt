@@ -2,7 +2,6 @@ package com.rbraithwaite.yourmovielog.data.network.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class TvSeasonCrew(
     @SerializedName("job")
     val job: String,
@@ -244,4 +243,3 @@ data class TvSeasonCredits(
     @SerializedName("crew")
     val crew: List<TvSeasonCrewMember>,
 )
-

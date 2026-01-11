@@ -58,7 +58,6 @@ data class CastMember(
     val mediaType: String?,
 )
 
-
 data class CrewMember(
     @SerializedName("adult")
     val isAdult: Boolean,

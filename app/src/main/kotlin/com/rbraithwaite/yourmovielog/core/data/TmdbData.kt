@@ -21,7 +21,7 @@ sealed interface TmdbData {
         val video: Boolean,
         val voteAverage: Float,
         val voteCount: Int
-    ): TmdbData
+    ) : TmdbData
 
     data class TvShow(
         val id: Long,
@@ -38,7 +38,7 @@ sealed interface TmdbData {
         val voteAverage: Float,
         val voteCount: Int,
         val originCountry: List<String>
-    ): TmdbData
+    ) : TmdbData
 
     data class Person(
         val id: Long,
@@ -50,5 +50,5 @@ sealed interface TmdbData {
         val gender: Int,
         val knownForDepartment: String,
         val profilePath: String?
-    ): TmdbData
+    ) : TmdbData
 }

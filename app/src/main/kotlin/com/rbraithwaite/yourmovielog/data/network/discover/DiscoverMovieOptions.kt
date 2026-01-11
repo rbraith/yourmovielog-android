@@ -16,12 +16,13 @@ class DiscoverMovieOptions {
         private set
     var certificationCountry: String? = null
         private set
-    fun certificationOptions(certificationCountry: String, optionsBlock: CertificationOptions.()->Unit) {
+    fun certificationOptions(certificationCountry: String, optionsBlock: CertificationOptions.() -> Unit) {
         CertificationOptions(certificationCountry).optionsBlock()
     }
 
     var includeAdult: Boolean = false
     var includeVideo: Boolean = false
+
     // REFACTOR [24-02-10 10:04p.m.] -- hardcoded language.
     var language: String = "en-US"
     var page: Int = 1
@@ -125,10 +126,9 @@ class DiscoverMovieOptions {
         private set
     var withWatchProviders: String? = null
         private set
-    fun withWatchOptions(watchRegion: String, optionsBlock: WatchOptions.()->Unit) {
+    fun withWatchOptions(watchRegion: String, optionsBlock: WatchOptions.() -> Unit) {
         WatchOptions(watchRegion).optionsBlock()
     }
-
 
     enum class Logic {
         AND,
@@ -229,11 +229,11 @@ class DiscoverMovieOptions {
 }
 
 suspend fun TmdbApiV3.discoverMovies(
-    discoverMovieOptions: DiscoverMovieOptions.()->Unit
+    discoverMovieOptions: DiscoverMovieOptions.() -> Unit
 ): Result<DiscoverMovieResponse> {
     val options = DiscoverMovieOptions().apply(discoverMovieOptions)
 
-    with (options) {
+    with(options) {
         return discoverMovies(
             certification = certification,
             certificationGte = certificationGte,

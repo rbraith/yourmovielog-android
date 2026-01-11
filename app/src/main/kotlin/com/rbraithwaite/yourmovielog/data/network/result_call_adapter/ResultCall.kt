@@ -10,9 +10,9 @@ import java.io.IOException
 
 class ResultCall<T>(
     private val delegate: Call<T>
-): Call<Result<T>> {
+) : Call<Result<T>> {
     override fun enqueue(callback: Callback<Result<T>>) {
-        delegate.enqueue(object: Callback<T> {
+        delegate.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 val result: Result<T> = if (response.isSuccessful) {
                     response.body()?.let { Result.success(it) } ?: Result.failure(NetworkError.Unknown())

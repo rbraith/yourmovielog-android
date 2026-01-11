@@ -20,7 +20,7 @@ data class SearchMultiResponse(
 
 sealed interface SearchMultiType
 
-class SearchMultiTypeDeserializer: JsonDeserializer<SearchMultiType> {
+class SearchMultiTypeDeserializer : JsonDeserializer<SearchMultiType> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,

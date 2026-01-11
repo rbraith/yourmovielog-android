@@ -91,7 +91,7 @@ private fun parseRatingString(ratingString: String): Int? {
     return beforeDec + afterDec
 }
 
-private fun isValidRatingString(ratingString: String): Boolean  {
+private fun isValidRatingString(ratingString: String): Boolean {
     if (ratingString.matches(Regex("^10\\.?0?\$"))) {
         // matches for 10, 10., 10.0
         return true

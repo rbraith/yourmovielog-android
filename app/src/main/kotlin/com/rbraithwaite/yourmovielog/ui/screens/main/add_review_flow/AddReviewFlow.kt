@@ -14,6 +14,6 @@ enum class AddReviewFlowDest(val route: String) {
  * Data shared between destinations of the "Add Review" navigation flow
  */
 @HiltViewModel
-class AddReviewFlowSharedData @Inject constructor(): ViewModel() {
+class AddReviewFlowSharedData @Inject constructor() : ViewModel() {
     var newReviewArgs: NewReviewArgs? = null
 }
