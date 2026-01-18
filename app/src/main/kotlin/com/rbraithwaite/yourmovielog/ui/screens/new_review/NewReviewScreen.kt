@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rbraithwaite.yourmovielog.core.data.MediaReview
 import com.rbraithwaite.yourmovielog.core.data.ReviewDate
 import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
 import java.time.Month
@@ -87,29 +89,32 @@ private fun NewReviewScreenContent(
     uiState: NewReviewUiState,
     screenState: NewReviewScreenState
 ) {
-//    if (screenState.shouldShowRatingDialog) {
-//        RatingPickerDialog(
-//            onDismiss = {  screenState.dismissRatingDialog() },
-//            onConfirm = { newRating ->
-//                screenState.dismissRatingDialog()
-//                uiState.editRating(newRating)
-//            }
-//        )
-//    }
-//
-//    if (screenState.shouldShowDateDialog) {
-//        ReviewDatePickerDialog(
-//            initialReviewDate = uiState.review.reviewDate,
-//            onConfirm = {
-//                screenState.dismissDateDialog()
-//                uiState.editReviewDate(it)
-//            },
-//            onDismiss = {
-//                screenState.dismissDateDialog()
-//            }
-//        )
-//    }
-//
+    if (screenState.shouldShowRatingDialog) {
+        RatingPickerDialog(
+            initialRating = screenState.dialogInitialRating,
+            onDismiss = {
+                screenState.dismissRatingDialog()
+            },
+            onConfirm = { newRating ->
+                screenState.dismissRatingDialog()
+                (uiState as? NewReviewUiState.EditReview)?.editRating?.invoke(newRating)
+            }
+        )
+    }
+
+    if (screenState.shouldShowDateDialog) {
+        ReviewDatePickerDialog(
+            initialReviewDate = screenState.dialogInitialReviewDate,
+            onConfirm = { newReviewDate ->
+                screenState.dismissDateDialog()
+                (uiState as? NewReviewUiState.EditReview)?.editReviewDate?.invoke(newReviewDate)
+            },
+            onDismiss = {
+                screenState.dismissDateDialog()
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -121,37 +126,94 @@ private fun NewReviewScreenContent(
                 DebugPlaceholder(label = "loading")
             }
             is NewReviewUiState.EditReview -> {
-                TabRow(
-                    selectedTabIndex = 0
-                ) {
-                    Tab(
-                        text = { Text("movie") },
-                        selected = true,
-                        onClick = { /*TODO*/ }
-                    )
-                    Tab(
-                        text = { Text("tv show") },
-                        selected = true,
-                        onClick = { /*TODO*/ }
-                    )
-                }
-                // TODO [25-12-1 5:25p.m.] optional secondary tab row for tv subtypes - show, season, episode.
-
-                when (uiState.media) {
-                    is NewReviewMovie -> {
-                        Text("movie title")
-                        TextField(
-                            value = uiState.media.movie.title,
-                            onValueChange = { uiState.editTitle(it) }
-                        )
-                    }
-                    else -> {
-                        // TO IMPLEMENT
-                        DebugPlaceholder(label = "non-movie media")
-                    }
-                }
+                EditReviewView(uiState, screenState)
             }
         }
+    }
+}
+
+@Composable
+private fun EditReviewView(
+    uiState: NewReviewUiState.EditReview,
+    screenState: NewReviewScreenState
+) {
+    TabRow(
+        selectedTabIndex = 0
+    ) {
+        Tab(
+            text = { Text("movie") },
+            selected = true,
+            onClick = { /*TODO*/ }
+        )
+        Tab(
+            text = { Text("tv show") },
+            selected = true,
+            onClick = { /*TODO*/ }
+        )
+    }
+    // TODO [25-12-1 5:25p.m.] optional secondary tab row for tv subtypes - show, season, episode.
+
+    when (uiState.media) {
+        is NewReviewMovie -> {
+            Text("movie title")
+            TextField(
+                value = uiState.media.movie.title,
+                onValueChange = { uiState.editTitle(it) }
+            )
+        }
+        else -> {
+            // TO IMPLEMENT
+            DebugPlaceholder(label = "non-movie media")
+        }
+    }
+
+    ReviewSection(
+        uiState.review,
+        onSelectNewRating = { currentRating ->
+            screenState.showRatingDialog(initialRating = currentRating)
+        },
+        onChangeReview = {
+            uiState.editReview(it)
+        },
+        onSelectNewReviewDate = { currentReviewDate ->
+            screenState.showDateDialog(initialReviewDate = currentReviewDate)
+        },
+        onChangeWatchContext = {
+            uiState.editWatchContext(it)
+        }
+    )
+}
+
+@Composable
+private fun ReviewSection(
+    currentReview: MediaReview,
+    onSelectNewRating: (currentRating: Int?) -> Unit,
+    onChangeReview: (currentReview: String?) -> Unit,
+    onSelectNewReviewDate: (currentReviewDate: ReviewDate?) -> Unit,
+    onChangeWatchContext: (currentWatchContext: String?) -> Unit
+) {
+    Column {
+        Text("rating")
+        Button(onClick = { onSelectNewRating(currentReview.rating) }) {
+            Text(formatRating(currentReview.rating))
+        }
+
+        Text("review")
+        TextField(
+            value = currentReview.review ?: "",
+            onValueChange = { onChangeReview(it) }
+        )
+
+        Text("review date")
+        Button(onClick = { onSelectNewReviewDate(currentReview.reviewDate) }) {
+            Text(formatReviewDate(currentReview.reviewDate))
+        }
+
+        Text("watch context")
+        TextField(
+            value = currentReview.watchContext ?: "",
+            onValueChange = { onChangeWatchContext(it) }
+        )
     }
 }
 

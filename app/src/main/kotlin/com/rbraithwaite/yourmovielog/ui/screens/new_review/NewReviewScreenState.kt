@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.rbraithwaite.yourmovielog.core.data.ReviewDate
 
 @Composable
 fun rememberNewReviewScreenState(): NewReviewScreenState {
@@ -19,11 +20,19 @@ class NewReviewScreenState {
     var shouldShowDateDialog by mutableStateOf(false)
         private set
 
-    fun showRatingDialog() {
+    var dialogInitialRating: Int? = null
+        private set
+
+    var dialogInitialReviewDate: ReviewDate? = null
+        private set
+
+    fun showRatingDialog(initialRating: Int?) {
+        dialogInitialRating = initialRating
         shouldShowRatingDialog = true
     }
 
-    fun showDateDialog() {
+    fun showDateDialog(initialReviewDate: ReviewDate?) {
+        dialogInitialReviewDate = initialReviewDate
         shouldShowDateDialog = true
     }
 

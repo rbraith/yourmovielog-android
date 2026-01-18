@@ -96,10 +96,12 @@ class NewReviewViewModel @Inject constructor(
 
         newReviewTvShowSeason = newReviewTvShowSeason.copy(newReviewTvShow = newReviewTvShow)
 
-        newReviewTvShowEpisode = newReviewTvShowEpisode.copy(
-            newReviewTvShowSeason = newReviewTvShowSeason,
-            tvShowEpisode = newReviewTvShowEpisode.tvShowEpisode.copy(title = newTitle)
-        )
+        // TODO [26-01-17 8:11p.m.] this was a bug - the episode title becomes stuck as the same as
+        //  the show title. I'll need a different solution for updating episode titles
+//        newReviewTvShowEpisode = newReviewTvShowEpisode.copy(
+//            newReviewTvShowSeason = newReviewTvShowSeason,
+//            tvShowEpisode = newReviewTvShowEpisode.tvShowEpisode.copy(title = newTitle)
+//        )
     }
 
     private fun initialUiState(
