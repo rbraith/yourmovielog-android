@@ -56,6 +56,9 @@ class NewReviewViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<NewReviewUiState?> = MutableStateFlow(null)
     val uiState: StateFlow<NewReviewUiState?> = _uiState
 
+    // Since the type of media being reviewed is undecided until the user actually confirms the review,
+    // we maintain each type of media simultaneously. This retains the user's choices as they toggle
+    // between these different media types.
     private var newReviewMovie: NewReviewMovie
     private var newReviewTvShow: NewReviewTvShow
     private var newReviewTvShowSeason: NewReviewTvShowSeason
