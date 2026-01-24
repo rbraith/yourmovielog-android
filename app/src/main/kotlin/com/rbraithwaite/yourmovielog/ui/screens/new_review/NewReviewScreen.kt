@@ -13,8 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -26,8 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rbraithwaite.yourmovielog.core.data.MediaReview
+import com.rbraithwaite.yourmovielog.core.data.Movie
 import com.rbraithwaite.yourmovielog.core.data.ReviewDate
+import com.rbraithwaite.yourmovielog.core.data.TvShow
 import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.components.MediaTypeSelector
 import java.time.Month
 
 @Composable
@@ -137,33 +138,29 @@ private fun EditReviewView(
     uiState: NewReviewUiState.EditReview,
     screenState: NewReviewScreenState
 ) {
-    TabRow(
-        selectedTabIndex = 0
-    ) {
-        Tab(
-            text = { Text("movie") },
-            selected = true,
-            onClick = { /*TODO*/ }
-        )
-        Tab(
-            text = { Text("tv show") },
-            selected = true,
-            onClick = { /*TODO*/ }
-        )
-    }
-    // TODO [25-12-1 5:25p.m.] optional secondary tab row for tv subtypes - show, season, episode.
+    MediaTypeSelector(
+        selectedMediaType = uiState.media::class,
+        onSelectMediaType = { selectedMediaType ->
+            uiState.onSelectMediaType(selectedMediaType)
+        }
+    )
 
     when (uiState.media) {
-        is NewReviewMovie -> {
+        is Movie -> {
             Text("movie title")
             TextField(
-                value = uiState.media.movie.title,
+                value = uiState.media.title,
                 onValueChange = { uiState.editTitle(it) }
             )
         }
-        else -> {
-            // TO IMPLEMENT
-            DebugPlaceholder(label = "non-movie media")
+        is TvShow -> {
+            DebugPlaceholder(label = "tv show fields")
+        }
+        is TvShow.Season -> {
+            DebugPlaceholder(label = "tv season fields")
+        }
+        is TvShow.Episode -> {
+            DebugPlaceholder(label = "tv episode fields")
         }
     }
 

@@ -1,18 +1,20 @@
 package com.rbraithwaite.yourmovielog.ui.screen_new_review
 
+import com.rbraithwaite.yourmovielog.core.data.Media
 import com.rbraithwaite.yourmovielog.core.data.Movie
+import com.rbraithwaite.yourmovielog.core.data.TvShow
 import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeMediaRepository
 import com.rbraithwaite.yourmovielog.test_utils.fakes.repositories.FakeReviewRepository
 import com.rbraithwaite.yourmovielog.test_utils.rules.MainDispatcherRule
 import com.rbraithwaite.yourmovielog.test_utils.willBe
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewMovie
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewUiState
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
+import kotlin.reflect.KClass
 
 class NewReviewViewModelTests {
     @get:Rule
@@ -46,10 +48,10 @@ class NewReviewViewModelTests {
         assertThat("", uiState is NewReviewUiState.EditReview)
         val editReview = uiState as NewReviewUiState.EditReview
 
-        assertThat("", editReview.media is NewReviewMovie)
-        val newReviewMovie = editReview.media as NewReviewMovie
+        assertThat("", editReview.media is Movie)
+        val movie = editReview.media as Movie
 
-        assertThat(newReviewMovie.movie.title, willBe(expectedMediaTitle))
+        assertThat(movie.title, willBe(expectedMediaTitle))
     }
 
     @Test
@@ -77,8 +79,8 @@ class NewReviewViewModelTests {
         // THEN the new title is updated in the ui state
         // ------------------------------------------
         editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
-        val movie = editReviewState.media as NewReviewMovie
-        assertThat(movie.movie.title, willBe(expectedTitle))
+        val movie = editReviewState.media as Movie
+        assertThat(movie.title, willBe(expectedTitle))
     }
 
     @Test
@@ -110,5 +112,38 @@ class NewReviewViewModelTests {
         assertThat(reviewList.size, willBe(1))
 
         assertThat(reviewList[0].rating, willBe(reviewRating))
+    }
+
+    @Test
+    fun selectTvShowMediaType() = runTest {
+        paramTest_selectMediaType(TvShow::class)
+    }
+
+    @Test
+    fun selectTvSeasonMediaType() = runTest {
+        paramTest_selectMediaType(TvShow.Season::class)
+    }
+
+    @Test
+    fun selectTvEpisodeMediaType() = runTest {
+        paramTest_selectMediaType(TvShow.Episode::class)
+    }
+
+    private fun paramTest_selectMediaType(mediaType: KClass<out Media>) {
+        // GIVEN a normal starting state
+        // ------------------------------------------
+        viewModel.init(NewReviewArgs.NewMedia("dummy"))
+
+        var editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        assertThat(editReviewState.media::class, willBe(Movie::class))
+
+        // WHEN the user selects a new media type
+        // ------------------------------------------
+        editReviewState.onSelectMediaType(mediaType)
+
+        // THEN the ui state's media type matches the selected type
+        // ------------------------------------------
+        editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        assertThat(editReviewState.media::class, willBe(mediaType))
     }
 }

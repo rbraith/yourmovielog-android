@@ -2,6 +2,7 @@ package com.rbraithwaite.yourmovielog.ui.screens.new_review
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rbraithwaite.yourmovielog.core.data.Media
 import com.rbraithwaite.yourmovielog.core.data.MediaReview
 import com.rbraithwaite.yourmovielog.core.data.Movie
 import com.rbraithwaite.yourmovielog.core.data.ReviewDate
@@ -17,11 +18,12 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
 sealed interface NewReviewUiState {
     data object Loading : NewReviewUiState
     data class EditReview(
-        val media: NewReviewMedia,
+        val media: Media,
         val tmdbData: TmdbData?,
         val review: MediaReview,
 
@@ -35,18 +37,10 @@ sealed interface NewReviewUiState {
         val editReviewDate: (ReviewDate?) -> Unit,
 
         // other callbacks
+        val onSelectMediaType: (KClass<out Media>) -> Unit,
         val onConfirmReview: () -> Unit,
     ) : NewReviewUiState
 }
-
-sealed interface NewReviewMedia
-data class NewReviewMovie(val movie: Movie) : NewReviewMedia
-data class NewReviewTvShow(val tvShow: TvShow) : NewReviewMedia
-data class NewReviewTvShowSeason(val newReviewTvShow: NewReviewTvShow, val tvShowSeason: TvShow.Season) : NewReviewMedia
-data class NewReviewTvShowEpisode(
-    val newReviewTvShowSeason: NewReviewTvShowSeason,
-    val tvShowEpisode: TvShow.Episode
-) : NewReviewMedia
 
 @HiltViewModel
 class NewReviewViewModel @Inject constructor(
@@ -59,22 +53,22 @@ class NewReviewViewModel @Inject constructor(
     // Since the type of media being reviewed is undecided until the user actually confirms the review,
     // we maintain each type of media simultaneously. This retains the user's choices as they toggle
     // between these different media types.
-    private var newReviewMovie: NewReviewMovie
-    private var newReviewTvShow: NewReviewTvShow
-    private var newReviewTvShowSeason: NewReviewTvShowSeason
-    private var newReviewTvShowEpisode: NewReviewTvShowEpisode
+    private var movie: Movie
+    private var tvShow: TvShow
+    private var tvSeason: TvShow.Season
+    private var tvEpisode: TvShow.Episode
 
     private var tmdbData: TmdbData? = null
 
-    private val defaultMedia: NewReviewMedia
-        get() = newReviewMovie
+    private val defaultMedia: Media
+        get() = movie
 
     init {
         val now = LocalDateTime.now()
-        newReviewMovie = NewReviewMovie(Movie("", UUID.randomUUID(), now, now, null))
-        newReviewTvShow = NewReviewTvShow(TvShow("", UUID.randomUUID(), now, now, null))
-        newReviewTvShowSeason = NewReviewTvShowSeason(newReviewTvShow, TvShow.Season(1, UUID.randomUUID(), now, now, null))
-        newReviewTvShowEpisode = NewReviewTvShowEpisode(newReviewTvShowSeason, TvShow.Episode("", 1, UUID.randomUUID(), now, now, null))
+        movie = Movie("", UUID.randomUUID(), now, now, null)
+        tvShow = TvShow("", UUID.randomUUID(), now, now, null)
+        tvSeason = TvShow.Season(1, UUID.randomUUID(), now, now, null)
+        tvEpisode = TvShow.Episode("", 1, UUID.randomUUID(), now, now, null)
     }
 
     fun init(args: NewReviewArgs?) {
@@ -90,22 +84,12 @@ class NewReviewViewModel @Inject constructor(
     }
 
     private fun updateMediaTitles(newTitle: String) {
-        newReviewMovie = newReviewMovie.copy(movie = newReviewMovie.movie.copy(title = newTitle))
-
-        newReviewTvShow = newReviewTvShow.copy(tvShow = newReviewTvShow.tvShow.copy(title = newTitle))
-
-        newReviewTvShowSeason = newReviewTvShowSeason.copy(newReviewTvShow = newReviewTvShow)
-
-        // TODO [26-01-17 8:11p.m.] this was a bug - the episode title becomes stuck as the same as
-        //  the show title. I'll need a different solution for updating episode titles
-//        newReviewTvShowEpisode = newReviewTvShowEpisode.copy(
-//            newReviewTvShowSeason = newReviewTvShowSeason,
-//            tvShowEpisode = newReviewTvShowEpisode.tvShowEpisode.copy(title = newTitle)
-//        )
+        movie = movie.copy(title = newTitle)
+        tvShow = tvShow.copy(title = newTitle)
     }
 
     private fun initialUiState(
-        media: NewReviewMedia,
+        media: Media,
         tmdbData: TmdbData?
     ): NewReviewUiState {
         return NewReviewUiState.EditReview(
@@ -117,6 +101,7 @@ class NewReviewViewModel @Inject constructor(
             ::editReview,
             ::editWatchContext,
             ::editReviewDate,
+            ::onSelectMediaType,
             ::onConfirmReview
         )
     }
@@ -134,6 +119,20 @@ class NewReviewViewModel @Inject constructor(
         )
     }
 
+    private fun onSelectMediaType(mediaType: KClass<out Media>) {
+        _uiState.update { state ->
+            (state as? NewReviewUiState.EditReview)?.let {
+                when (mediaType) {
+                    Movie::class -> it.copy(media = movie)
+                    TvShow::class -> it.copy(media = tvShow)
+                    TvShow.Season::class -> it.copy(media = tvSeason)
+                    TvShow.Episode::class -> it.copy(media = tvEpisode)
+                    else -> it
+                }
+            } ?: state
+        }
+    }
+
     private fun onConfirmReview() {
         viewModelScope.launch {
             // TODO [25-12-2 2:57a.m.] handle null review or media case.
@@ -144,9 +143,9 @@ class NewReviewViewModel @Inject constructor(
             //  new media have editable values, while existing media or tmdb-derived media don't.
 
             when (media) {
-                is NewReviewMovie -> {
-                    mediaRepository.addMedia(media.movie)
-                    reviewRepository.addReview(review, media.movie.uuid)
+                is Movie -> {
+                    mediaRepository.addMedia(movie)
+                    reviewRepository.addReview(review, movie.uuid)
                 }
                 else -> {
                     // TODO [25-12-2 3:01a.m.] will need to consider how to handle tv seasons/episodes,
@@ -164,10 +163,10 @@ class NewReviewViewModel @Inject constructor(
             state?.let {
                 if (it is NewReviewUiState.EditReview) {
                     when (it.media) {
-                        is NewReviewMovie -> it.copy(media = newReviewMovie)
-                        is NewReviewTvShow -> it.copy(media = newReviewTvShow)
-                        is NewReviewTvShowSeason -> it.copy(media = newReviewTvShowSeason)
-                        is NewReviewTvShowEpisode -> it.copy(media = newReviewTvShowEpisode)
+                        is Movie -> it.copy(media = movie)
+                        is TvShow -> it.copy(media = tvShow)
+                        is TvShow.Season -> it.copy(media = tvSeason)
+                        is TvShow.Episode -> it.copy(media = tvEpisode)
                     }
                 } else {
                     it
