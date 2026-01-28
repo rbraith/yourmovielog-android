@@ -137,11 +137,18 @@ class NewReviewViewModel @Inject constructor(
         viewModelScope.launch {
             val editReviewState = _uiState.value as? NewReviewUiState.EditReview ?: return@launch
 
-            // TODO [26-01-27 8:01p.m.] there is extra logic needed here for tv seasons/episodes
-            //  will need to possibly also add a new tv show and/or season?
-
             mediaRepository.addMedia(editReviewState.media)
             reviewRepository.addReview(editReviewState.review, editReviewState.media.uuid)
+
+            // When the media being reviewed is a tv season or episode, we should also persist the
+            // new parent media types (show for a season, and show + season for an episode)
+            val media = editReviewState.media
+            if (media is TvShow.Season) {
+                mediaRepository.addMedia(tvShow)
+            } else if (media is TvShow.Episode) {
+                mediaRepository.addMedia(tvShow)
+                mediaRepository.addMedia(tvSeason)
+            }
         }
     }
 

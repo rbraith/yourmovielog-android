@@ -115,6 +115,29 @@ class NewReviewViewModelTests {
     }
 
     @Test
+    fun onConfirmMedia_ParentTvMediaArePersistedForEpisodes() = runTest {
+        // GIVEN there is an active review for a tv episode of a "new media" show
+        // ------------------------------------------
+        val tvShowTitle = "tv show title"
+        viewModel.init(NewReviewArgs.NewMedia(tvShowTitle))
+
+        val editReviewState = viewModel.uiState.value as NewReviewUiState.EditReview
+        editReviewState.onSelectMediaType(TvShow.Episode::class)
+
+        // WHEN the review is confirmed
+        // ------------------------------------------
+        editReviewState.onConfirmReview()
+
+        // THEN the new tv show and seasons are also persisted along with the new episode
+        // ------------------------------------------
+        val mediaList = fakeMediaRepository.getMedia()
+        assertThat(mediaList.size, willBe(3))
+        assertThat("", mediaList.any { it is TvShow && it.title == tvShowTitle })
+        assertThat("", mediaList.any { it is TvShow.Season && it.seasonNumber == 1 })
+        assertThat("", mediaList.any { it is TvShow.Episode && it.episodeNumber == 1 })
+    }
+
+    @Test
     fun selectTvShowMediaType() = runTest {
         paramTest_selectMediaType(TvShow::class)
     }
