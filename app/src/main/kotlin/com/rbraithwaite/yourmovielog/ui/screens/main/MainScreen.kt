@@ -213,7 +213,9 @@ private fun MainNavHost(
                 NewReviewScreen(
                     viewModel = viewModel,
                     onNavBack = { TODO() },
-                    onConfirmReview = { TODO() }
+                    onConfirmReview = {
+                        // TO IMPLEMENT
+                    }
                 )
             }
         }

@@ -47,9 +47,9 @@ fun NewReviewScreen(
                     // TO IMPLEMENT
                 },
                 onConfirmReview = {
-                    // TODO [25-12-1 5:10p.m.] broken.
-//                    uiStateSafe.onConfirmReview()
-//                    onConfirmReview()
+                    (uiStateSafe as? NewReviewUiState.EditReview)?.onConfirmReview?.invoke()?.also {
+                        onConfirmReview()
+                    }
                 }
             )
         }

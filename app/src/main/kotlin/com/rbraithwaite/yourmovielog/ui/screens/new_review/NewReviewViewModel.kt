@@ -135,25 +135,13 @@ class NewReviewViewModel @Inject constructor(
 
     private fun onConfirmReview() {
         viewModelScope.launch {
-            // TODO [25-12-2 2:57a.m.] handle null review or media case.
-            val review = (_uiState.value as? NewReviewUiState.EditReview)?.review ?: return@launch
-            val media = (_uiState.value as? NewReviewUiState.EditReview)?.media ?: return@launch
+            val editReviewState = _uiState.value as? NewReviewUiState.EditReview ?: return@launch
 
-            // TODO [25-12-2 2:59a.m.] there's more subtlety that will be needed here, or somewhere in this viewmodel.
-            //  new media have editable values, while existing media or tmdb-derived media don't.
+            // TODO [26-01-27 8:01p.m.] there is extra logic needed here for tv seasons/episodes
+            //  will need to possibly also add a new tv show and/or season?
 
-            when (media) {
-                is Movie -> {
-                    mediaRepository.addMedia(movie)
-                    reviewRepository.addReview(review, movie.uuid)
-                }
-                else -> {
-                    // TODO [25-12-2 3:01a.m.] will need to consider how to handle tv seasons/episodes,
-                    //  since they also require the tv show data
-                    //  actually probably just: upsert (maybe?) tv show; then add season or episode w/ tv show uuid.
-                    TODO("Other media types not yet implemented")
-                }
-            }
+            mediaRepository.addMedia(editReviewState.media)
+            reviewRepository.addReview(editReviewState.review, editReviewState.media.uuid)
         }
     }
 
