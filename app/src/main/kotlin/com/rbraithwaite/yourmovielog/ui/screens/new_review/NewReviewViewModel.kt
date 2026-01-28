@@ -137,6 +137,8 @@ class NewReviewViewModel @Inject constructor(
         viewModelScope.launch {
             val editReviewState = _uiState.value as? NewReviewUiState.EditReview ?: return@launch
 
+            // TODO [26-01-27 8:43p.m.] all this should be in a transaction.
+
             mediaRepository.addMedia(editReviewState.media)
             reviewRepository.addReview(editReviewState.review, editReviewState.media.uuid)
 
