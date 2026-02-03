@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import com.rbraithwaite.yourmovielog.core.data.Movie as CoreMovie
+import com.rbraithwaite.yourmovielog.core.data.TvShow as CoreTvShow
 
 class MediaRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
@@ -24,10 +25,15 @@ class MediaRepositoryImpl @Inject constructor(
     private val tmdbApiV3: TmdbApiV3,
     private val mediaDao: MediaDao
 ) : MediaRepository {
+    // REFACTOR [26-02-3 4:55p.m.] change launch/join to async/await, wrap fun body in
+    //  try catch, and return a Result.
     override suspend fun addMedia(media: Media) {
         externalScope.launch(ioDispatcher) {
             when (media) {
                 is CoreMovie -> mediaDao.insertMovie(media.toEntity())
+                is CoreTvShow -> mediaDao.insertTvShow(media.toEntity())
+                is CoreTvShow.Season -> mediaDao.insertTvSeason(media.toEntity())
+                is CoreTvShow.Episode -> mediaDao.insertTvEpisode(media.toEntity())
                 else -> TODO("Not yet implemented")
             }
         }.join()

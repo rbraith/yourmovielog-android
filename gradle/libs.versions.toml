@@ -22,6 +22,8 @@ hamcrestVersion = "2.2"
 androidxJunitExtVersion = "1.1.5"
 espressoVersion = "3.5.1"
 detektVersion = "1.23.8"
+robolectricVersion = "4.16"
+coreTestingVersion = "2.2.0"
 
 # plugins
 androidGradlePluginVersion = "8.9.1"
@@ -73,6 +75,8 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 
 # Testing
 junit = { module = "junit:junit", version.ref = "junitVersion" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectricVersion" }
+core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTestingVersion" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTestVersion" }
 # TODO [23-10-12 10:32p.m.] -- mockito-kotlin latest requires java 11 support.
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }

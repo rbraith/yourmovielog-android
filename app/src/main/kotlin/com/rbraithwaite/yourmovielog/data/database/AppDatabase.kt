@@ -7,12 +7,18 @@ import com.rbraithwaite.yourmovielog.data.database.dao.MediaDao
 import com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao
 import com.rbraithwaite.yourmovielog.data.database.entities.MediaMovieEntity
 import com.rbraithwaite.yourmovielog.data.database.entities.MediaReviewEntity
+import com.rbraithwaite.yourmovielog.data.database.entities.MediaTvEpisodeEntity
+import com.rbraithwaite.yourmovielog.data.database.entities.MediaTvSeasonEntity
+import com.rbraithwaite.yourmovielog.data.database.entities.MediaTvShowEntity
 import com.rbraithwaite.yourmovielog.data.database.type_converters.LocalDateConverter
 import com.rbraithwaite.yourmovielog.data.database.type_converters.ReviewDateConverter
 
 @Database(
     entities = [
         MediaMovieEntity::class,
+        MediaTvShowEntity::class,
+        MediaTvSeasonEntity::class,
+        MediaTvEpisodeEntity::class,
         MediaReviewEntity::class,
     ],
     version = 1

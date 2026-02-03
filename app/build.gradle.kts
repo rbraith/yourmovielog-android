@@ -162,6 +162,8 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.hamcrest)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.core.testing)
 
     // TODO [26-01-9 10:07p.m.] get rid of this.
     // Reflection for DelegateFake
