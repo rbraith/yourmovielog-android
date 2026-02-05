@@ -35,6 +35,8 @@ import androidx.navigation.navigation
 import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
 import com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow.AddReviewFlowDest
 import com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow.AddReviewFlowSharedData
+import com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow.NewMediaReviewButton
+import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreen
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchScreen
@@ -193,12 +195,19 @@ private fun MainNavHost(
                     MainDrawerDest.ADD_REVIEW_FLOW.route
                 )
 
-                SearchScreen(hiltViewModel(), onNavToNewReviewScreen = { args ->
-                    addReviewFlowSharedData.newReviewArgs = args
-                    mainScreenState.navController.navigate(
-                        route = AddReviewFlowDest.ADD_REVIEW.route,
-                    )
-                })
+                SearchScreen(
+                    hiltViewModel(),
+                    preResultsSlot = { searchInputUiState ->
+                        // A button to add a review for a new media, if the user can't find anything
+                        // in the search results
+                        NewMediaReviewButton(searchInputUiState) { mediaTitle ->
+                            addReviewFlowSharedData.newReviewArgs = NewReviewArgs.NewMedia(mediaTitle)
+                            mainScreenState.navController.navigate(
+                                route = AddReviewFlowDest.ADD_REVIEW.route,
+                            )
+                        }
+                    }
+                )
             }
 
             composable(route = AddReviewFlowDest.ADD_REVIEW.route) {

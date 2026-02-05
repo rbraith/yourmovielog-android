@@ -26,12 +26,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rbraithwaite.yourmovielog.core.data.SearchResult
 import com.rbraithwaite.yourmovielog.core.data.TmdbData
 import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
-import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
 
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
-    onNavToNewReviewScreen: (args: NewReviewArgs) -> Unit
+    preResultsSlot: @Composable ((SearchInputUiState) -> Unit)?
 ) {
     val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
     val searchResultsUiState by viewModel.searchResultsUiState.collectAsStateWithLifecycle()
@@ -46,36 +45,13 @@ fun SearchScreen(
             SearchInputWidget(searchInputUiState)
         }
 
-        item {
-            NewCustomMediaButton(searchInputUiState, onClickAddReview = {
-                onNavToNewReviewScreen(NewReviewArgs.NewMedia(it))
-            })
+        preResultsSlot?.run {
+            item {
+                invoke(searchInputUiState)
+            }
         }
 
         searchResultsList(searchResultsUiState)
-    }
-}
-
-@Composable
-fun NewCustomMediaButton(
-    state: SearchInputUiState,
-    onClickAddReview: (mediaTitle: String) -> Unit
-) {
-    val searchInput = state.searchInput
-    val mediaTitle = when (searchInput) {
-        is QuickSearch.Multi -> searchInput.query
-        else -> "NOT IMPLEMENTED"
-    }
-
-    Button(
-        onClick = {
-            onClickAddReview(mediaTitle)
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(64.dp)
-    ) {
-        Text("Add review for \"$mediaTitle\"")
     }
 }
 
