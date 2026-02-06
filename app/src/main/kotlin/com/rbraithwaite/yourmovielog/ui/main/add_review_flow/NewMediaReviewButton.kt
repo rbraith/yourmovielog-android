@@ -29,6 +29,7 @@ fun NewMediaReviewButton(
             .fillMaxWidth()
             .height(64.dp)
     ) {
-        Text("Add review for \"$mediaTitle\"")
+        val titleText = if (mediaTitle.isEmpty()) "a new movie or tv show" else "\"${mediaTitle}\""
+        Text("Add review for $titleText")
     }
 }
