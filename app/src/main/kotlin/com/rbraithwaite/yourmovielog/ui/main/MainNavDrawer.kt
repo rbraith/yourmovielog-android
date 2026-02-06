@@ -22,6 +22,11 @@ fun MainNavDrawer(
             mainState = mainState
         )
         MainNavDrawerItem(
+            label = "Review History",
+            dest = MainDrawerDest.REVIEW_HISTORY,
+            mainState = mainState
+        )
+        MainNavDrawerItem(
             label = "Search",
             dest = MainDrawerDest.SEARCH,
             mainState = mainState
@@ -48,5 +53,6 @@ private fun MainNavDrawerItem(
 
 enum class MainDrawerDest(val route: String) {
     ADD_REVIEW_FLOW("add-review-flow"),
-    SEARCH("search")
+    SEARCH("search"),
+    REVIEW_HISTORY("review-history")
 }

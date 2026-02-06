@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -14,6 +15,7 @@ import com.rbraithwaite.yourmovielog.ui.main.add_review_flow.NewMediaReviewButto
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewScreen
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewViewModel
+import com.rbraithwaite.yourmovielog.ui.screens.review_history.ReviewHistoryScreen
 import com.rbraithwaite.yourmovielog.ui.screens.search.SearchScreen
 import com.rbraithwaite.yourmovielog.ui.utils.getScopedViewModel
 
@@ -27,64 +29,71 @@ fun MainNavHost(
         startDestination = MainDrawerDest.ADD_REVIEW_FLOW.route,
         modifier = modifier
     ) {
-        // Add Review Flow
-        navigation(
-            startDestination = AddReviewFlowDest.SEARCH.route,
-            route = MainDrawerDest.ADD_REVIEW_FLOW.route
-        ) {
-            composable(route = AddReviewFlowDest.SEARCH.route) {
-                val addReviewFlowSharedData = mainState.navController.getScopedViewModel<AddReviewFlowSharedData>(
-                    it,
-                    MainDrawerDest.ADD_REVIEW_FLOW.route
-                )
+        addReviewFlow(mainState)
 
-                MainScaffold(mainState) {
-                    SearchScreen(
-                        hiltViewModel(),
-                        preResultsSlot = { searchInputUiState ->
-                            // A button to add a review for a new media, if the user can't find anything
-                            // in the search results
-                            NewMediaReviewButton(searchInputUiState) { mediaTitle ->
-                                addReviewFlowSharedData.newReviewArgs = NewReviewArgs.NewMedia(mediaTitle)
-                                mainState.navController.navigate(
-                                    route = AddReviewFlowDest.ADD_REVIEW.route,
-                                )
-                            }
-                        }
-                    )
-                }
-            }
+        composable(route = MainDrawerDest.SEARCH.route) {
+            DebugPlaceholder(
+                label = "Search Screen",
+                modifier = Modifier.fillMaxSize()
+            )
+        }
 
-            composable(route = AddReviewFlowDest.ADD_REVIEW.route) {
-                val addReviewFlowSharedData = mainState.navController.getScopedViewModel<AddReviewFlowSharedData>(
-                    it,
-                    MainDrawerDest.ADD_REVIEW_FLOW.route
-                )
+        composable(route = MainDrawerDest.REVIEW_HISTORY.route) {
+            ReviewHistoryScreen(mainState)
+        }
+    }
+}
 
-                val viewModel: NewReviewViewModel = hiltViewModel()
-                viewModel.init(addReviewFlowSharedData.newReviewArgs)
+fun NavGraphBuilder.addReviewFlow(mainState: MainState) {
+    navigation(
+        startDestination = AddReviewFlowDest.SEARCH.route,
+        route = MainDrawerDest.ADD_REVIEW_FLOW.route
+    ) {
+        composable(route = AddReviewFlowDest.SEARCH.route) {
+            val addReviewFlowSharedData = mainState.navController.getScopedViewModel<AddReviewFlowSharedData>(
+                it,
+                MainDrawerDest.ADD_REVIEW_FLOW.route
+            )
 
-                NewReviewScreen(
-                    viewModel = viewModel,
-                    onNavBack = {
-                        mainState.navController.navigateUp()
-                    },
-                    onConfirmReview = {
-                        // navigate back to the start of the "add review" flow after adding a new review
-                        mainState.navController.navigate(MainDrawerDest.ADD_REVIEW_FLOW.route) {
-                            popUpTo(MainDrawerDest.ADD_REVIEW_FLOW.route) {
-                                inclusive = true
-                            }
+            MainScaffold(mainState) {
+                SearchScreen(
+                    hiltViewModel(),
+                    preResultsSlot = { searchInputUiState ->
+                        // A button to add a review for a new media, if the user can't find anything
+                        // in the search results
+                        NewMediaReviewButton(searchInputUiState) { mediaTitle ->
+                            addReviewFlowSharedData.newReviewArgs = NewReviewArgs.NewMedia(mediaTitle)
+                            mainState.navController.navigate(
+                                route = AddReviewFlowDest.ADD_REVIEW.route,
+                            )
                         }
                     }
                 )
             }
         }
 
-        composable(route = MainDrawerDest.SEARCH.route) {
-            DebugPlaceholder(
-                label = "Search Screen",
-                modifier = Modifier.fillMaxSize()
+        composable(route = AddReviewFlowDest.ADD_REVIEW.route) {
+            val addReviewFlowSharedData = mainState.navController.getScopedViewModel<AddReviewFlowSharedData>(
+                it,
+                MainDrawerDest.ADD_REVIEW_FLOW.route
+            )
+
+            val viewModel: NewReviewViewModel = hiltViewModel()
+            viewModel.init(addReviewFlowSharedData.newReviewArgs)
+
+            NewReviewScreen(
+                viewModel = viewModel,
+                onNavBack = {
+                    mainState.navController.navigateUp()
+                },
+                onConfirmReview = {
+                    // navigate back to the start of the "add review" flow after adding a new review
+                    mainState.navController.navigate(MainDrawerDest.ADD_REVIEW_FLOW.route) {
+                        popUpTo(MainDrawerDest.ADD_REVIEW_FLOW.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }
