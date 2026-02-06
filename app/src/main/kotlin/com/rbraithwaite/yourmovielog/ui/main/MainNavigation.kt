@@ -70,7 +70,12 @@ fun MainNavHost(
                         mainState.navController.navigateUp()
                     },
                     onConfirmReview = {
-                        // TO IMPLEMENT
+                        // navigate back to the start of the "add review" flow after adding a new review
+                        mainState.navController.navigate(MainDrawerDest.ADD_REVIEW_FLOW.route) {
+                            popUpTo(MainDrawerDest.ADD_REVIEW_FLOW.route) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }

@@ -30,6 +30,7 @@ import com.rbraithwaite.yourmovielog.ui.debug.DebugPlaceholder
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel,
+    /** This UI slot is after the search input fields, and before the search results. */
     preResultsSlot: @Composable ((SearchInputUiState) -> Unit)?
 ) {
     val searchInputUiState by viewModel.searchInputUiState.collectAsStateWithLifecycle()
