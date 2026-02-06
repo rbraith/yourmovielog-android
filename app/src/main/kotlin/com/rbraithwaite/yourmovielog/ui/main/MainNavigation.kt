@@ -66,7 +66,9 @@ fun MainNavHost(
 
                 NewReviewScreen(
                     viewModel = viewModel,
-                    onNavBack = { TODO() },
+                    onNavBack = {
+                        mainState.navController.navigateUp()
+                    },
                     onConfirmReview = {
                         // TO IMPLEMENT
                     }

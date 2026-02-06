@@ -43,9 +43,7 @@ fun NewReviewScreen(
     Scaffold(
         topBar = {
             NewReviewScreenTopAppBar(
-                onNavBack = {
-                    // TO IMPLEMENT
-                },
+                onNavBack = onNavBack,
                 onConfirmReview = {
                     (uiStateSafe as? NewReviewUiState.EditReview)?.onConfirmReview?.invoke()?.also {
                         onConfirmReview()
