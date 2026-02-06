@@ -1,4 +1,4 @@
-package com.rbraithwaite.yourmovielog.ui.screens.main.add_review_flow
+package com.rbraithwaite.yourmovielog.ui.main.add_review_flow
 
 import androidx.lifecycle.ViewModel
 import com.rbraithwaite.yourmovielog.ui.screens.new_review.NewReviewArgs

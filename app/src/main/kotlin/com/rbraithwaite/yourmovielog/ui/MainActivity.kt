@@ -3,10 +3,10 @@ package com.rbraithwaite.yourmovielog.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.rbraithwaite.yourmovielog.ui.screens.main.MainScreen
+import androidx.compose.material3.ModalNavigationDrawer
+import com.rbraithwaite.yourmovielog.ui.main.MainNavDrawer
+import com.rbraithwaite.yourmovielog.ui.main.MainNavHost
+import com.rbraithwaite.yourmovielog.ui.main.rememberMainState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,16 +15,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val navController = rememberNavController()
+            val mainState = rememberMainState()
 
-            NavHost(
-                navController = navController,
-                route = "root_nav",
-                startDestination = "main"
-            ) {
-                composable(route = "main") {
-                    MainScreen()
+            ModalNavigationDrawer(
+                drawerState = mainState.drawerState,
+                drawerContent = {
+                    MainNavDrawer(mainState = mainState)
                 }
+            ) {
+                MainNavHost(mainState = mainState)
             }
         }
     }
