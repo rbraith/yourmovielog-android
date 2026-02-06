@@ -18,7 +18,7 @@ fun NewMediaReviewButton(
     val searchInput = state.searchInput
     val mediaTitle = when (searchInput) {
         is QuickSearch.Multi -> searchInput.query
-        else -> "NOT IMPLEMENTED"
+        else -> "MEDIA TITLE NOT IMPLEMENTED"
     }
 
     Button(

@@ -79,7 +79,7 @@ private fun SearchInputWidget(state: SearchInputUiState) {
                 is QuickSearch.Multi -> QuickSearchMultiFields(searchInput = state.searchInput)
                 else -> {
                     DebugPlaceholder(
-                        label = state.searchInput::class.simpleName ?: "wip",
+                        label = "TODO: ${state.searchInput::class.simpleName}",
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
