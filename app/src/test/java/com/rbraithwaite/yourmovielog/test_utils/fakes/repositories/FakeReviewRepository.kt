@@ -2,6 +2,7 @@ package com.rbraithwaite.yourmovielog.test_utils.fakes.repositories
 
 import com.rbraithwaite.yourmovielog.core.data.MediaReview
 import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository
+import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.MediaReviewBuilder
 import java.util.UUID
 
 class FakeReviewRepository : ReviewRepository {
@@ -24,9 +25,18 @@ class FakeReviewRepository : ReviewRepository {
         reviews.add(review)
     }
 
+    override suspend fun getAllReviews(): List<MediaReview> {
+        return reviews
+    }
+
     //endregion ReviewRepository
 
     fun getReviews(): List<MediaReview> {
         return reviews
+    }
+
+    fun setReviews(vararg reviews: MediaReviewBuilder) {
+        this.reviews.clear()
+        this.reviews.addAll(reviews.map { it.build() })
     }
 }

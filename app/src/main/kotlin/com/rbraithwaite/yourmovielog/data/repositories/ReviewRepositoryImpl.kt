@@ -4,6 +4,7 @@ import com.rbraithwaite.yourmovielog.core.data.MediaReview
 import com.rbraithwaite.yourmovielog.core.repositories.ReviewRepository
 import com.rbraithwaite.yourmovielog.data.database.dao.ReviewDao
 import com.rbraithwaite.yourmovielog.data.repositories.conversions.toEntity
+import com.rbraithwaite.yourmovielog.data.repositories.conversions.toMediaReview
 import com.rbraithwaite.yourmovielog.di.SingletonModule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,10 @@ class ReviewRepositoryImpl @Inject constructor(
         launchExternal {
             reviewDao.insertReview(review.toEntity(mediaId))
         }
+    }
+
+    override suspend fun getAllReviews(): List<MediaReview> {
+        return reviewDao.getAllReviews().map { it.toMediaReview() }
     }
 
     //endregion

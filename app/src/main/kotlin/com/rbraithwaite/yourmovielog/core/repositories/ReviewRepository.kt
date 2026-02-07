@@ -5,4 +5,7 @@ import java.util.UUID
 
 interface ReviewRepository {
     suspend fun addReview(review: MediaReview, mediaId: UUID)
+
+    // TODO [26-02-6 10:15p.m.] consider pagination instead?
+    suspend fun getAllReviews(): List<MediaReview>
 }

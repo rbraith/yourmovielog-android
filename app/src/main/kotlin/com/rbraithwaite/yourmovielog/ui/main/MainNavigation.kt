@@ -39,7 +39,10 @@ fun MainNavHost(
         }
 
         composable(route = MainDrawerDest.REVIEW_HISTORY.route) {
-            ReviewHistoryScreen(mainState)
+            ReviewHistoryScreen(
+                hiltViewModel(),
+                mainState
+            )
         }
     }
 }
