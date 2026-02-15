@@ -111,7 +111,9 @@ class NewReviewViewModelTests {
         val reviewList = fakeReviewRepository.getReviews()
         assertThat(reviewList.size, willBe(1))
 
-        assertThat(reviewList[0].rating, willBe(reviewRating))
+        val review = reviewList[0]
+        assertThat(review.rating, willBe(reviewRating))
+        assertThat(review.mediaUuid, willBe(movie.uuid))
     }
 
     @Test

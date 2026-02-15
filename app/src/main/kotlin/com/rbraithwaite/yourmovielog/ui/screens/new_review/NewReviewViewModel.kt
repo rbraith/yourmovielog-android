@@ -95,7 +95,7 @@ class NewReviewViewModel @Inject constructor(
         return NewReviewUiState.EditReview(
             media,
             tmdbData,
-            createEmptyReview(),
+            createEmptyReview(media.uuid),
             ::editTitle,
             ::editRating,
             ::editReview,
@@ -106,10 +106,11 @@ class NewReviewViewModel @Inject constructor(
         )
     }
 
-    private fun createEmptyReview(): MediaReview {
+    private fun createEmptyReview(mediaUuid: UUID): MediaReview {
         return MediaReview(
             // TODO [25-11-27 3:59p.m.] do I want to be generating the UUID at this point?
             UUID.randomUUID(),
+            mediaUuid,
             null,
             null,
             null,
@@ -128,6 +129,8 @@ class NewReviewViewModel @Inject constructor(
                     TvShow.Season::class -> it.copy(media = tvSeason)
                     TvShow.Episode::class -> it.copy(media = tvEpisode)
                     else -> it
+                }.apply {
+                    copy(review = review.copy(mediaUuid = media.uuid))
                 }
             } ?: state
         }
@@ -140,7 +143,7 @@ class NewReviewViewModel @Inject constructor(
             // TODO [26-01-27 8:43p.m.] all this should be in a transaction.
 
             mediaRepository.addMedia(editReviewState.media)
-            reviewRepository.addReview(editReviewState.review, editReviewState.media.uuid)
+            reviewRepository.addReview(editReviewState.review)
 
             // When the media being reviewed is a tv season or episode, we should also persist the
             // new parent media types (show for a season, and show + season for an episode)

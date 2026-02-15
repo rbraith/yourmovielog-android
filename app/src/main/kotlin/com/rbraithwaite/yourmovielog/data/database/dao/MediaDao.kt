@@ -23,6 +23,30 @@ abstract class MediaDao {
     abstract suspend fun insertTvEpisode(tvEpisode: MediaTvEpisodeEntity)
 
     @Query(
+        "SELECT * FROM ${MediaMovieEntity.Contract.TABLE_NAME} " +
+            "WHERE ${MediaMovieEntity.Contract.Columns.UUID} IN (:uuids)"
+    )
+    abstract suspend fun getMoviesByUuid(uuids: Set<String>): List<MediaMovieEntity>
+
+    @Query(
+        "SELECT * FROM ${MediaTvShowEntity.Contract.TABLE_NAME} " +
+            "WHERE ${MediaTvShowEntity.Contract.Columns.UUID} IN (:uuids)"
+    )
+    abstract suspend fun getTvShowsByUuid(uuids: Set<String>): List<MediaTvShowEntity>
+
+    @Query(
+        "SELECT * FROM ${MediaTvSeasonEntity.Contract.TABLE_NAME} " +
+            "WHERE ${MediaTvSeasonEntity.Contract.Columns.UUID} IN (:uuids)"
+    )
+    abstract suspend fun getTvSeasonsByUuid(uuids: Set<String>): List<MediaTvSeasonEntity>
+
+    @Query(
+        "SELECT * FROM ${MediaTvEpisodeEntity.Contract.TABLE_NAME} " +
+            "WHERE ${MediaTvEpisodeEntity.Contract.Columns.UUID} IN (:uuids)"
+    )
+    abstract suspend fun getTvEpisodesByUuid(uuids: Set<String>): List<MediaTvEpisodeEntity>
+
+    @Query(
         "SELECT * FROM ${MediaTvShowEntity.Contract.TABLE_NAME} " +
             "WHERE ${MediaTvShowEntity.Contract.Columns.UUID} = :id"
     )

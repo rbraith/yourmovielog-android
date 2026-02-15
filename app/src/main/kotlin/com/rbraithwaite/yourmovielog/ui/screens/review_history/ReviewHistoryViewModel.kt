@@ -18,7 +18,7 @@ class ReviewHistoryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val reviews = reviewRepository.getAllReviews()
+            val reviews = reviewRepository.getAllReviewsWithMedia()
             _uiState.value = ReviewHistoryUiState.Success(reviews)
         }
     }

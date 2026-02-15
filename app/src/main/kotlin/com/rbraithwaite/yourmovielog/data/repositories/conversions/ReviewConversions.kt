@@ -6,10 +6,10 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
-fun MediaReview.toEntity(mediaId: UUID): MediaReviewEntity {
+fun MediaReview.toEntity(): MediaReviewEntity {
     return MediaReviewEntity(
         uuid = uuid.toString(),
-        mediaId = mediaId.toString(),
+        mediaId = mediaUuid.toString(),
         rating = rating,
         review = review,
         reviewDate = reviewDate,
@@ -22,6 +22,7 @@ fun MediaReview.toEntity(mediaId: UUID): MediaReviewEntity {
 fun MediaReviewEntity.toMediaReview(): MediaReview {
     return MediaReview(
         uuid = UUID.fromString(uuid),
+        mediaUuid = UUID.fromString(mediaId),
         rating = rating,
         review = review,
         reviewDate = reviewDate,

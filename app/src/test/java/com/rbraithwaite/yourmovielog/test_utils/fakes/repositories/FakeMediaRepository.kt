@@ -6,6 +6,7 @@ import com.rbraithwaite.yourmovielog.core.data.TmdbData
 import com.rbraithwaite.yourmovielog.core.repositories.MediaRepository
 import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbMovieBuilder
 import com.rbraithwaite.yourmovielog.test_utils.data_builders.core_data.TmdbTvShowBuilder
+import java.util.UUID
 
 class FakeMediaRepository : MediaRepository {
 
@@ -71,5 +72,9 @@ class FakeMediaRepository : MediaRepository {
 
     fun getMedia(): List<Media> {
         return mediaList
+    }
+
+    fun getMediaMatchingIds(ids: Set<UUID>): List<Media> {
+        return mediaList.filter { ids.contains(it.uuid) }
     }
 }

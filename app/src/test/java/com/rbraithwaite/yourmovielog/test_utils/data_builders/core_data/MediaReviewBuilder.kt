@@ -12,6 +12,7 @@ abstract class AbstractMediaReviewBuilder : TestDataBuilder<MediaReview>()
 class MediaReviewBuilder : BaseAbstractMediaReviewBuilder<MediaReviewBuilder>() {
     override var data = MediaReview(
         uuid = UUID(1L, 2L),
+        mediaUuid = UUID(1L, 1L),
         rating = 78,
         review = "this is a review",
         reviewDate = null,

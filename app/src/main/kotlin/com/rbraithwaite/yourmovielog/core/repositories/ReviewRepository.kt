@@ -1,11 +1,13 @@
 package com.rbraithwaite.yourmovielog.core.repositories
 
 import com.rbraithwaite.yourmovielog.core.data.MediaReview
-import java.util.UUID
+import com.rbraithwaite.yourmovielog.core.data.MediaReviewWithMedia
 
 interface ReviewRepository {
-    suspend fun addReview(review: MediaReview, mediaId: UUID)
+    suspend fun addReview(review: MediaReview)
 
-    // TODO [26-02-6 10:15p.m.] consider pagination instead?
+    // TODO [26-02-12 4:40p.m.] delete.
     suspend fun getAllReviews(): List<MediaReview>
+
+    suspend fun getAllReviewsWithMedia(): List<MediaReviewWithMedia>
 }
